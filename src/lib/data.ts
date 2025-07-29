@@ -78,7 +78,7 @@ export const scratchCards: ScratchCardType[] = [
     description: "Uma moedinha pode valer mil no PIX. Vai ficar de fora?",
     prizeAmount: 1000.0,
     cost: 0.5,
-    imageUrl: "https://placehold.co/400x225.png",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FF7ZDNXFVAFJ6R79MX2ZZ5.png",
     aiHint: "lucky coin",
   },
   {
