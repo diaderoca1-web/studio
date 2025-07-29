@@ -41,7 +41,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
-    <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-sm border-t z-[60]">
+    <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-sm border-t z-[100]">
         <div className="flex justify-around items-center h-20">
           <Link href="/" className="flex flex-col items-center gap-1 text-primary">
             <Home />
