@@ -10,9 +10,11 @@ export default function Home() {
 
   return (
     <div className="container mx-auto max-w-5xl">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col">
         <HeroBanner />
-        <RecentWinners />
+        <div className="py-2">
+            <RecentWinners />
+        </div>
 
         <section className="flex flex-col gap-2 pt-2">
           <div className="flex justify-between items-center">
