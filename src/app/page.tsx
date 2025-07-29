@@ -9,12 +9,10 @@ export default function Home() {
   const highlightedCards = scratchCards.slice(0, 6);
 
   return (
-    <div className="container mx-auto max-w-5xl">
-      <div className="flex flex-col">
-        <HeroBanner />
-        <div className="py-0">
-            <RecentWinners />
-        </div>
+    <div className="flex flex-col">
+      <HeroBanner />
+      <div className="container mx-auto max-w-5xl">
+        <RecentWinners />
 
         <section className="flex flex-col gap-2 pt-2">
           <div className="flex justify-between items-center">
