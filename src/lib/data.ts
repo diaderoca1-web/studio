@@ -114,8 +114,8 @@ export const scratchCards: ScratchCardType[] = [
     description: "Raspadinhas online com pagamentos instantâneos no seu Pix.",
     prizeAmount: 30000.0,
     cost: 50.0,
-    imageUrl: "https://placehold.co/400x225.png",
-    aiHint: "magic hat",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/BIKE%20,%20MAQUINA%20-%20MOTO.png?updatedAt=1752534650346",
+    aiHint: "motorcycle prize",
   },
   {
     slug: "raspe-e-ganhe",
