@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -33,7 +34,7 @@ export default function RecentWinners() {
       >
         <CarouselContent>
           {recentWinners.map((winner, index) => (
-            <CarouselItem key={index} className="basis-1/2 md:basis-1/2">
+            <CarouselItem key={index} className="basis-auto md:basis-1/2 lg:basis-1/3">
                <Card className="bg-secondary border-none">
                 <CardContent className="p-3 flex items-center gap-3">
                   <div className="relative size-12 flex-shrink-0">
