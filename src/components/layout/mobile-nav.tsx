@@ -12,7 +12,7 @@ import { UserPlus } from "lucide-react";
 const navItems = [
   { href: "/", icon: HomeIcon, label: "Início" },
   { href: "/raspadinhas", icon: TicketIcon, label: "Raspadinhas" },
-  { href: "/register", icon: UserPlus, label: "Registrar", isCentral: true },
+  { href: "/create", icon: UserPlus, label: "Criar", isCentral: true },
   { href: "/premios", icon: GiftIcon, label: "Prêmios" },
   { href: "/login", icon: UserIcon, label: "Entrar" },
 ];

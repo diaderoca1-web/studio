@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Logo from "../icons/logo";
 import { UserPlus } from "lucide-react";
+import { MainNav } from "./main-nav";
 
 export function Header() {
   return (
@@ -10,6 +11,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2">
           <Logo className="h-10 w-auto" />
         </Link>
+        <MainNav />
         <div className="flex items-center gap-2">
           <Button variant="ghost">Entrar</Button>
           <Button>
