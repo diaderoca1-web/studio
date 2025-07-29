@@ -41,7 +41,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
-    <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-sm border-t z-50">
+    <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-background/90 backdrop-blur-sm border-t z-[60]">
         <div className="flex justify-around items-center h-20">
           <Link href="/" className="flex flex-col items-center gap-1 text-primary">
             <Home />
@@ -51,8 +51,10 @@ export function Footer() {
             <Search />
             <span className="text-xs font-medium">Raspadinhas</span>
           </Link>
-          <Button size="icon" className="w-16 h-16 rounded-full -translate-y-4 shadow-lg shadow-primary/50">
-            <PlusCircle className="size-8" />
+          <Button asChild size="icon" className="w-16 h-16 rounded-full -translate-y-4 shadow-lg shadow-primary/50">
+            <Link href="/create">
+              <PlusCircle className="size-8" />
+            </Link>
           </Button>
           <Link href="#" className="flex flex-col items-center gap-1 text-muted-foreground">
             <Trophy />
