@@ -27,7 +27,7 @@ export default function ScratchCard({ card }: ScratchCardProps) {
           alt={card.title}
           width={400}
           height={160}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
           data-ai-hint={card.aiHint}
         />
       </div>
