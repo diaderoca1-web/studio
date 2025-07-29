@@ -9,7 +9,7 @@ export default function Home() {
   const highlightedCards = scratchCards.slice(0, 6);
 
   return (
-    <div className="flex flex-col pb-24">
+    <div className="flex flex-col">
       <HeroBanner />
       <div className="container mx-auto max-w-5xl">
         <div className="py-4">
@@ -37,6 +37,7 @@ export default function Home() {
           </div>
         </section>
       </div>
+      <div className="h-24 md:hidden" />
     </div>
   );
 }
