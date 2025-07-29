@@ -123,7 +123,7 @@ export const scratchCards: ScratchCardType[] = [
     description: "Transforme sua sorte em dinheiro de verdade com cada raspada.",
     prizeAmount: 60000.0,
     cost: 100.0,
-    imageUrl: "https://placehold.co/400x225.png",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/PREMIOS%20DIVERSOS.png?updatedAt=1752534650509",
     aiHint: "diamond prize",
   },
 ];
