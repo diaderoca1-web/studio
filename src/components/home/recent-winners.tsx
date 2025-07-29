@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { recentWinners } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
-import { Dot } from "lucide-react";
+import LiveIcon from "@/components/icons/live-icon";
 import {
   Carousel,
   CarouselContent,
@@ -15,7 +15,7 @@ export default function RecentWinners() {
   return (
     <div className="flex items-center gap-4 overflow-hidden">
       <div className="flex items-center text-primary font-bold">
-        <Dot className="size-10 animate-ping" />
+        <LiveIcon className="size-10" />
         <span>AO VIVO</span>
       </div>
       <Carousel
@@ -33,7 +33,7 @@ export default function RecentWinners() {
       >
         <CarouselContent>
           {recentWinners.map((winner, index) => (
-            <CarouselItem key={index} className="basis-auto md:basis-1/2 lg:basis-1/3">
+            <CarouselItem key={index} className="basis-auto md:basis-1/2 lg:basis-1/4">
                <Card className="bg-secondary border-none">
                 <CardContent className="p-3 flex items-center gap-3">
                   <div className="relative size-12 flex-shrink-0">
