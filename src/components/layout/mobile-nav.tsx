@@ -35,7 +35,7 @@ export function MobileNav() {
                 <div className="bg-primary rounded-full p-3.5 border-4 border-background shadow-lg">
                   <item.icon className="size-7 text-primary-foreground" />
                 </div>
-                <span className={cn(isActive ? "text-primary" : "text-muted-foreground")}>
+                <span className={cn("text-center", isActive ? "text-primary" : "text-muted-foreground")}>
                   {item.label}
                 </span>
               </Link>
@@ -55,6 +55,7 @@ export function MobileNav() {
               />
               <span
                 className={cn(
+                  "text-center",
                   isActive ? "text-primary" : "text-muted-foreground"
                 )}
               >
