@@ -63,7 +63,12 @@ export const recentWinners = [
     { winnerName: "Heitor R.", prizeName: "20 Reais", prizeValue: 20.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/Notas/20%20REAIS.png?updatedAt=1752047821716", aiHint: "money" },
     { winnerName: "Isaac S.", prizeName: "15 Reais", prizeValue: 15.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/Notas/15%20REAIS.png?updatedAt=1752047821835", aiHint: "money" },
     { winnerName: "Joaquim T.", prizeName: "10 Reais", prizeValue: 10.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681", aiHint: "money" },
-    { winnerName: "Lorenzo U.", prizeName: "3 Reais", prizeValue: 3.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/Notas/3%20REAIS.png?updatedAt=1752047821897", aiHint: "money" }
+    { winnerName: "Lorenzo U.", prizeName: "3 Reais", prizeValue: 3.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/Notas/3%20REAIS.png?updatedAt=1752047821897", aiHint: "money" },
+    { winnerName: "Laura S.", prizeName: "Volkswagen Nivus", prizeValue: 120000.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/banner/01K0BEQH30DBZPFNJNQP2W7V5D.png", aiHint: "car" },
+    { winnerName: "Mateus A.", prizeName: "Nissan Kicks", prizeValue: 115000.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/banner/01K0BEBYS7BN26DVZ0SHQJV8TT.png", aiHint: "car" },
+    { winnerName: "Nícolas B.", prizeName: "Air Force 1 Low Retro", prizeValue: 1200.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/banner/01K0BE42XDSF6D848QM4WE2PT0.png", aiHint: "sneakers" },
+    { winnerName: "Otávio C.", prizeName: "Rolex Explorer II", prizeValue: 84800.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/banner/01K0BENF3QK662JJA27E96K63Q.png", aiHint: "watch" },
+    { winnerName: "Pedro D.", prizeName: "Datejust 41", prizeValue: 75400.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/banner/01K0BEQH30DBZPFNJNQP2W7V5D.png", aiHint: "watch" }
 ];
 
 export const scratchCards: ScratchCardType[] = [
