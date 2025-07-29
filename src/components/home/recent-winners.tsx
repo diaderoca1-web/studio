@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -14,7 +13,7 @@ import Autoplay from "embla-carousel-autoplay";
 
 export default function RecentWinners() {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 overflow-hidden">
       <div className="flex items-center text-primary font-bold">
         <Dot className="size-10 animate-ping" />
         <span>AO VIVO</span>
