@@ -11,12 +11,12 @@ export type ScratchCardType = {
 
 export const heroBanners = [
   {
-    imageUrl: "https://placehold.co/1400x400.png",
-    alt: "R$ 1.000 com apenas 1 real",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/NOVOS-BANNER-RASPA.png?updatedAt=1753297869020",
+    alt: "Special Offer Banner 1",
     aiHint: "casino promotion",
   },
   {
-    imageUrl: "https://placehold.co/1400x400.png",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/NOVOS-BANNER-RASPA.png?updatedAt=1753474399329",
     alt: "Special Offer Banner 2",
     aiHint: "lottery tickets",
   },
