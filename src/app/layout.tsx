@@ -3,13 +3,12 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Header } from '@/components/layout/header';
-import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster"
 
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'Lucky Scratch',
   description: 'Your lucky day is just a scratch away!',
 };
@@ -30,7 +29,6 @@ export default function RootLayout({
         <div className="relative flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
-          <Footer />
         </div>
         <Toaster />
       </body>
