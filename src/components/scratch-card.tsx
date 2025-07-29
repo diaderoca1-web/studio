@@ -20,19 +20,19 @@ interface ScratchCardProps {
 export default function ScratchCard({ card }: ScratchCardProps) {
   return (
     <div className="bg-card text-card-foreground flex flex-col rounded-xl border border-primary/20 shadow-lg group transition-all duration-300 select-none hover:border-primary overflow-hidden">
-      <div className="w-full aspect-video">
+      <div className="w-full aspect-video bg-muted flex items-center justify-center">
         <Image
           src={card.imageUrl}
           alt={card.title}
           width={400}
           height={225}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
           data-ai-hint={card.aiHint}
         />
       </div>
 
-      <div className="flex flex-col p-4 flex-grow">
-        <div className="flex-grow">
+      <div className="flex flex-col p-2 flex-grow">
+        <div className="flex-grow space-y-1">
           <h1 className="font-semibold text-base leading-tight truncate">{card.title}</h1>
           <h2 className="text-xs text-amber-400 font-bold opacity-90 leading-tight">
             PRÊMIOS DE ATÉ R$&nbsp;
@@ -42,7 +42,7 @@ export default function ScratchCard({ card }: ScratchCardProps) {
           </h2>
         </div>
 
-        <div className="flex items-center justify-between mt-4 gap-2">
+        <div className="flex items-center justify-between mt-2 gap-2">
           <Link href={`/raspadinhas/${card.slug}`} className="flex-1">
             <Button className="h-9 w-full justify-between px-2">
               <div className="flex gap-1.5 items-center font-semibold">
