@@ -96,7 +96,7 @@ export const scratchCards: ScratchCardType[] = [
     description: "Seu bilhete para prêmios de verdade.",
     prizeAmount: 5000.0,
     cost: 2.5,
-    imageUrl: "https://placehold.co/400x225.png",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FJA0JE70JMW0Y30HMFCP46.jpg",
     aiHint: "treasure chest",
   },
   {
