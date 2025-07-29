@@ -87,7 +87,7 @@ export const scratchCards: ScratchCardType[] = [
     description: "Raspou, ganhou, sacou!",
     prizeAmount: 2500.0,
     cost: 1.0,
-    imageUrl: "https://placehold.co/400x225.png",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FH5P70HZV4PV88Y9KV06PA.jpg",
     aiHint: "gold rush",
   },
   {
