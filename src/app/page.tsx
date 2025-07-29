@@ -9,7 +9,7 @@ export default function Home() {
   const highlightedCards = scratchCards.slice(0, 6);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-24">
       <HeroBanner />
       <div className="container mx-auto max-w-5xl">
         <div className="py-4">
