@@ -105,7 +105,7 @@ export const scratchCards: ScratchCardType[] = [
     description: "Com um lanche você pode ganhar um Playstation!",
     prizeAmount: 15000.0,
     cost: 5.0,
-    imageUrl: "https://placehold.co/400x225.png",
+    imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0F77Z6HB3SZ5C9HEH3TQ90W.jpg",
     aiHint: "lightning bolt",
   },
   {
