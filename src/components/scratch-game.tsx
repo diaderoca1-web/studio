@@ -2,22 +2,23 @@
 "use client";
 
 import { useRef, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Gift } from 'lucide-react';
 
 const prizes = [
-    { type: 'coin', value: 10 },
-    { type: 'star', value: 50 },
-    { type: 'gem', value: 100 },
-    { type: 'seven', value: 500 },
+    { type: '1-real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1-real-coin.png?updatedAt=1753862142426' },
+    { type: '50-centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-cent-coin.png?updatedAt=1753862142410' },
+    { type: 'star', value: 50, imageUrl: 'https://placehold.co/100x100/orange/white?text=⭐' },
+    { type: 'gem', value: 100, imageUrl: 'https://placehold.co/100x100/blue/white?text=💎' },
 ];
 
 const symbolMap: { [key: string]: string } = {
-    coin: '💰',
-    star: '⭐',
-    gem: '💎',
-    seven: '7️⃣',
-    lose: '❌',
+    '1-real': 'https://ik.imagekit.io/azx3nlpdu/1-real-coin.png?updatedAt=1753862142426',
+    '50-centavos': 'https://ik.imagekit.io/azx3nlpdu/50-cent-coin.png?updatedAt=1753862142410',
+    star: 'https://placehold.co/100x100/orange/white?text=⭐',
+    gem: 'https://placehold.co/100x100/blue/white?text=💎',
+    lose: 'https://placehold.co/100x100/grey/white?text=❌',
 };
 
 // Simple shuffle function
@@ -165,8 +166,15 @@ export default function ScratchGame({ cardTitle }: { cardTitle: string }) {
             <CardContent className="p-2 aspect-[4/3] relative">
                 <div className="absolute inset-2 grid grid-cols-3 grid-rows-3 gap-2">
                     {game.grid.map((item, index) => (
-                        <div key={index} className="bg-muted rounded-md flex items-center justify-center">
-                            <span className="text-4xl md:text-5xl">{symbolMap[item.type as keyof typeof symbolMap]}</span>
+                        <div key={index} className="bg-muted rounded-md flex items-center justify-center p-2">
+                           <div className="relative w-full h-full">
+                             <Image 
+                                src={symbolMap[item.type as keyof typeof symbolMap] || symbolMap.lose} 
+                                alt={item.type}
+                                fill
+                                className="object-contain"
+                             />
+                           </div>
                         </div>
                     ))}
                 </div>
