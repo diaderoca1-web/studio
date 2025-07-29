@@ -35,7 +35,7 @@ export default function HeroBanner() {
                     src={banner.imageUrl}
                     alt={banner.alt}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     data-ai-hint={banner.aiHint}
                   />
                 </div>
