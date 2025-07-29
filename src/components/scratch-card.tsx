@@ -20,21 +20,21 @@ interface ScratchCardProps {
 
 export default function ScratchCard({ card }: ScratchCardProps) {
   return (
-    <div className="text-card-foreground flex flex-col rounded-xl border p-4 shadow-sm gap-4 bg-gradient-to-t from-primary/5 from-[0%] to-[45%] to-transparent group border-b-2 hover:border-b-primary transition-all duration-300 select-none">
-      <div className="w-full aspect-[5/1] overflow-hidden rounded-md">
+    <div className="bg-card text-card-foreground flex flex-col rounded-xl border border-primary/20 p-4 shadow-lg gap-4 group transition-all duration-300 select-none hover:border-primary">
+      <div className="w-full aspect-video overflow-hidden rounded-md">
         <Image
           src={card.imageUrl}
           alt={card.title}
           width={400}
-          height={80}
+          height={160}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           data-ai-hint={card.aiHint}
         />
       </div>
 
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+      <div className="flex flex-col">
         <h1 className="font-semibold text-lg">{card.title}</h1>
-        <h2 className="text-xs text-amber-500 font-medium opacity-90 uppercase">
+        <h2 className="text-xs text-amber-400 font-medium opacity-90 uppercase">
           Prêmios de até R$&nbsp;
           {card.prizeAmount.toLocaleString("pt-BR", {
             minimumFractionDigits: 2,
@@ -51,7 +51,7 @@ export default function ScratchCard({ card }: ScratchCardProps) {
                 <span>Jogar</span>
               </div>
               <div className="bg-background/20 rounded-md px-2 py-1 flex items-center gap-1 text-white text-xs">
-                <span className="text-primary-foreground/80">R$</span>
+                <span>R$</span>
                 {card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </div>
             </div>

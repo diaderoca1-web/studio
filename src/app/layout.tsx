@@ -27,11 +27,11 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <Header />
-        <main className="min-h-[calc(100vh-4rem)]">
-            {children}
-        </main>
-        <Footer />
+        <div className="relative flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
         <Toaster />
       </body>
     </html>

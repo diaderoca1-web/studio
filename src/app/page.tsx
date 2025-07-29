@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Flame, MoveRight } from "lucide-react";
 import { scratchCards } from "@/lib/data";
-import HeroCarousel from "@/components/home/hero-carousel";
+import HeroBanner from "@/components/home/hero-banner";
 import RecentWinners from "@/components/home/recent-winners";
 import ScratchCard from "@/components/scratch-card";
 
@@ -9,9 +9,9 @@ export default function Home() {
   const highlightedCards = scratchCards.slice(0, 6);
 
   return (
-    <div className="mx-auto max-w-7xl w-full px-5 pt-6 md:pt-7 pb-12">
+    <div className="container mx-auto max-w-5xl py-6">
       <div className="flex flex-col gap-8">
-        <HeroCarousel />
+        <HeroBanner />
         <RecentWinners />
 
         <section className="flex flex-col gap-6">
