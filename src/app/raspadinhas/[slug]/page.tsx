@@ -15,7 +15,7 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
   }
 
   return (
-    <div className="container mx-auto py-12">
+    <div className="container mx-auto py-12 pb-24">
       <div className="grid md:grid-cols-2 gap-12">
         <div>
           <Card className="overflow-hidden">

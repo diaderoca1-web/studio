@@ -3,7 +3,7 @@ import { scratchCards } from "@/lib/data";
 
 export default function AllScratchCardsPage() {
   return (
-    <div className="container mx-auto py-12">
+    <div className="container mx-auto py-12 pb-24">
       <div className="space-y-4 text-center mb-12">
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
           All Scratch Cards
