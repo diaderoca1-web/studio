@@ -12,11 +12,11 @@ export default function Home() {
     <div className="container mx-auto max-w-5xl">
       <div className="flex flex-col">
         <HeroBanner />
-        <div className="py-2">
+        <div className="py-0">
             <RecentWinners />
         </div>
 
-        <section className="flex flex-col gap-2">
+        <section className="flex flex-col gap-2 pt-2">
           <div className="flex justify-between items-center">
             <h1 className="flex items-center gap-2 text-2xl font-bold">
               <Flame className="text-primary animate-bounce" />
