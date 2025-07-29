@@ -20,7 +20,6 @@ export default function AllScratchCardsPage() {
           ))}
         </div>
       </div>
-      <div className="h-24 md:hidden" />
     </>
   );
 }

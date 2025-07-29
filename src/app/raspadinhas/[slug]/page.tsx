@@ -83,7 +83,6 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
           </div>
         </div>
       </div>
-      <div className="h-24 md:hidden" />
     </>
   );
 }

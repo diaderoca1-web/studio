@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import {
   Home,
-  LayoutGrid,
   Gift,
   CircleUser,
   PlusCircle,
@@ -116,6 +115,7 @@ export function Footer() {
           </ul>
         </nav>
       </footer>
+      <div className="h-24 md:hidden" />
     </>
   );
 }

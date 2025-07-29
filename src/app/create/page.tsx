@@ -15,7 +15,6 @@ export default function CreatePage() {
         </div>
         <CreateThemeForm />
       </div>
-      <div className="h-24 md:hidden" />
     </>
   );
 }

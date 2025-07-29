@@ -37,7 +37,6 @@ export default function Home() {
           </div>
         </section>
       </div>
-      <div className="h-24 md:hidden" />
     </div>
   );
 }
