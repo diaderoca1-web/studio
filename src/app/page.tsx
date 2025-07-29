@@ -16,7 +16,7 @@ export default function Home() {
           <RecentWinners />
         </div>
 
-        <section className="flex flex-col pb-32">
+        <section className="flex flex-col">
           <div className="flex justify-between items-center mb-4">
             <h1 className="flex items-center gap-2 text-2xl font-bold">
               <Flame className="text-primary animate-bounce" />
