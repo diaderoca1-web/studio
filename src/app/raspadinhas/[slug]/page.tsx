@@ -1,3 +1,4 @@
+
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { scratchCards } from "@/lib/data";
@@ -6,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import CoinIcon from "@/components/icons/coin-icon";
 import TrophyIcon from "@/components/icons/trophy-icon";
 import { CheckCircle } from "lucide-react";
+import ScratchGame from "@/components/scratch-game";
 
 export default function ScratchCardPage({ params }: { params: { slug: string } }) {
   const card = scratchCards.find((c) => c.slug === params.slug);
@@ -25,23 +27,12 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
                 <CardDescription>{card.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="aspect-video w-full bg-muted rounded-lg flex items-center justify-center relative overflow-hidden">
-                  <Image 
-                    src={card.imageUrl}
-                    alt={card.title}
-                    fill
-                    className="object-cover"
-                    data-ai-hint={card.aiHint}
-                  />
-                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent p-4 flex flex-col justify-end">
-                      <h2 className="text-white text-2xl font-bold">Scratch Here!</h2>
-                   </div>
-                </div>
+                <ScratchGame cardTitle={card.title} />
                 <Button size="lg" className="w-full mt-6 text-lg h-14">
                   <div className="flex gap-2 justify-between items-center w-full">
                       <div className="flex gap-2 items-center font-bold">
                           <CoinIcon className="size-6" />
-                          <span>Play Now</span>
+                          <span>Play Again</span>
                       </div>
                       <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base">
                           <span>R$</span>
