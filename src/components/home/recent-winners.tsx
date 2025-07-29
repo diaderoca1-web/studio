@@ -14,9 +14,8 @@ import Autoplay from "embla-carousel-autoplay";
 export default function RecentWinners() {
   return (
     <div className="flex items-center gap-4 overflow-hidden">
-      <div className="flex items-center text-primary font-bold">
+      <div className="flex items-center justify-center">
         <LiveIcon className="size-10" />
-        <span>AO VIVO</span>
       </div>
       <Carousel
         opts={{
@@ -33,7 +32,7 @@ export default function RecentWinners() {
       >
         <CarouselContent>
           {recentWinners.map((winner, index) => (
-            <CarouselItem key={index} className="basis-auto md:basis-1/2 lg:basis-1/4">
+            <CarouselItem key={index} className="basis-auto md:basis-1/3 lg:basis-1/5">
                <Card className="bg-secondary border-none">
                 <CardContent className="p-3 flex items-center gap-3">
                   <div className="relative size-12 flex-shrink-0">
