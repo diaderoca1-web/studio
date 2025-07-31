@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function SettingsPage() {
   return (
@@ -85,6 +86,25 @@ export default function SettingsPage() {
                     <Input id="payment-secret-key" type="password" placeholder="sk_live_..." />
                 </div>
             </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Banco de Dados</CardTitle>
+            <CardDescription>
+              Gerencie as configurações de conexão com o banco de dados.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="db-service-account">Firebase Service Account JSON</Label>
+              <Textarea id="db-service-account" placeholder='{ "type": "service_account", ... }' rows={5}/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="db-database-url">Realtime Database URL</Label>
+              <Input id="db-database-url" placeholder="https://<YOUR_PROJECT_ID>.firebaseio.com" />
+            </div>
+          </CardContent>
         </Card>
         
         <Card>
