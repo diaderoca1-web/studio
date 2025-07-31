@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 
 export default function SettingsPage() {
@@ -51,6 +52,58 @@ export default function SettingsPage() {
 
         <Card>
             <CardHeader>
+                <CardTitle>Mecânica de Jogo</CardTitle>
+                <CardDescription>
+                    Ajuste as configurações de probabilidade e prêmios.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="space-y-2">
+                    <Label htmlFor="win-probability">Probabilidade de Vitória (%)</Label>
+                    <div className="flex items-center gap-4">
+                        <Slider id="win-probability" defaultValue={[50]} max={100} step={1} className="flex-1" />
+                        <span className="w-12 text-right">50%</span>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+        
+        <Card>
+            <CardHeader>
+                <CardTitle>Gateway de Pagamento</CardTitle>
+                <CardDescription>
+                    Integre com seu provedor de pagamento (ex: Stripe, PayPal).
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="space-y-2">
+                    <Label htmlFor="payment-client-id">Client ID</Label>
+                    <Input id="payment-client-id" placeholder="pk_live_..." />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="payment-secret-key">Secret Key</Label>
+                    <Input id="payment-secret-key" type="password" placeholder="sk_live_..." />
+                </div>
+            </CardContent>
+        </Card>
+        
+        <Card>
+            <CardHeader>
+                <CardTitle>Chaves de API</CardTitle>
+                <CardDescription>
+                    Gerencie chaves de API para serviços de terceiros.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="space-y-2">
+                    <Label htmlFor="analytics-api-key">Google Analytics API Key</Label>
+                    <Input id="analytics-api-key" placeholder="G-..." />
+                </div>
+            </CardContent>
+        </Card>
+
+        <Card>
+            <CardHeader>
                 <CardTitle>Avançado</CardTitle>
                 <CardDescription>
                     Configurações avançadas para administradores.
@@ -68,7 +121,6 @@ export default function SettingsPage() {
                 </div>
             </CardContent>
         </Card>
-
 
         <div className="flex justify-end">
             <Button>Salvar Alterações</Button>
