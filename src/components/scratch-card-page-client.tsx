@@ -142,7 +142,16 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
-       {gameResult?.isWinner && <ReactConfetti width={windowSize.width} height={windowSize.height} />}
+       {gameResult?.isWinner && (
+            <ReactConfetti 
+                width={windowSize.width} 
+                height={windowSize.height}
+                style={{ zIndex: 100 }}
+                gravity={0.3}
+                numberOfPieces={400}
+                recycle={false}
+            />
+        )}
         <div className="py-4">
             <RecentWinners />
         </div>
