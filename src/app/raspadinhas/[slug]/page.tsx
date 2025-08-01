@@ -28,18 +28,6 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
         </div>
 
         <div className="flex items-center gap-2">
-            <Button size="lg" className="flex-1 text-lg h-14">
-                <div className="flex gap-2 justify-between items-center w-full">
-                    <div className="flex gap-2 items-center font-bold">
-                        <CoinIcon className="size-6" />
-                        <span>Comprar</span>
-                    </div>
-                    <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base font-bold">
-                        <span>R$</span>
-                        <span>{card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
-                    </div>
-                </div>
-            </Button>
             <Button variant="secondary" size="icon" className="h-14 w-14">
                 <Zap className="size-6" />
             </Button>
@@ -55,13 +43,13 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
             </CardHeader>
             <CardContent className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl</kbd> para comprar.</p>
+                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + R</kbd> para comprar.</p>
                 </div>
                  <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl</kbd> para revelar.</p>
+                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + B</kbd> para revelar.</p>
                 </div>
                  <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Shift</kbd> para revelar rápido.</p>
+                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Shift + B</kbd> para revelar rápido.</p>
                 </div>
             </CardContent>
         </Card>
