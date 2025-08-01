@@ -29,7 +29,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
         </div>
 
         <div className="md:col-span-1 space-y-6">
-            <div className="w-full aspect-video relative rounded-lg overflow-hidden">
+            <div className="hidden md:block w-full aspect-video relative rounded-lg overflow-hidden">
                 <Image 
                     src="https://raspagreen.com/deposit_bg.jpg"
                     alt="Pix na Hora"
