@@ -51,6 +51,10 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   };
 
   const handlePurchase = async () => {
+    if (!user) {
+        toast({ title: "Erro", description: "Você precisa estar logado para comprar.", variant: "destructive" });
+        return;
+    }
     if (deductBalance(card.cost)) {
         await scratchGameRef.current?.purchase();
     } else {
@@ -77,27 +81,6 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
         }, 4000);
     }
   };
-
-  const handleAutoPlay = async () => {
-    if (!scratchGameRef.current) return false;
-    
-    if (!deductBalance(card.cost)) {
-        toast({
-            title: "Saldo Insuficiente",
-            description: "Autoplay parado por falta de saldo.",
-            variant: "destructive"
-        });
-        setIsAutoPlaying(false);
-        return false;
-    }
-
-    await scratchGameRef.current.purchase();
-    await sleep(200);
-    await scratchGameRef.current.reveal();
-    await sleep(1000); 
-    await scratchGameRef.current.reset();
-    return true;
-  };
   
   const toggleAutoPlay = () => {
     setIsAutoPlaying(prev => !prev);
@@ -105,27 +88,43 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
 
   useEffect(() => {
     if (isAutoPlaying) {
-      const runAutoPlay = async () => {
-        const canContinue = await handleAutoPlay();
-        if (canContinue) {
-          autoPlayIntervalRef.current = setTimeout(runAutoPlay, 2000);
+      // Start interval
+      autoPlayIntervalRef.current = setInterval(async () => {
+        if (!scratchGameRef.current) return;
+
+        if (!deductBalance(card.cost)) {
+          toast({
+            title: "Saldo Insuficiente",
+            description: "Autoplay parado por falta de saldo.",
+            variant: "destructive",
+          });
+          setIsAutoPlaying(false); // This will trigger the cleanup
+          return;
         }
-      };
-      runAutoPlay();
+
+        await scratchGameRef.current.purchase();
+        await sleep(200);
+        await scratchGameRef.current.reveal();
+        await sleep(1500); // A bit more time for user to see result
+        await scratchGameRef.current.reset();
+      }, 2000); // 2 seconds between plays
     } else {
+      // Clear interval if it exists
       if (autoPlayIntervalRef.current) {
-        clearTimeout(autoPlayIntervalRef.current);
+        clearInterval(autoPlayIntervalRef.current);
+        autoPlayIntervalRef.current = null;
         scratchGameRef.current?.reset();
       }
     }
 
+    // Cleanup function to clear interval when component unmounts or isAutoPlaying becomes false
     return () => {
       if (autoPlayIntervalRef.current) {
-        clearTimeout(autoPlayIntervalRef.current);
+        clearInterval(autoPlayIntervalRef.current);
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, user]);
 
 
   return (
@@ -256,4 +255,3 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     </div>
   );
 }
-
