@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
         hostname: 'raspagreen.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

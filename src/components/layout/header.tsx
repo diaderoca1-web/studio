@@ -12,7 +12,7 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Logo className="h-10 w-auto" />
+          <Logo className="h-12 w-40" />
         </Link>
         <div className="hidden md:flex flex-1 justify-center">
             <MainNav />

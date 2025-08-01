@@ -17,7 +17,7 @@ export function Footer() {
       <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center md:items-start space-y-4">
-                <Logo className="h-10 w-auto" />
+                <Logo className="h-12 w-40" />
                 <p className="text-sm text-center md:text-left text-muted-foreground">
                 © {new Date().getFullYear()} raspagreen.com. Todos os direitos reservados.
                 </p>
