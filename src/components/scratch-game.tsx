@@ -10,10 +10,14 @@ import { PrizeType } from '@/lib/data';
 
 // Simple shuffle function
 const shuffle = <T,>(array: T[]): T[] => {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    let currentIndex = array.length, randomIndex;
+
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
+
     return array;
 };
 
@@ -53,32 +57,39 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
     // Generate a grid for the game
     const generateGrid = (): GameResult => {
         if (!prizes || prizes.length === 0) {
-            // Return a default "empty" or "losing" state if there are no prizes
-            return {
-                grid: [],
-                winningSymbol: null,
-                isWinner: false,
-                prizeValue: 0,
-                prizeName: null,
-                prizeImageUrl: null,
-            };
+            return { grid: [], winningSymbol: null, isWinner: false, prizeValue: 0, prizeName: null, prizeImageUrl: null };
         }
-        const isWinner = Math.random() > 0.5; // 50% chance to win
-    
-        if (isWinner && prizes.length > 0) {
+        
+        const isWinner = Math.random() > 0.5; // 50% chance to win. This can be tied to admin settings later.
+
+        if (isWinner) {
             const winningPrize = prizes[Math.floor(Math.random() * prizes.length)];
             const winningSymbol = { name: winningPrize.name, imageUrl: winningPrize.imageUrl };
 
             let grid = Array(3).fill(winningSymbol);
 
-            const otherPrizes = prizes.filter(p => p.name !== winningPrize.name);
-            for (let i = 0; i < 6; i++) {
-                const randomPrize = otherPrizes.length > 0 ? otherPrizes[Math.floor(Math.random() * otherPrizes.length)] : winningPrize;
-                grid.push({ name: randomPrize.name, imageUrl: randomPrize.imageUrl });
+            // Get other symbols, ensuring we don't accidentally create another winning set.
+            const otherSymbols = prizes.filter(p => p.name !== winningPrize.name);
+            let remainingSlots = 6;
+            
+            // This is a more robust way to fill the remaining slots without accidental wins.
+            const fillerSymbols: { name: string; imageUrl: string }[] = [];
+            let symbolIndex = 0;
+            while(fillerSymbols.length < remainingSlots) {
+                const symbol1 = otherSymbols[symbolIndex % otherSymbols.length];
+                const symbol2 = otherSymbols[(symbolIndex + 1) % otherSymbols.length];
+
+                if(fillerSymbols.length + 2 <= remainingSlots) {
+                    fillerSymbols.push({name: symbol1.name, imageUrl: symbol1.imageUrl});
+                    fillerSymbols.push({name: symbol2.name, imageUrl: symbol2.imageUrl});
+                } else {
+                    fillerSymbols.push({name: symbol1.name, imageUrl: symbol1.imageUrl});
+                }
+                symbolIndex += 2;
             }
             
-            // This is a simplified logic, a real game would need more robust generation
-            // to avoid accidental wins of other symbols. For this demo, we'll keep it simple.
+            grid.push(...fillerSymbols);
+
             return {
                 grid: shuffle(grid),
                 winningSymbol: winningPrize.name, 
@@ -88,20 +99,19 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                 prizeImageUrl: winningPrize.imageUrl
             };
         } else {
-            // Create a losing grid
-            let grid = [];
-            let counts: {[key: string]: number} = {};
-
-            while(grid.length < 9) {
-                const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
-                counts[randomPrize.name] = (counts[randomPrize.name] || 0) + 1;
-                if(counts[randomPrize.name] < 3) {
-                     grid.push({ name: randomPrize.name, imageUrl: randomPrize.imageUrl });
-                } else {
-                    // prevent adding a third of the same symbol
-                    counts[randomPrize.name]--; 
-                }
+            // Create a losing grid where no symbol appears more than twice.
+            let grid: { name: string; imageUrl: string }[] = [];
+            const shuffledPrizes = shuffle([...prizes]);
+            
+            // Add two of the first four unique prizes
+            for(let i = 0; i < 4; i++) {
+                const prize = shuffledPrizes[i % shuffledPrizes.length];
+                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
+                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
             }
+            // Add one of a fifth unique prize
+            const lastPrize = shuffledPrizes[4 % shuffledPrizes.length];
+            grid.push({ name: lastPrize.name, imageUrl: lastPrize.imageUrl });
             
             return {
                 grid: shuffle(grid), 
