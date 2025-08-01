@@ -218,19 +218,22 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                         />
                     </>
                 ) : (
-                     <div className="absolute inset-0 w-full h-full">
+                     <div className="absolute inset-0 w-full h-full bg-black">
                         <Image 
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
                             layout="fill"
                             objectFit="contain"
-                            className="z-0"
+                            className="z-0 opacity-70"
                         />
-                        <div className="absolute inset-0 bg-black/70 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
-                            <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
-                                <div className="flex items-center justify-between w-full gap-4">
-                                    <span>Comprar</span>
-                                    <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold">
+                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
+                             <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center gap-1.5">
+                                        <CoinIcon />
+                                        <span>Comprar</span>
+                                    </div>
+                                    <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold ml-4">
                                         <span>R$</span>
                                         <span>{cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
                                     </div>
