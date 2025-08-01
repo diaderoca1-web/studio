@@ -152,8 +152,10 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                   requestAnimationFrame(() => animateScratch(startTime));
                 } else {
                   calculateScratchedArea();
-                  setIsRevealed(true);
-                  onReveal?.();
+                  if (!isRevealed) {
+                    setIsRevealed(true);
+                    onReveal?.();
+                  }
                   resolve();
                 }
               };
