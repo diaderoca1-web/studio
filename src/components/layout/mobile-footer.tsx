@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Ticket, CirclePlus, UserPlus, User } from "lucide-react";
+import { Home, Ticket, UserPlus, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import DepositIcon from "../icons/deposit-icon";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";

@@ -4,7 +4,7 @@ import Logo from "../icons/logo";
 
 export function Footer() {
   return (
-    <footer className="bg-card/50 border-t hidden md:block">
+    <footer className="bg-card/50 border-t">
       <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center md:items-start space-y-4">
