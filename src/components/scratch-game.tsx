@@ -188,7 +188,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
 
     return (
         <Card className="overflow-hidden relative select-none border-none shadow-2xl shadow-primary/10">
-            <CardContent className="p-0 aspect-[4/3] relative bg-black">
+            <CardContent className="p-0 aspect-[4/3] relative bg-card">
                 {isPurchased ? (
                     <>
                         <div className="absolute inset-2 grid grid-cols-3 grid-rows-3 gap-2">
@@ -218,12 +218,12 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                         />
                     </>
                 ) : (
-                     <div className="absolute inset-0 w-full h-full bg-black">
+                     <div className="absolute inset-0 w-full h-full">
                         <Image 
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
                             layout="fill"
-                            objectFit="contain"
+                            objectFit="cover"
                             className="z-0 opacity-70"
                         />
                         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
