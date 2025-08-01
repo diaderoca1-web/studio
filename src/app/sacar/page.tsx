@@ -46,17 +46,6 @@ export default function WithdrawPage() {
 
   return (
     <div className="container mx-auto max-w-lg py-8">
-      <div className="mb-8">
-          <Image
-            src="https://ik.imagekit.io/azx3nlpdu/SAQUE.jpg?updatedAt=1751798026776"
-            alt="Promotional Banner"
-            width={600}
-            height={200}
-            className="rounded-lg object-contain"
-            data-ai-hint="promo banner"
-          />
-      </div>
-
       <Card className="bg-card/70 border-none">
         <CardHeader>
           <CardTitle className="flex items-center gap-3 text-2xl">
