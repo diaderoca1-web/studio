@@ -45,6 +45,7 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
             </Button>
             <Button variant="secondary" size="icon" className="h-14 w-14">
                 <RefreshCw className="size-6" />
+                <span className="sr-only">Auto</span>
             </Button>
         </div>
 
@@ -54,13 +55,13 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
             </CardHeader>
             <CardContent className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl</kbd> + <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">R</kbd> para comprar.</p>
+                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl</kbd> para comprar.</p>
                 </div>
                  <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl</kbd> + <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">B</kbd> para revelar.</p>
+                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl</kbd> para revelar.</p>
                 </div>
                  <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Shift</kbd> + <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">B</kbd> para revelar rápido.</p>
+                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Shift</kbd> para revelar rápido.</p>
                 </div>
             </CardContent>
         </Card>

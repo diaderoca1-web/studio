@@ -102,7 +102,7 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
         ctx.font = 'bold 32px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('SCRATCH HERE', canvas.width / 2, canvas.height / 2);
+        ctx.fillText('RASPE AQUI!', canvas.width / 2, canvas.height / 2);
     }, [isPurchased]);
     
     useEffect(() => {
@@ -208,9 +208,9 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
                         />
                     </>
                 ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-background">
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black/50 p-4">
-                            <p className="flex items-center gap-1 text-sm text-muted-foreground"><Zap className="size-4" />Clique em "comprar e raspar" para iniciar o jogo</p>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-4 gap-4">
+                            
                             <div className="relative w-full max-w-xs aspect-square">
                                <Image 
                                     src={purchaseImageUrl}
@@ -219,8 +219,9 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
                                     className="object-contain"
                                />
                             </div>
+                            <p className="flex items-center gap-1 text-lg text-foreground font-semibold">Comprar por R$ {cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
                             <Button onClick={handlePurchase} size="lg" className="h-12 text-base">
-                                 <div className="flex gap-2 justify-between items-center w-full">
+                                 <div className="flex gap-2 justify-between items-center w-full px-4">
                                     <div className="flex gap-2 items-center font-bold">
                                         <CoinIcon className="size-6" />
                                         <span>Comprar</span>
