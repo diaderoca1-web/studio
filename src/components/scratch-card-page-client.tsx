@@ -105,47 +105,44 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
 
   useEffect(() => {
     if (isAutoPlaying) {
-      // Start interval
       autoPlayIntervalRef.current = setInterval(async () => {
         if (!scratchGameRef.current) return;
-
+  
         if (!deductBalance(card.cost)) {
           toast({
             title: "Saldo Insuficiente",
             description: "Autoplay parado por falta de saldo.",
             variant: "destructive",
           });
-          setIsAutoPlaying(false); // This will trigger the cleanup
+          setIsAutoPlaying(false);
           return;
         }
-
+  
         await scratchGameRef.current.purchase();
         await sleep(200);
         await scratchGameRef.current.reveal();
-        await sleep(1500); // A bit more time for user to see result
+        await sleep(1500);
         await scratchGameRef.current.reset();
-      }, 2000); // 2 seconds between plays
+      }, 2000);
     } else {
-      // Clear interval if it exists
       if (autoPlayIntervalRef.current) {
         clearInterval(autoPlayIntervalRef.current);
         autoPlayIntervalRef.current = null;
         scratchGameRef.current?.reset();
       }
     }
-
-    // Cleanup function to clear interval when component unmounts or isAutoPlaying becomes false
+  
     return () => {
       if (autoPlayIntervalRef.current) {
         clearInterval(autoPlayIntervalRef.current);
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAutoPlaying, user]);
+  }, [isAutoPlaying, card.cost, deductBalance, toast]);
 
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
+       {gameResult?.isWinner && <ReactConfetti width={windowSize.width} height={windowSize.height} />}
         <div className="py-4">
             <RecentWinners />
         </div>
@@ -272,7 +269,6 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
 
         <Dialog open={!!gameResult} onOpenChange={(isOpen) => !isOpen && resetGame()}>
             <DialogContent className="max-w-sm text-center">
-                {gameResult?.isWinner && <ReactConfetti width={windowSize.width} height={windowSize.height} />}
                 {gameResult?.isWinner ? (
                     <>
                         <DialogHeader className="space-y-4">
