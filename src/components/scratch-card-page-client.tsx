@@ -162,7 +162,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                         </DialogDescription>
                     </DialogHeader>
                     <div className="my-4 p-4 bg-secondary border border-border rounded-lg text-center">
-                        <p className="text-muted-foreground">A cada 5 amigos que se cadastrarem e jogarem, você ganha</p>
+                        <p className="text-muted-foreground">A cada 5 amigos que se cadastrarem e jogarem, <span className="text-white">você ganha</span></p>
                         <p className="text-3xl font-bold text-primary mt-1">R$10 no PIX!</p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -223,3 +223,5 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     </div>
   );
 }
+
+    
