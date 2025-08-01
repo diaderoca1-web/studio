@@ -1,4 +1,11 @@
 
+export type PrizeType = {
+  name: string;
+  value: number;
+  imageUrl: string;
+  aiHint?: string;
+};
+
 export type ScratchCardType = {
   slug: string;
   title: string;
@@ -7,6 +14,7 @@ export type ScratchCardType = {
   cost: number;
   imageUrl: string;
   aiHint: string;
+  prizes: PrizeType[];
 };
 
 export const heroBanners = [
@@ -71,6 +79,59 @@ export const recentWinners = [
     { winnerName: "Pedro D.", prizeName: "Datejust 41", prizeValue: 75400.00, imageUrl: "https://ik.imagekit.io/azx3nlpdu/banner/01K0BEQH30DBZPFNJNQP2W7V5D.png", aiHint: "watch" }
 ];
 
+const prizesCentavoDaSorte: PrizeType[] = [
+  { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
+  { name: '500 Reais', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/500-REAIS.png?updatedAt=1752856623150' },
+  { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
+  { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
+  { name: '20 Reais', value: 20.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/20%20REAIS.png?updatedAt=1752047821716' },
+  { name: '10 Reais', value: 10.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681' },
+  { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
+  { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
+  { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
+];
+
+const prizesSorteInstantanea: PrizeType[] = [
+  { name: 'Caixa de som JBL', value: 2500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_jbl_boombox_3_black.png?updatedAt=1751634894498' },
+  { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
+  { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
+  { name: 'Fone de ouvido', value: 220.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_fone_de_ouvido_bluetooth.png?updatedAt=1751634890865' },
+  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/200-REAIS.png?updatedAt=1752865094953' },
+  { name: 'Copo Stanley', value: 165.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_copo_t_rmico_stanley_preto.png?updatedAt=1751634897660' },
+  { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
+  { name: 'PowerBank', value: 60.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F5KTMSEJBQF1STFZ4BCKXM.png' },
+  { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
+  { name: 'Chinelo Havaianas', value: 35.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_chinelo_havaianas_top_branco.png?updatedAt=1751634896291' },
+  { name: '10 Reais', value: 10.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681' },
+  { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
+  { name: '3 Reais', value: 3.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/3%20REAIS.png?updatedAt=1752047821897' },
+  { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
+  { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
+];
+
+const allPrizes: PrizeType[] = [
+  { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
+  { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
+  { name: '500 Reais', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/500-REAIS.png?updatedAt=1752856623150' },
+  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/200-REAIS.png?updatedAt=1752865094953' },
+  { name: 'Smartwatch D20 Shock', value: 80.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_smartwatch_d20_shock.png?updatedAt=1751634892443' },
+  { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
+  { name: 'PowerBank', value: 70.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F5KTMSEJBQF1STFZ4BCKXM.png' },
+  { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
+  { name: '20 Reais', value: 20.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/20%20REAIS.png?updatedAt=1752047821716' },
+  { name: '15 Reais', value: 15.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/15%20REAIS.png?updatedAt=1752047821835' },
+  { name: '10 Reais', value: 10.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681' },
+  { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
+  { name: '4 Reais', value: 4.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/4%20REAIS.png?updatedAt=1752047821875' },
+  { name: '3 Reais', value: 3.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/3%20REAIS.png?updatedAt=1752047821897' },
+  { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
+  { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
+];
+
+
 export const scratchCards: ScratchCardType[] = [
   {
     slug: "centavo-da-sorte",
@@ -80,6 +141,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 0.5,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FF7ZDNXFVAFJ6R79MX2ZZ5.png",
     aiHint: "lucky coin",
+    prizes: prizesCentavoDaSorte,
   },
   {
     slug: "sorte-instantanea",
@@ -89,6 +151,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 1.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FH5P70HZV4PV88Y9KV06PA.jpg",
     aiHint: "gold rush",
+    prizes: prizesSorteInstantanea,
   },
   {
     slug: "raspadinha-suprema",
@@ -98,6 +161,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 2.5,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FJA0JE70JMW0Y30HMFCP46.jpg",
     aiHint: "treasure chest",
+    prizes: allPrizes, // using all prizes as a fallback
   },
   {
     slug: "raspa-relampago",
@@ -107,6 +171,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 5.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0F77Z6HB3SZ5C9HEH3TQ90W.jpg",
     aiHint: "lightning bolt",
+    prizes: allPrizes, // using all prizes as a fallback
   },
   {
     slug: "raspadinha-magica",
@@ -116,6 +181,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 50.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/BIKE%20,%20MAQUINA%20-%20MOTO.png?updatedAt=1752534650346",
     aiHint: "motorcycle prize",
+    prizes: allPrizes, // using all prizes as a fallback
   },
   {
     slug: "raspe-e-ganhe",
@@ -125,5 +191,6 @@ export const scratchCards: ScratchCardType[] = [
     cost: 100.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/PREMIOS%20DIVERSOS.png?updatedAt=1752534650509",
     aiHint: "diamond prize",
+    prizes: allPrizes, // using all prizes as a fallback
   },
 ];
