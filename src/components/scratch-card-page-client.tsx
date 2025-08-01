@@ -158,7 +158,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                     <DialogHeader>
                         <DialogTitle>Convidar um amigo</DialogTitle>
                         <DialogDescription>
-                            Copie o link abaixo e envie para um amigo para que ele jogue com você.
+                            Copie o link abaixo e envie para um amigo. A cada 5 amigos que se cadastrarem e jogarem, você ganha R$10 para sacar!
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex items-center space-x-2">
