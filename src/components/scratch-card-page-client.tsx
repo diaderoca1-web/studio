@@ -23,10 +23,20 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             purchaseImageUrl="https://ik.imagekit.io/azx3nlpdu/TELA%202.png?updatedAt=1751849389437"
           />
         </div>
+        <div className="hidden md:block">
+            <div className="aspect-[4/3] w-full relative overflow-hidden rounded-lg">
+                <Image 
+                    src="https://ik.imagekit.io/azx3nlpdu/PIX%20NA%20HORA!.png?updatedAt=1752535505054"
+                    alt="Pix na Hora"
+                    fill
+                    className="object-contain"
+                />
+            </div>
+        </div>
       </div>
        <div className="w-full flex justify-start mt-6">
             <div className="flex items-center gap-2 flex-wrap">
-                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => scratchGameRef.current?.purchase()}>
+                <Button className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => scratchGameRef.current?.purchase()}>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
                             <CoinIcon />
