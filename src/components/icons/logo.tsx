@@ -1,14 +1,12 @@
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 export default function Logo({ className, ...props }: { className?: string }) {
     return (
         <div className={cn("relative", className)} {...props}>
-            <Image
+            <img
                 src="https://i.ibb.co/6gZ3GAX/raspadinha-click-logo.png"
                 alt="Raspadinha.click Logo"
-                fill
-                className="object-contain"
+                className="object-contain h-full w-full"
             />
         </div>
     );
