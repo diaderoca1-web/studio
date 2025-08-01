@@ -208,29 +208,31 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
                         />
                     </>
                 ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black/50 p-4">
-                        <p className="flex items-center gap-1 text-sm text-muted-foreground"><Zap className="size-4" />Clique em "comprar e raspar" para iniciar o jogo</p>
-                        <div className="relative w-full max-w-xs aspect-square">
-                           <Image 
-                                src={purchaseImageUrl}
-                                alt="Comprar raspadinha"
-                                fill
-                                className="object-contain"
-                           />
-                        </div>
-                        <Button onClick={handlePurchase} size="lg" className="h-12 text-base">
-                             <div className="flex gap-2 justify-between items-center w-full">
-                                <div className="flex gap-2 items-center font-bold">
-                                    <CoinIcon className="size-6" />
-                                    <span>Comprar</span>
-                                </div>
-                                <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base font-bold">
-                                    <span>R$</span>
-                                    <span>{cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
-                                </div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-background">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black/50 p-4">
+                            <p className="flex items-center gap-1 text-sm text-muted-foreground"><Zap className="size-4" />Clique em "comprar e raspar" para iniciar o jogo</p>
+                            <div className="relative w-full max-w-xs aspect-square">
+                               <Image 
+                                    src={purchaseImageUrl}
+                                    alt="Comprar raspadinha"
+                                    fill
+                                    className="object-contain"
+                               />
                             </div>
-                        </Button>
-                        <p className="text-sm mt-4 text-muted-foreground">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
+                            <Button onClick={handlePurchase} size="lg" className="h-12 text-base">
+                                 <div className="flex gap-2 justify-between items-center w-full">
+                                    <div className="flex gap-2 items-center font-bold">
+                                        <CoinIcon className="size-6" />
+                                        <span>Comprar</span>
+                                    </div>
+                                    <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base font-bold">
+                                        <span>R$</span>
+                                        <span>{cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
+                                    </div>
+                                </div>
+                            </Button>
+                            <p className="text-sm mt-4 text-muted-foreground">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
+                        </div>
                     </div>
                 )}
             </CardContent>
