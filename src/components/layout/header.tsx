@@ -1,12 +1,15 @@
+
+'use client';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Logo from "../icons/logo";
 import { UserPlus } from "lucide-react";
 import { MainNav } from "./main-nav";
 import { UserNav } from "./user-nav";
+import { useAuth } from "@/contexts/auth-context";
 
 export function Header() {
-  const isLoggedIn = true; // Placeholder for authentication state
+  const { user } = useAuth();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
@@ -18,14 +21,18 @@ export function Header() {
             <MainNav />
         </div>
         <div className="flex items-center gap-2">
-            {isLoggedIn ? (
+            {user ? (
                 <UserNav />
             ) : (
                 <>
-                    <Button variant="ghost">Entrar</Button>
-                    <Button>
-                        <UserPlus className="mr-2 h-4 w-4"/>
-                        Registrar
+                    <Button variant="ghost" asChild>
+                      <Link href="/login">Entrar</Link>
+                    </Button>
+                    <Button asChild>
+                        <Link href="/register">
+                            <UserPlus className="mr-2 h-4 w-4"/>
+                            Registrar
+                        </Link>
                     </Button>
                 </>
             )}
