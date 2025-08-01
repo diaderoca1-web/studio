@@ -152,7 +152,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
         </Card>
 
         <div className="mt-12">
-            <h2 className="text-2xl font-bold mb-4">Prêmios da Raspadinha:</h2>
+            <h2 className="text-xl font-semibold mb-6">Prêmios da Raspadinha:</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {prizes.map((prize, index) => (
                     <Card key={index} className="bg-card/70 border-none flex flex-col items-center p-4 text-center">
