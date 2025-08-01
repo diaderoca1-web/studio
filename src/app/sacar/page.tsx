@@ -33,7 +33,7 @@ export default function WithdrawPage() {
     <div className="container mx-auto max-w-lg py-8">
       <div className="mb-8">
           <Image
-            src="https://ik.imagekit.io/azx3nlpdu/banner.png?updatedAt=1751798335359"
+            src="https://ik.imagekit.io/azx3nlpdu/SAQUE.jpg?updatedAt=1751798026776"
             alt="Promotional Banner"
             width={600}
             height={200}
