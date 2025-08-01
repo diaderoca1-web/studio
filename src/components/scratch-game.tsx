@@ -72,9 +72,9 @@ interface ScratchGameProps {
 }
 
 export interface ScratchGameRef {
-  purchase: () => void;
-  autoScratch: () => void;
-  reveal: () => void;
+  purchase: () => Promise<void>;
+  reveal: () => Promise<void>;
+  reset: () => Promise<void>;
 }
 
 const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl }, ref) => {
@@ -83,85 +83,83 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
     const [game, setGame] = useState(generateGrid());
     const [scratchedPercentage, setScratchedPercentage] = useState(0);
     const [isPurchased, setIsPurchased] = useState(false);
+    const [isRevealed, setIsRevealed] = useState(false);
 
     const getCtx = () => canvasRef.current?.getContext('2d');
 
-    const reveal = () => {
-        const ctx = getCtx();
-        if (ctx) {
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            calculateScratchedArea();
-        }
-    };
-
-    const handlePurchase = () => {
-        setIsPurchased(true);
-    };
-
-    useImperativeHandle(ref, () => ({
-        purchase() {
-            handlePurchase();
-        },
-        autoScratch() {
-            if(!isPurchased) {
-                handlePurchase();
-                setTimeout(() => reveal(), 100);
-            } else {
-                reveal();
-            }
-        },
-        reveal() {
-            if(isPurchased) {
-                reveal();
-            }
-        }
-    }));
-
-
-    useEffect(() => {
-        if (!isPurchased) return;
-
+    const drawScratchLayer = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = getCtx();
         if (!ctx) return;
 
-        // Set canvas dimensions
         const rect = canvas.parentElement!.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
 
-        // Fill the scratchable layer
-        ctx.fillStyle = '#a1a1aa'; // zinc-400
+        ctx.fillStyle = '#a1a1aa';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Add "Scratch Here" text
-        ctx.fillStyle = '#fafafa'; // neutral-50
+        ctx.fillStyle = '#fafafa';
         ctx.font = 'bold 32px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('RASPE AQUI!', canvas.width / 2, canvas.height / 2);
+    }
+    
+    useImperativeHandle(ref, () => ({
+        purchase: async () => {
+            if (isPurchased) return;
+            setIsPurchased(true);
+        },
+        reveal: async () => {
+            if (!isPurchased || isRevealed) return;
+            const ctx = getCtx();
+            if (ctx) {
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                calculateScratchedArea();
+            }
+             setIsRevealed(true);
+        },
+        reset: async () => {
+            setIsPurchased(false);
+            setIsRevealed(false);
+            setScratchedPercentage(0);
+            setGame(generateGrid());
+        }
+    }));
+
+
+    useEffect(() => {
+        if (isPurchased) {
+            drawScratchLayer();
+        }
     }, [isPurchased]);
     
     useEffect(() => {
-        if(scratchedPercentage > 60) {
-            reveal();
+        if(scratchedPercentage > 60 && !isRevealed) {
+            const ctx = getCtx();
+            if (ctx) {
+                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            }
+            setIsRevealed(true);
         }
-    }, [scratchedPercentage]);
+    }, [scratchedPercentage, isRevealed]);
 
 
     const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
+        if (isRevealed) return;
         setIsDrawing(true);
         draw(e);
     };
 
     const stopDrawing = () => {
+        if (isRevealed) return;
         setIsDrawing(false);
         calculateScratchedArea();
     };
 
     const draw = (e: React.MouseEvent | React.TouchEvent) => {
-        if (!isDrawing) return;
+        if (!isDrawing || isRevealed) return;
         const ctx = getCtx();
         if (!ctx) return;
 
@@ -237,7 +235,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                         />
                     </>
                 ) : (
-                     <div className="absolute inset-0 w-full h-full">
+                     <div className="absolute inset-0 w-full h-full bg-transparent">
                         <Image 
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
@@ -245,7 +243,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                             className="object-cover"
                         />
                         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
-                             <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => scratchGameRef.current?.purchase()}>
+                             <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => ref.current?.purchase()}>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-1.5">
                                         <CoinIcon />
@@ -261,7 +259,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                     </div>
                 )}
             </CardContent>
-             {scratchedPercentage > 60 && (
+             {isRevealed && (
                 <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-center text-white p-4">
                     {game.isWinner ? (
                         <>

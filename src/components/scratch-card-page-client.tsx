@@ -1,16 +1,53 @@
 
 'use client';
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, RefreshCw, WandSparkles } from "lucide-react";
+import { Zap, RefreshCw, WandSparkles, Play, Square } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export default function ScratchCardPageClient({ card }: { card: ScratchCardType }) {
   const scratchGameRef = useRef<ScratchGameRef>(null);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleAutoPlay = async () => {
+    if (!scratchGameRef.current) return;
+    
+    await scratchGameRef.current.purchase();
+    await sleep(200);
+    await scratchGameRef.current.reveal();
+    await sleep(2500);
+    await scratchGameRef.current.reset();
+  };
+
+  useEffect(() => {
+    if (isAutoPlaying) {
+      handleAutoPlay(); // Run once immediately
+      autoPlayIntervalRef.current = setInterval(handleAutoPlay, 3000);
+    } else {
+      if (autoPlayIntervalRef.current) {
+        clearInterval(autoPlayIntervalRef.current);
+      }
+    }
+
+    return () => {
+      if (autoPlayIntervalRef.current) {
+        clearInterval(autoPlayIntervalRef.current);
+      }
+    };
+  }, [isAutoPlaying]);
+
+  const handlePurchase = () => {
+      if (!isAutoPlaying) {
+          scratchGameRef.current?.purchase();
+      }
+  }
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
@@ -36,7 +73,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
       </div>
        <div className="w-full flex justify-start mt-6">
             <div className="flex items-center gap-2 flex-wrap">
-                <Button className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => scratchGameRef.current?.purchase()}>
+                <Button className="h-12" onClick={handlePurchase} disabled={isAutoPlaying}>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
                             <CoinIcon />
@@ -48,12 +85,14 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                         </div>
                     </div>
                 </Button>
-                <Button variant="secondary" size="icon" className="h-12 w-12" onClick={() => scratchGameRef.current?.reveal()}>
+                <Button variant="secondary" size="icon" className="h-12 w-12" onClick={() => scratchGameRef.current?.reveal()} disabled={isAutoPlaying}>
                     <Zap className="size-6" />
                 </Button>
-                <Button variant="secondary" className="h-12 px-4" onClick={() => scratchGameRef.current?.reveal()}>
-                    <RefreshCw className="size-6" />
-                    <span className="text-sm font-bold ml-2">Auto</span>
+                <Button variant="secondary" className="h-12 px-4" onClick={() => setIsAutoPlaying(prev => !prev)}>
+                    {isAutoPlaying ? <Square className="size-6" /> : <Play className="size-6" />}
+                    <span className="text-sm font-bold ml-2">
+                         {isAutoPlaying ? 'Parar' : 'Auto'}
+                    </span>
                 </Button>
             </div>
         </div>
