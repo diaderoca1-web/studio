@@ -19,9 +19,45 @@ const users: User[] = [
         email: 'admin@raspagreen.com',
         phone: '00000000000',
         balance: 1000,
-    }
+    },
+    { id: '1', name: 'John Doe', email: 'john.doe@example.com', phone: '1234567890', balance: 50 },
+    { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '0987654321', balance: 75 },
 ];
-let userIdCounter = 1;
+let userIdCounter = users.length;
+
+
+/**
+ * Fetches all users.
+ * @returns A promise that resolves to an array of all users.
+ */
+export const getAllUsers = async (): Promise<User[]> => {
+    console.log("Fetching all users from mock service.");
+    await new Promise(resolve => setTimeout(resolve, 200)); // Simulate delay
+    return [...users];
+};
+
+/**
+ * Updates a user's data. In this mock, we only update the balance.
+ * @param updatedData - An object containing the user ID and the fields to update.
+ * @returns A promise that resolves to true if successful, false otherwise.
+ */
+export const updateUser = async (updatedData: Partial<User> & { id: string }): Promise<boolean> => {
+    console.log(`Updating user ${updatedData.id} with`, updatedData);
+    await new Promise(resolve => setTimeout(resolve, 200));
+    const userIndex = users.findIndex(u => u.id === updatedData.id);
+    if (userIndex !== -1) {
+        if (updatedData.balance !== undefined) {
+            const currentBalance = users[userIndex].balance || 0;
+            // This logic assumes the 'balance' in updatedData is the amount to ADD.
+            users[userIndex].balance = currentBalance + updatedData.balance;
+        }
+        console.log("User updated:", users[userIndex]);
+        return true;
+    }
+    console.log("Update failed: User not found.");
+    return false;
+};
+
 
 /**
  * Logs a user in.

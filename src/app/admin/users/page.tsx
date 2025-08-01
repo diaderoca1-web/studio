@@ -4,20 +4,14 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { User } from '@/services/auth-service';
+import { User, getAllUsers } from '@/services/auth-service';
 import { Edit, Trash2, PlusCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-
-// This is a mock since we can't import server-side vars directly
-const mockUsers: User[] = [
-    { id: '0', name: 'Admin', email: 'admin@raspagreen.com', phone: '00000000000' },
-    { id: '1', name: 'John Doe', email: 'john.doe@example.com', phone: '1234567890' },
-    { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '0987654321' },
-];
+import { useAuth } from '@/contexts/auth-context';
 
 
 export default function UsersPage() {
@@ -27,11 +21,16 @@ export default function UsersPage() {
     const [creditType, setCreditType] = useState('real');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { toast } = useToast();
+    const { addBalance, updateUserInContext, user: loggedInUser } = useAuth();
+
+
+    const fetchUsers = async () => {
+        const userList = await getAllUsers();
+        setUsers(userList);
+    };
 
     useEffect(() => {
-        // In a real app, you would fetch users from your API
-        // For now, we use a mock list
-        setUsers(mockUsers);
+        fetchUsers();
     }, []);
 
     const handleAddCredit = (user: User) => {
@@ -41,15 +40,38 @@ export default function UsersPage() {
         setIsDialogOpen(true);
     };
 
-    const handleConfirmAddCredit = () => {
+    const handleConfirmAddCredit = async () => {
         if (!selectedUser || !creditAmount) return;
+
+        const amount = parseFloat(creditAmount.replace(',', '.'));
+        if (isNaN(amount) || amount <= 0) {
+            toast({ title: "Erro", description: "Por favor, insira um valor válido.", variant: "destructive" });
+            return;
+        }
         
-        const typeLabel = creditType === 'real' ? 'Saldo Real' : 'Saldo de Bônus';
-        console.log(`Adding R$ ${creditAmount} of ${typeLabel} to user ${selectedUser.name}`);
-        toast({
-            title: 'Crédito Adicionado!',
-            description: `R$ ${creditAmount} de ${typeLabel} foram adicionados para ${selectedUser.name}.`,
-        });
+        const success = await addBalance(selectedUser.id, amount);
+        
+        if (success) {
+            const typeLabel = creditType === 'real' ? 'Saldo Real' : 'Saldo de Bônus';
+            toast({
+                title: 'Crédito Adicionado!',
+                description: `R$ ${amount.toFixed(2)} de ${typeLabel} foram adicionados para ${selectedUser.name}.`,
+            });
+            // Re-fetch users to show updated balance, though it's client-side only
+            fetchUsers();
+            if (loggedInUser && loggedInUser.id === selectedUser.id) {
+                const newBalance = (loggedInUser.balance || 0) + amount;
+                updateUserInContext({ ...loggedInUser, balance: newBalance });
+            }
+
+        } else {
+             toast({
+                title: "Erro",
+                description: "Não foi possível adicionar o crédito.",
+                variant: "destructive",
+            });
+        }
+
 
         // Reset state
         setCreditAmount('');
@@ -73,6 +95,7 @@ export default function UsersPage() {
                                 <TableHead>Nome</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Telefone</TableHead>
+                                <TableHead>Saldo</TableHead>
                                 <TableHead className="text-right">Ações</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -82,6 +105,7 @@ export default function UsersPage() {
                                     <TableCell className="font-medium">{user.name}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.phone}</TableCell>
+                                    <TableCell>R$ {(user.balance || 0).toFixed(2)}</TableCell>
                                     <TableCell className="text-right">
                                         <Button variant="ghost" size="icon" onClick={() => handleAddCredit(user)}>
                                             <PlusCircle className="h-4 w-4 text-primary" />

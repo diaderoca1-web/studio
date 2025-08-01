@@ -2,7 +2,7 @@
 'use client';
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { User, login as apiLogin, register as apiRegister, logout as apiLogout } from '@/services/auth-service';
+import { User, login as apiLogin, register as apiRegister, logout as apiLogout, updateUser as apiUpdateUser } from '@/services/auth-service';
 
 interface AuthContextType {
   user: User | null;
@@ -11,6 +11,8 @@ interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
   deductBalance: (amount: number) => boolean;
+  addBalance: (userId: string, amount: number) => Promise<boolean>;
+  updateUserInContext: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,16 +29,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
+  const updateUserInContext = (updatedUser: User) => {
+    setUser(updatedUser);
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
+
   const login = async (credentials: { email: string; pass: string }) => {
     const loggedInUser = await apiLogin(credentials.email, credentials.pass);
-    setUser(loggedInUser);
-    localStorage.setItem('user', JSON.stringify(loggedInUser));
+    updateUserInContext(loggedInUser);
   };
 
   const register = async (credentials: { name: string, email: string; phone: string; pass: string }) => {
     const newUser = await apiRegister(credentials.name, credentials.email, credentials.phone, credentials.pass);
-    setUser(newUser);
-    localStorage.setItem('user', JSON.stringify(newUser));
+    updateUserInContext(newUser);
   };
 
   const logout = () => {
@@ -48,15 +53,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const deductBalance = (amount: number): boolean => {
     if (user && user.balance !== undefined && user.balance >= amount) {
         const updatedUser = { ...user, balance: user.balance - amount };
-        setUser(updatedUser);
-        localStorage.setItem('user', JSON.stringify(updatedUser));
+        apiUpdateUser(updatedUser); // Update mock DB
+        updateUserInContext(updatedUser);
         return true;
     }
     return false;
   };
 
+  const addBalance = async (userId: string, amount: number): Promise<boolean> => {
+    const success = await apiUpdateUser({ id: userId, balance: amount });
+    if (success) {
+      // If the updated user is the currently logged-in user, update their context
+      if (user && user.id === userId) {
+        const updatedUser = { ...user, balance: (user.balance || 0) + amount };
+        updateUserInContext(updatedUser);
+      }
+      return true;
+    }
+    return false;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, isLoading, deductBalance }}>
+    <AuthContext.Provider value={{ user, login, register, logout, isLoading, deductBalance, addBalance, updateUserInContext }}>
       {children}
     </AuthContext.Provider>
   );
