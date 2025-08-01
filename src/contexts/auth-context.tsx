@@ -11,7 +11,7 @@ interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
   deductBalance: (amount: number) => boolean;
-  addBalance: (userId: string, amount: number) => Promise<boolean>;
+  addBalance: (amount: number) => boolean;
   updateUserInContext: (user: User) => void;
 }
 
@@ -59,19 +59,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     return false;
   };
-
-  const addBalance = async (userId: string, amount: number): Promise<boolean> => {
-    const success = await apiUpdateUser({ id: userId, balance: amount });
-    if (success) {
-      // If the updated user is the currently logged-in user, update their context
-      if (user && user.id === userId) {
+  
+  const addBalance = (amount: number): boolean => {
+    if (user) {
         const updatedUser = { ...user, balance: (user.balance || 0) + amount };
+        apiUpdateUser(updatedUser); // Update mock DB
         updateUserInContext(updatedUser);
-      }
-      return true;
+        return true;
     }
     return false;
-  }
+  };
 
   return (
     <AuthContext.Provider value={{ user, login, register, logout, isLoading, deductBalance, addBalance, updateUserInContext }}>

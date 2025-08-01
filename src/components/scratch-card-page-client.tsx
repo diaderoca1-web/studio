@@ -24,7 +24,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   const [inviteLink, setInviteLink] = useState("");
   const [hasCopied, setHasCopied] = useState(false);
   const { toast } = useToast();
-  const { deductBalance } = useAuth();
+  const { deductBalance, addBalance } = useAuth();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -61,6 +61,22 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
         });
     }
   }
+
+  const handleReveal = (result: { isWinner: boolean; prizeValue: number }) => {
+    if (result.isWinner) {
+        addBalance(result.prizeValue);
+        toast({
+            title: "Você Ganhou!",
+            description: `R$ ${result.prizeValue.toFixed(2)} foi adicionado ao seu saldo.`,
+        });
+    }
+
+    if (!isAutoPlaying) {
+        setTimeout(() => {
+            scratchGameRef.current?.reset();
+        }, 4000);
+    }
+  };
 
   const handleAutoPlay = async () => {
     if (!scratchGameRef.current) return;
@@ -127,13 +143,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             cost={card.cost}
             purchaseImageUrl="https://ik.imagekit.io/azx3nlpdu/TELA%202.png?updatedAt=1751849389437"
             onPurchaseRequest={handlePurchase}
-            onReveal={() => {
-                if (!isAutoPlaying) {
-                    setTimeout(() => {
-                        scratchGameRef.current?.reset();
-                    }, 4000);
-                }
-            }}
+            onReveal={handleReveal}
           />
         </div>
         <div className="hidden md:block">

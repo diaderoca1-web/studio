@@ -32,8 +32,15 @@ const shuffle = (array: any[]) => {
     return array;
 };
 
+type GameResult = {
+    grid: { type: string }[];
+    winningSymbol: string | null;
+    isWinner: boolean;
+    prizeValue: number;
+};
+
 // Generate a grid for the game
-const generateGrid = () => {
+const generateGrid = (): GameResult => {
     const winningPrize = prizes[Math.floor(Math.random() * prizes.length)];
     const isWinner = Math.random() > 0.5; // 50% chance to win
 
@@ -70,7 +77,7 @@ interface ScratchGameProps {
     cost: number;
     purchaseImageUrl: string;
     onPurchaseRequest: () => void;
-    onReveal?: () => void;
+    onReveal?: (result: { isWinner: boolean; prizeValue: number }) => void;
     onReset?: () => void;
 }
 
@@ -83,7 +90,7 @@ export interface ScratchGameRef {
 const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl, onPurchaseRequest, onReveal, onReset }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
-    const [game, setGame] = useState(generateGrid());
+    const [game, setGame] = useState<GameResult>(generateGrid());
     const [scratchedPercentage, setScratchedPercentage] = useState(0);
     const [isPurchased, setIsPurchased] = useState(false);
     const [isRevealed, setIsRevealed] = useState(false);
@@ -155,7 +162,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                   calculateScratchedArea();
                   if (!isRevealed) {
                     setIsRevealed(true);
-                    onReveal?.();
+                    onReveal?.({ isWinner: game.isWinner, prizeValue: game.prizeValue });
                   }
                   resolve();
                 }
@@ -187,9 +194,9 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                 ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             }
             setIsRevealed(true);
-            onReveal?.();
+            onReveal?.({ isWinner: game.isWinner, prizeValue: game.prizeValue });
         }
-    }, [scratchedPercentage, isRevealed, onReveal]);
+    }, [scratchedPercentage, isRevealed, onReveal, game.isWinner, game.prizeValue]);
 
 
     const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
