@@ -111,15 +111,53 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
             if (isPurchased) return;
             setIsPurchased(true);
         },
-        reveal: async () => {
-            if (!isPurchased || isRevealed) return;
-            const ctx = getCtx();
-            if (ctx) {
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-                calculateScratchedArea();
-            }
-             setIsRevealed(true);
-        },
+        reveal: () => {
+            return new Promise<void>((resolve) => {
+              if (!isPurchased || isRevealed) {
+                resolve();
+                return;
+              }
+      
+              const canvas = canvasRef.current;
+              const ctx = getCtx();
+              if (!canvas || !ctx) {
+                resolve();
+                return;
+              }
+      
+              const width = canvas.width;
+              const height = canvas.height;
+              let progress = 0;
+              const duration = 500; 
+      
+              const animateScratch = (startTime: number) => {
+                const currentTime = Date.now();
+                const elapsedTime = currentTime - startTime;
+                progress = Math.min(elapsedTime / duration, 1);
+      
+                ctx.globalCompositeOperation = 'destination-out';
+                const diagonalLength = Math.sqrt(width * width + height * height);
+                const radius = (diagonalLength / 2) * progress;
+      
+                const centerX = width / 2;
+                const centerY = height / 2;
+      
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
+                ctx.fill();
+      
+                if (progress < 1) {
+                  requestAnimationFrame(() => animateScratch(startTime));
+                } else {
+                  calculateScratchedArea();
+                  setIsRevealed(true);
+                  resolve();
+                }
+              };
+      
+              requestAnimationFrame(() => animateScratch(Date.now()));
+            });
+          },
         reset: async () => {
             setIsPurchased(false);
             setIsRevealed(false);
@@ -242,8 +280,11 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                             fill
                             className="object-cover"
                         />
-                        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
-                             <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => ref.current?.purchase()}>
+                         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4">
+                            <Button 
+                                className="h-12"
+                                onClick={() => ref.current?.purchase()}
+                            >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-1.5">
                                         <CoinIcon />
