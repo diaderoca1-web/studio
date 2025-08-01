@@ -56,8 +56,29 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
     
     // Generate a grid for the game
     const generateGrid = (): GameResult => {
+        // Handle case where there are no prizes defined for the card
         if (!prizes || prizes.length === 0) {
-            return { grid: [], winningSymbol: null, isWinner: false, prizeValue: 0, prizeName: null, prizeImageUrl: null };
+            // Generate a generic losing grid
+             const genericPrizes: PrizeType[] = [
+                { name: 'Cherry', value: 0, imageUrl: 'https://placehold.co/100x100/FF0000/FFFFFF.png?text=🍒' },
+                { name: 'Lemon', value: 0, imageUrl: 'https://placehold.co/100x100/FFFF00/000000.png?text=🍋' },
+                { name: 'Orange', value: 0, imageUrl: 'https://placehold.co/100x100/FFA500/FFFFFF.png?text=🍊' },
+                { name: 'Grape', value: 0, imageUrl: 'https://placehold.co/100x100/800080/FFFFFF.png?text=🍇' },
+                { name: 'Bell', value: 0, imageUrl: 'https://placehold.co/100x100/FFD700/000000.png?text=🔔' },
+            ];
+             let grid: { name: string; imageUrl: string }[] = [];
+            const shuffledGenericPrizes = shuffle([...genericPrizes]);
+            for (let i = 0; i < 4; i++) {
+                const prize = shuffledGenericPrizes[i];
+                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
+                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
+            }
+            const lastPrize = shuffledGenericPrizes[4];
+            grid.push({ name: lastPrize.name, imageUrl: lastPrize.imageUrl });
+            
+            return {
+                grid: shuffle(grid), winningSymbol: null, isWinner: false, prizeValue: 0, prizeName: null, prizeImageUrl: null
+            };
         }
         
         const isWinner = Math.random() > 0.5; // 50% chance to win. This can be tied to admin settings later.
@@ -70,25 +91,27 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
 
             // Get other symbols, ensuring we don't accidentally create another winning set.
             const otherSymbols = prizes.filter(p => p.name !== winningPrize.name);
-            let remainingSlots = 6;
-            
-            // This is a more robust way to fill the remaining slots without accidental wins.
-            const fillerSymbols: { name: string; imageUrl: string }[] = [];
+            if (otherSymbols.length < 2) {
+                // Not enough variety for a losing portion, create a losing grid instead
+                 return generateLosingGrid();
+            }
+
+            let fillerSymbols: { name: string; imageUrl: string }[] = [];
             let symbolIndex = 0;
-            while(fillerSymbols.length < remainingSlots) {
+            while (fillerSymbols.length < 6) {
+                // Ensure we have at least two other symbols to pick from
                 const symbol1 = otherSymbols[symbolIndex % otherSymbols.length];
                 const symbol2 = otherSymbols[(symbolIndex + 1) % otherSymbols.length];
-
-                if(fillerSymbols.length + 2 <= remainingSlots) {
-                    fillerSymbols.push({name: symbol1.name, imageUrl: symbol1.imageUrl});
+                
+                fillerSymbols.push({name: symbol1.name, imageUrl: symbol1.imageUrl});
+                // to avoid pushing a 3rd of the same, make sure the filler isn't all the same
+                if(fillerSymbols.length < 6) {
                     fillerSymbols.push({name: symbol2.name, imageUrl: symbol2.imageUrl});
-                } else {
-                    fillerSymbols.push({name: symbol1.name, imageUrl: symbol1.imageUrl});
                 }
                 symbolIndex += 2;
             }
-            
-            grid.push(...fillerSymbols);
+
+            grid.push(...fillerSymbols.slice(0, 6));
 
             return {
                 grid: shuffle(grid),
@@ -99,30 +122,44 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                 prizeImageUrl: winningPrize.imageUrl
             };
         } else {
-            // Create a losing grid where no symbol appears more than twice.
-            let grid: { name: string; imageUrl: string }[] = [];
-            const shuffledPrizes = shuffle([...prizes]);
-            
-            // Add two of the first four unique prizes
-            for(let i = 0; i < 4; i++) {
-                const prize = shuffledPrizes[i % shuffledPrizes.length];
-                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
-                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
-            }
-            // Add one of a fifth unique prize
-            const lastPrize = shuffledPrizes[4 % shuffledPrizes.length];
-            grid.push({ name: lastPrize.name, imageUrl: lastPrize.imageUrl });
-            
-            return {
-                grid: shuffle(grid), 
-                winningSymbol: null, 
-                isWinner: false, 
-                prizeValue: 0,
-                prizeName: null,
-                prizeImageUrl: null,
-            };
+             return generateLosingGrid();
         }
     };
+    
+    const generateLosingGrid = () => {
+         // Create a losing grid where no symbol appears more than twice.
+        let grid: { name: string; imageUrl: string }[] = [];
+        const shuffledPrizes = shuffle([...prizes]);
+        
+        if (shuffledPrizes.length < 5) {
+             // Fallback for very few prize types
+            let tempGrid: { name: string; imageUrl: string }[] = [];
+            for (let i = 0; i < 9; i++) {
+                const prize = shuffledPrizes[i % shuffledPrizes.length];
+                tempGrid.push({ name: prize.name, imageUrl: prize.imageUrl });
+            }
+            return { grid: tempGrid, winningSymbol: null, isWinner: false, prizeValue: 0, prizeName: null, prizeImageUrl: null };
+        }
+
+        // Add two of the first four unique prizes
+        for(let i = 0; i < 4; i++) {
+            const prize = shuffledPrizes[i];
+            grid.push({ name: prize.name, imageUrl: prize.imageUrl });
+            grid.push({ name: prize.name, imageUrl: prize.imageUrl });
+        }
+        // Add one of a fifth unique prize
+        const lastPrize = shuffledPrizes[4];
+        grid.push({ name: lastPrize.name, imageUrl: lastPrize.imageUrl });
+        
+        return {
+            grid: shuffle(grid), 
+            winningSymbol: null, 
+            isWinner: false, 
+            prizeValue: 0,
+            prizeName: null,
+            prizeImageUrl: null,
+        };
+    }
     
     const getCtx = () => canvasRef.current?.getContext('2d');
 
