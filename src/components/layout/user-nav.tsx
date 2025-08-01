@@ -61,10 +61,8 @@ export function UserNav() {
 
       <Sheet>
         <SheetTrigger asChild>
-            <Button asChild variant="primary" size="icon" className="bg-lime-400 hover:bg-lime-500 text-black">
-                <Link href="/depositar">
-                    <DepositIcon className="h-6 w-6"/>
-                </Link>
+            <Button size="icon" className="bg-lime-400 hover:bg-lime-500 text-black">
+                <DepositIcon className="h-6 w-6"/>
             </Button>
         </SheetTrigger>
         <SheetContent side="bottom" className="p-0 bg-card/95 backdrop-blur-sm border-t border-primary/20">
