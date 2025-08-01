@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Play, Square, WandSparkles, Users, Copy, Check, PartyPopper } from "lucide-react";
+import { Zap, Play, Square, WandSparkles, Users, Copy, Check } from "lucide-react";
 import ScratchGame, { ScratchGameRef, GameResult } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/auth-context";
+import ReactConfetti from "react-confetti";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -26,10 +27,20 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   const { toast } = useToast();
   const { user, deductBalance, addBalance } = useAuth();
   const [gameResult, setGameResult] = useState<GameResult | null>(null);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setInviteLink(`${window.location.origin}/lobby/${card.slug}?gameId=${Math.random().toString(36).substring(7)}`);
+      
+      const handleResize = () => {
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      };
+      
+      window.addEventListener('resize', handleResize);
+      handleResize(); // Set initial size
+      
+      return () => window.removeEventListener('resize', handleResize);
     }
   }, [card.slug]);
 
@@ -261,6 +272,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
 
         <Dialog open={!!gameResult} onOpenChange={(isOpen) => !isOpen && resetGame()}>
             <DialogContent className="max-w-sm text-center">
+                {gameResult?.isWinner && <ReactConfetti width={windowSize.width} height={windowSize.height} />}
                 {gameResult?.isWinner ? (
                     <>
                         <DialogHeader className="space-y-4">
