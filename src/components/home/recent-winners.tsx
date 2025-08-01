@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -36,13 +37,15 @@ export default function RecentWinners() {
                <Card className="bg-secondary border-none">
                 <CardContent className="p-2 flex items-center gap-3">
                   <div className="relative size-10 flex-shrink-0">
-                    <Image
-                      src={winner.imageUrl}
-                      alt={winner.prizeName}
-                      fill
-                      className="object-contain"
-                      data-ai-hint={winner.aiHint}
-                    />
+                    {winner.imageUrl && (
+                      <Image
+                        src={winner.imageUrl}
+                        alt={winner.prizeName}
+                        fill
+                        className="object-contain"
+                        data-ai-hint={winner.aiHint}
+                      />
+                    )}
                   </div>
                   <div className="flex flex-col text-xs overflow-hidden">
                     <span className="font-medium text-amber-400/95 overflow-hidden text-nowrap text-ellipsis">
