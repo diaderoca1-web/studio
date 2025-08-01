@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Header } from '@/components/layout/header';
 import { Toaster } from "@/components/ui/toaster"
 import { Footer } from '@/components/layout/footer';
+import { MobileFooter } from '@/components/layout/mobile-footer';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -26,11 +27,12 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <div className="relative flex min-h-screen flex-col">
+        <div className="relative flex min-h-screen flex-col pb-20 md:pb-0">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+        <MobileFooter />
         <Toaster />
       </body>
     </html>

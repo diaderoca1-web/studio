@@ -14,7 +14,9 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2">
           <Logo className="h-10 w-auto" />
         </Link>
-        <MainNav />
+        <div className="hidden md:flex flex-1 justify-center">
+            <MainNav />
+        </div>
         <div className="flex items-center gap-2">
             {isLoggedIn ? (
                 <UserNav />
