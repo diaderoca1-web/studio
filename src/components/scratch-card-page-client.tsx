@@ -157,10 +157,14 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
                         <DialogTitle>Desafie um Amigo e Ganhe!</DialogTitle>
-                        <DialogDescription>
-                            Envie o link para seus amigos. A cada 5 que se cadastrarem e jogarem, você ganha <span className="font-bold text-primary text-lg">R$10 no PIX!</span>
+                         <DialogDescription>
+                           Envie o link para seus amigos e chame-os para a diversão!
                         </DialogDescription>
                     </DialogHeader>
+                    <div className="my-4 p-4 bg-primary/10 border border-primary/20 rounded-lg text-center">
+                        <p className="text-muted-foreground">A cada 5 amigos que se cadastrarem e jogarem, você ganha</p>
+                        <p className="text-3xl font-bold text-primary">R$10 no PIX!</p>
+                    </div>
                     <div className="flex items-center space-x-2">
                         <div className="grid flex-1 gap-2">
                             <Label htmlFor="link" className="sr-only">
