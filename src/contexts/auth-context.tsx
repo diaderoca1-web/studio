@@ -6,8 +6,8 @@ import { User, login as apiLogin, register as apiRegister, logout as apiLogout }
 
 interface AuthContextType {
   user: User | null;
-  login: (credentials: { email: string; pass: string }) => Promise<void>;
-  register: (credentials: { name: string, email: string; pass: string }) => Promise<void>;
+  login: (credentials: { phone: string; pass: string }) => Promise<void>;
+  register: (credentials: { name: string, phone: string; pass: string }) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
 }
@@ -28,14 +28,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const login = async (credentials: { email: string; pass: string }) => {
-    const loggedInUser = await apiLogin(credentials.email, credentials.pass);
+  const login = async (credentials: { phone: string; pass: string }) => {
+    const loggedInUser = await apiLogin(credentials.phone, credentials.pass);
     setUser(loggedInUser);
     localStorage.setItem('user', JSON.stringify(loggedInUser));
   };
 
-  const register = async (credentials: { name: string, email: string; pass: string }) => {
-    const newUser = await apiRegister(credentials.name, credentials.email, credentials.pass);
+  const register = async (credentials: { name: string, phone: string; pass: string }) => {
+    const newUser = await apiRegister(credentials.name, credentials.phone, credentials.pass);
     setUser(newUser);
     localStorage.setItem('user', JSON.stringify(newUser));
   };

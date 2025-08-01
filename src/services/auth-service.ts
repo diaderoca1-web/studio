@@ -6,7 +6,8 @@
 export interface User {
   id: string;
   name: string;
-  email: string;
+  phone: string;
+  email: string | null; // Email can be optional now
 }
 
 // Mock database of users
@@ -16,23 +17,17 @@ let userIdCounter = 1;
 /**
  * Logs a user in.
  * In a real app, this would make an API call to your backend.
- * @param email - The user's email.
+ * @param phone - The user's phone number.
  * @param pass - The user's password.
  * @returns A promise that resolves to the logged-in user.
  */
-export const login = async (email: string, pass: string): Promise<User> => {
-  console.log(`Attempting to log in with email: ${email}`);
+export const login = async (phone: string, pass: string): Promise<User> => {
+  console.log(`Attempting to log in with phone: ${phone}`);
   
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
 
-  // In a real app, you'd find the user and verify the password.
-  // For this mock, we'll just return a dummy user if the email is not "fail@test.com".
-  if (email.toLowerCase() === 'fail@test.com') {
-    throw new Error("Invalid email or password.");
-  }
-
-  const existingUser = users.find(u => u.email === email);
+  const existingUser = users.find(u => u.phone === phone);
 
   if (existingUser) {
       return existingUser;
@@ -42,7 +37,8 @@ export const login = async (email: string, pass: string): Promise<User> => {
   const mockUser: User = {
     id: '1',
     name: 'Mock User',
-    email: email,
+    phone: phone,
+    email: `${phone}@example.com`,
   };
   
   console.log("Login successful", mockUser);
@@ -53,24 +49,25 @@ export const login = async (email: string, pass: string): Promise<User> => {
  * Registers a new user.
  * In a real app, this would make an API call to your backend.
  * @param name - The user's name.
- * @param email - The user's email.
+ * @param phone - The user's phone number.
  * @param pass - The user's password.
  * @returns A promise that resolves to the newly registered user.
  */
-export const register = async (name: string, email: string, pass: string): Promise<User> => {
-  console.log(`Attempting to register new user with email: ${email}`);
+export const register = async (name: string, phone: string, pass: string): Promise<User> => {
+  console.log(`Attempting to register new user with phone: ${phone}`);
 
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
 
-  if (users.find(u => u.email === email)) {
-      throw new Error("User with this email already exists.");
+  if (users.find(u => u.phone === phone)) {
+      throw new Error("User with this phone number already exists.");
   }
 
   const newUser: User = {
     id: (userIdCounter++).toString(),
     name,
-    email,
+    phone,
+    email: null,
   };
 
   users.push(newUser);
