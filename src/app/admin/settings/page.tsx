@@ -20,6 +20,10 @@ export default function SettingsPage() {
   const [dbDatabaseUrl, setDbDatabaseUrl] = useState("");
   const [analyticsApiKey, setAnalyticsApiKey] = useState("");
   const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const [supabaseUrl, setSupabaseUrl] = useState("");
+  const [supabaseAnonKey, setSupabaseAnonKey] = useState("");
+  const [googleClientId, setGoogleClientId] = useState("");
+  const [googleClientSecret, setGoogleClientSecret] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +38,10 @@ export default function SettingsPage() {
       dbDatabaseUrl,
       analyticsApiKey,
       maintenanceMode,
+      supabaseUrl,
+      supabaseAnonKey,
+      googleClientId,
+      googleClientSecret,
     };
     console.log("Saving settings:", settings);
     alert("Configurações salvas! Verifique o console do navegador.");
@@ -117,6 +125,44 @@ export default function SettingsPage() {
                     <Input id="payment-secret-key" type="password" placeholder="sk_live_..." value={paymentSecretKey} onChange={(e) => setPaymentSecretKey(e.target.value)} />
                 </div>
             </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Supabase</CardTitle>
+            <CardDescription>
+              Configure a integração com o Supabase.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="supabase-url">Supabase URL</Label>
+              <Input id="supabase-url" placeholder="https://<YOUR_PROJECT_ID>.supabase.co" value={supabaseUrl} onChange={(e) => setSupabaseUrl(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="supabase-anon-key">Supabase Anon Key</Label>
+              <Input id="supabase-anon-key" type="password" placeholder="eyJhbGciOi..." value={supabaseAnonKey} onChange={(e) => setSupabaseAnonKey(e.target.value)} />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Google Login</CardTitle>
+            <CardDescription>
+              Configure as credenciais do Google para login social.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="google-client-id">Google Client ID</Label>
+              <Input id="google-client-id" placeholder="<YOUR_CLIENT_ID>.apps.googleusercontent.com" value={googleClientId} onChange={(e) => setGoogleClientId(e.target.value)} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="google-client-secret">Google Client Secret</Label>
+              <Input id="google-client-secret" type="password" placeholder="GOCSPX-..." value={googleClientSecret} onChange={(e) => setGoogleClientSecret(e.target.value)} />
+            </div>
+          </CardContent>
         </Card>
 
         <Card>
