@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { LayoutDashboard, CreditCard, Users, Settings } from 'lucide-react'
+import { LayoutDashboard, CreditCard, Users, Settings, Landmark } from 'lucide-react'
 
 export function AdminSidebar() {
   const pathname = usePathname()
@@ -14,6 +14,7 @@ export function AdminSidebar() {
     { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/scratchcards', label: 'Raspadinhas', icon: CreditCard },
     { href: '/admin/users', label: 'Usuários', icon: Users },
+    { href: '/admin/withdrawals', label: 'Saques', icon: Landmark },
     { href: '/admin/settings', label: 'Configurações', icon: Settings },
   ]
 
