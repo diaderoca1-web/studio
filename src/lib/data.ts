@@ -116,28 +116,8 @@ const prizesSorteInstantanea: PrizeType[] = [
   { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
 ];
 
-const allPrizes: PrizeType[] = [
-  { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
-  { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
-  { name: '500 Reais', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/500-REAIS.png?updatedAt=1752856623150' },
-  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/200-REAIS.png?updatedAt=1752865094953' },
-  { name: 'Smartwatch D20 Shock', value: 80.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_smartwatch_d20_shock.png?updatedAt=1751634892443' },
-  { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
-  { name: 'PowerBank', value: 70.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F5KTMSEJBQF1STFZ4BCKXM.png' },
-  { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
-  { name: '20 Reais', value: 20.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/20%20REAIS.png?updatedAt=1752047821716' },
-  { name: '15 Reais', value: 15.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/15%20REAIS.png?updatedAt=1752047821835' },
-  { name: '10 Reais', value: 10.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681' },
-  { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
-  { name: '4 Reais', value: 4.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/4%20REAIS.png?updatedAt=1752047821875' },
-  { name: '3 Reais', value: 3.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/3%20REAIS.png?updatedAt=1752047821897' },
-  { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
-  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
-  { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
-];
-
 const prizesRaspadinhaSuprema: PrizeType[] = [
-  { name: '5.000 Reais', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752731172984' },
+  { name: '5.000 Reais', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/5K.png?updatedAt=1752731172984' },
   { name: 'iPhone 15', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_iphone_15_azul.png?updatedAt=1751634894131' },
   { name: 'Notebook Dell G15', value: 4500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_notebook_g15.png?updatedAt=1751634891010' },
   { name: 'PlayStation 5', value: 4500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_playstation_5.png?updatedAt=1751634892317' },
@@ -161,6 +141,46 @@ const prizesRaspadinhaSuprema: PrizeType[] = [
   { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
   { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
 ];
+
+const prizesRaspaRelampago: PrizeType[] = [
+  { name: 'Churrasqueira a gás', value: 15000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_churrasqueira_a_g_s_versia_gourmand.png?updatedAt=1751634896402' },
+  { name: 'Moto Honda Biz', value: 13000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_biz_110i_vermelho.png?updatedAt=1751634892737' },
+  { name: 'Moto Honda Pop', value: 11500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_pop_110i_branco.png?updatedAt=1751634894490' },
+  { name: 'iPhone 15 Pro', value: 11000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_iphone_15_pro_256_gb_tit_nio_natural.png?updatedAt=1751634894188' },
+  { name: '10.000 Reais', value: 10000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/5.png?updatedAt=1752731173073' },
+  { name: 'Apple Watch Ultra', value: 9000.00, imageUrl: 'https://placehold.co/100x100/grey/white?text=Watch' }, // Placeholder
+  { name: 'Geladeira Frost Free', value: 7500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_geladeira_frost_free.png?updatedAt=1751634890810' },
+  { name: 'Galaxy Z Flip5', value: 6000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_galaxy_z_flip5_256_gb_creme.png?updatedAt=1751634892797' },
+  { name: '5.000 Reais', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/5K.png?updatedAt=1752731172984' },
+  { name: 'Xbox Series X', value: 4500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_xbox_series_x.png?updatedAt=1751634892410' },
+  { name: 'PlayStation 5', value: 4500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_playstation_5.png?updatedAt=1751634892317' },
+  { name: 'Lava-louças', value: 4000.00, imageUrl: 'https://placehold.co/100x100/grey/white?text=Dishwasher' }, // Placeholder
+  { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
+  { name: '500 Reais', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/500-REAIS.png?updatedAt=1752856623150' },
+  { name: 'Controle Xbox', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_controle_xbox_eletric_volt.png?updatedAt=1751634897634' },
+  { name: 'Controle DualSense', value: 470.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_controle_dualsense_playstation_midnight_black.png?updatedAt=1751634897303' },
+  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/200-REAIS.png?updatedAt=1752865094953' },
+  { name: 'Fone de ouvido', value: 170.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_fone_de_ouvido_bluetooth.png?updatedAt=1751634890865' },
+  { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
+  { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
+  { name: '15 Reais', value: 15.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/15%20REAIS.png?updatedAt=1752047821835' },
+  { name: '10 Reais', value: 10.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681' },
+  { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
+  { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
+];
+
+const allPrizes: PrizeType[] = [
+  ...prizesCentavoDaSorte,
+  ...prizesSorteInstantanea,
+  ...prizesRaspadinhaSuprema,
+  ...prizesRaspaRelampago
+].filter((prize, index, self) => 
+  index === self.findIndex((t) => (
+    t.name === prize.name && t.value === prize.value
+  ))
+);
+
 
 
 export const scratchCards: ScratchCardType[] = [
@@ -202,7 +222,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 5.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0F77Z6HB3SZ5C9HEH3TQ90W.jpg",
     aiHint: "lightning bolt",
-    prizes: allPrizes, // using all prizes as a fallback
+    prizes: prizesRaspaRelampago,
   },
   {
     slug: "raspadinha-magica",
