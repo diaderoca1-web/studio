@@ -6,11 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Zap, RefreshCw } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
+import CoinIcon from "./icons/coin-icon";
 
 export default function ScratchCardPageClient({ card }: { card: ScratchCardType }) {
   const scratchGameRef = useRef<ScratchGameRef>(null);
 
   const handlePurchaseClick = () => {
+    // This button is now primarily for display, the main purchase
+    // is inside the ScratchGame component.
+    // We can still trigger it from here if needed, but for now we'll
+    // let the game component handle its own state.
     scratchGameRef.current?.purchase();
   };
 
@@ -30,7 +35,10 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             <div className="flex items-center gap-2">
                 <Button size="lg" className="h-14 bg-lime-400 hover:bg-lime-500 text-black font-bold flex-1" onClick={handlePurchaseClick}>
                     <div className="flex items-center justify-between w-full">
-                        <span>Comprar</span>
+                        <div className="flex items-center gap-1.5">
+                            <CoinIcon />
+                            <span>Comprar</span>
+                        </div>
                         <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold">
                             <span>R$</span>
                             <span>{card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
@@ -40,7 +48,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                 <Button variant="secondary" size="icon" className="h-14 w-14">
                     <Zap className="size-6" />
                 </Button>
-                <Button variant="secondary" className="h-14 w-14">
+                <Button variant="secondary" className="h-14 w-14 flex-col gap-1">
                     <RefreshCw className="size-6" />
                     <span className="text-xs font-bold">Auto</span>
                 </Button>

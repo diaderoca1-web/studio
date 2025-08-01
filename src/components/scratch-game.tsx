@@ -90,6 +90,10 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
         }
     }));
 
+    const handlePurchase = () => {
+        setIsPurchased(true);
+    };
+
     useEffect(() => {
         if (!isPurchased) return;
 
@@ -180,11 +184,6 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
         const percentage = (transparentPixels / totalPixels) * 100;
         setScratchedPercentage(percentage);
     };
-    
-    const handlePurchase = () => {
-        // In a real app, you would handle the purchase logic here
-        setIsPurchased(true);
-    }
 
     return (
         <Card className="overflow-hidden relative select-none border-none shadow-2xl shadow-primary/10">
@@ -218,7 +217,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                         />
                     </>
                 ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <div className="absolute inset-0">
                         <Image 
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
@@ -227,7 +226,16 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                             className="z-0"
                         />
                         <div className="absolute inset-0 bg-black/70 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
-                             <p className="text-sm mt-4 text-white/80">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
+                            <p className="text-sm mt-4 text-white/80">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
+                            <Button size="lg" className="h-14 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
+                                <div className="flex items-center justify-between w-full gap-4">
+                                    <span>Comprar</span>
+                                    <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold">
+                                        <span>R$</span>
+                                        <span>{cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
+                                    </div>
+                                </div>
+                            </Button>
                         </div>
                     </div>
                 )}
