@@ -11,15 +11,48 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, ShieldCheck, User } from "lucide-react";
 
 export function UserNav() {
   return (
     <>
-      <Button variant="outline" className="flex items-center gap-2">
-        <span>R$ 0,00</span>
-        <ChevronDown className="h-4 w-4 text-muted-foreground" />
-      </Button>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="outline" className="flex items-center gap-2">
+            <span>R$ 0,00</span>
+            <ChevronDown className="h-4 w-4 text-muted-foreground" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-64 p-3">
+            <div className="space-y-3">
+                <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Saldo</span>
+                        <span className="font-semibold">R$ 0,00</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Bônus</span>
+                        <span className="font-semibold">R$ 0,00</span>
+                    </div>
+                </div>
+                <Separator />
+                <div className="flex justify-between font-bold">
+                    <span>Total</span>
+                    <span>R$ 0,00</span>
+                </div>
+                 <p className="text-xs text-muted-foreground">
+                    O saldo total é a soma do seu saldo e bônus.
+                </p>
+                <Button className="w-full bg-primary hover:bg-primary/90">
+                    <Landmark className="mr-2 h-4 w-4" />
+                    Sacar
+                </Button>
+            </div>
+        </PopoverContent>
+      </Popover>
+
       <Button variant="primary" size="icon" className="bg-primary hover:bg-primary/90">
         <Landmark className="h-5 w-5"/>
       </Button>
