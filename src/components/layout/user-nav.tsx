@@ -18,6 +18,8 @@ import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, Shield
 import Link from "next/link";
 import DepositIcon from "../icons/deposit-icon";
 import { useAuth } from "@/contexts/auth-context";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { DepositSheet } from "../deposit-sheet";
 
 export function UserNav() {
   const { user, logout } = useAuth();
@@ -59,12 +61,20 @@ export function UserNav() {
         </PopoverContent>
       </Popover>
 
-      <Button asChild className="bg-primary hover:bg-primary/90 hidden md:flex">
-        <Link href="/depositar">
-          <DepositIcon className="mr-2 h-4 w-4" />
-          Depositar
-        </Link>
-      </Button>
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button className="bg-primary hover:bg-primary/90 hidden md:flex">
+            <DepositIcon className="mr-2 h-4 w-4" />
+            Depositar
+          </Button>
+        </SheetTrigger>
+        <SheetContent 
+            side="right" 
+            className="p-0 bg-card border-l-0 w-full max-w-md"
+        >
+            <DepositSheet />
+        </SheetContent>
+      </Sheet>
       
       <Button asChild className="bg-primary hover:bg-primary/90 hidden md:flex">
         <Link href="/sacar">
