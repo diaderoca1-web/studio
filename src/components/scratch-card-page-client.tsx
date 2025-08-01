@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, RefreshCw, WandSparkles, Play, Square } from "lucide-react";
+import { Zap, Play, Square, WandSparkles } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
@@ -22,23 +22,28 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     await scratchGameRef.current.purchase();
     await sleep(200);
     await scratchGameRef.current.reveal();
-    // The reset is now handled by the onReveal handler below
+    await sleep(3800); // Wait for the win/loss message to be visible
+    await scratchGameRef.current.reset();
   };
   
-  const startAutoPlay = () => {
-    handleAutoPlay(); // Run once immediately
-    autoPlayIntervalRef.current = setInterval(handleAutoPlay, 4000);
-  }
-
-  const stopAutoPlay = () => {
-     if (autoPlayIntervalRef.current) {
-        clearInterval(autoPlayIntervalRef.current);
-        autoPlayIntervalRef.current = null;
-        scratchGameRef.current?.reset();
-      }
+  const toggleAutoPlay = () => {
+    setIsAutoPlaying(prev => !prev);
   }
 
   useEffect(() => {
+    const startAutoPlay = () => {
+        handleAutoPlay(); // Run once immediately
+        autoPlayIntervalRef.current = setInterval(handleAutoPlay, 8000);
+    }
+  
+    const stopAutoPlay = () => {
+       if (autoPlayIntervalRef.current) {
+          clearInterval(autoPlayIntervalRef.current);
+          autoPlayIntervalRef.current = null;
+          scratchGameRef.current?.reset();
+        }
+    }
+
     if (isAutoPlaying) {
         startAutoPlay();
     } else {
@@ -63,7 +68,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             cost={card.cost}
             purchaseImageUrl="https://ik.imagekit.io/azx3nlpdu/TELA%202.png?updatedAt=1751849389437"
             onReveal={() => {
-                // After revealing, wait a bit then reset, unless we're in auto-play mode
+                // After revealing, wait a bit then reset, only if we are NOT in auto-play mode
                  if (!isAutoPlaying) {
                     setTimeout(() => {
                         scratchGameRef.current?.reset();
@@ -100,7 +105,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             <Button variant="secondary" size="icon" className="h-12 w-12" onClick={() => scratchGameRef.current?.reveal()} disabled={isAutoPlaying}>
                 <Zap className="size-6" />
             </Button>
-            <Button variant="secondary" className="h-12 px-4" onClick={() => setIsAutoPlaying(prev => !prev)}>
+            <Button variant="secondary" className="h-12 px-4" onClick={toggleAutoPlay}>
                 {isAutoPlaying ? <Square className="size-6" /> : <Play className="size-6" />}
                 <span className="text-sm font-bold ml-2">
                       {isAutoPlaying ? 'Parar' : 'Auto'}
