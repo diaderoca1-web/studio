@@ -4,11 +4,15 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Play, Square, WandSparkles, Users } from "lucide-react";
+import { Zap, Play, Square, WandSparkles, Users, Copy, Check } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
 import RecentWinners from "./home/recent-winners";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -16,6 +20,33 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   const scratchGameRef = useRef<ScratchGameRef>(null);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [inviteLink, setInviteLink] = useState("");
+  const [hasCopied, setHasCopied] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setInviteLink(`${window.location.origin}/lobby/${card.slug}?gameId=${Math.random().toString(36).substring(7)}`);
+    }
+  }, [card.slug]);
+
+  const handleCopyToClipboard = () => {
+    navigator.clipboard.writeText(inviteLink).then(() => {
+      setHasCopied(true);
+      setTimeout(() => setHasCopied(false), 2000);
+      toast({
+        title: "Sucesso!",
+        description: "Link de convite copiado para a área de transferência.",
+      });
+    }).catch(err => {
+      console.error('Failed to copy: ', err);
+       toast({
+        title: "Erro",
+        description: "Não foi possível copiar o link.",
+        variant: "destructive",
+      });
+    });
+  };
 
   const handleAutoPlay = async () => {
     if (!scratchGameRef.current) return;
@@ -114,12 +145,43 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                       {isAutoPlaying ? 'Parar' : 'Auto'}
                 </span>
             </Button>
-            <Button variant="secondary" className="h-12 px-4">
-                <Users className="size-6" />
-                <span className="text-sm font-bold ml-2">
-                    Jogar com amigo
-                </span>
-            </Button>
+            <Dialog>
+                <DialogTrigger asChild>
+                    <Button variant="secondary" className="h-12 px-4">
+                        <Users className="size-6" />
+                        <span className="text-sm font-bold ml-2">
+                            Jogar com amigo
+                        </span>
+                    </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Convidar um amigo</DialogTitle>
+                        <DialogDescription>
+                            Copie o link abaixo e envie para um amigo para que ele jogue com você.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex items-center space-x-2">
+                        <div className="grid flex-1 gap-2">
+                            <Label htmlFor="link" className="sr-only">
+                                Link
+                            </Label>
+                            <Input
+                                id="link"
+                                value={inviteLink}
+                                readOnly
+                            />
+                        </div>
+                         <Button type="button" size="icon" className="h-9 w-9" onClick={handleCopyToClipboard}>
+                            {hasCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                            <span className="sr-only">Copiar</span>
+                        </Button>
+                    </div>
+                    <DialogFooter className="sm:justify-start">
+                       <p className="text-xs text-muted-foreground">O link é válido por 24 horas.</p>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
       </div>
        <Card className="bg-card/50 mt-6">
