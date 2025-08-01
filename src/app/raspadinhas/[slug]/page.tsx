@@ -8,6 +8,7 @@ import CoinIcon from "@/components/icons/coin-icon";
 import TrophyIcon from "@/components/icons/trophy-icon";
 import { CheckCircle } from "lucide-react";
 import ScratchGame from "@/components/scratch-game";
+import RecentWinners from "@/components/home/recent-winners";
 
 export default function ScratchCardPage({ params }: { params: { slug: string } }) {
   const card = scratchCards.find((c) => c.slug === params.slug);
@@ -18,23 +19,25 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
 
   return (
     <>
-      <div className="container mx-auto py-12">
-        <div className="grid md:grid-cols-2 gap-12">
+      <div className="container mx-auto py-8 max-w-2xl">
+        <div className="py-4">
+            <RecentWinners />
+        </div>
+        <div className="grid grid-cols-1 gap-8">
           <div>
-            <Card className="overflow-hidden">
-              <CardHeader>
-                <CardTitle className="text-3xl">{card.title}</CardTitle>
-                <CardDescription>{card.description}</CardDescription>
+            <Card className="overflow-hidden border-none shadow-2xl shadow-primary/10">
+              <CardHeader className="p-4">
+                <CardTitle className="text-2xl">{card.title}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-2 pt-0">
                 <ScratchGame cardTitle={card.title} />
-                <Button size="lg" className="w-full mt-6 text-lg h-14">
+                <Button size="lg" className="w-full mt-4 text-lg h-14">
                   <div className="flex gap-2 justify-between items-center w-full">
                       <div className="flex gap-2 items-center font-bold">
                           <CoinIcon className="size-6" />
-                          <span>Play Again</span>
+                          <span>Comprar</span>
                       </div>
-                      <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base">
+                      <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base font-bold">
                           <span>R$</span>
                           <span>{card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
                       </div>
@@ -42,35 +45,6 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
                 </Button>
               </CardContent>
             </Card>
-          </div>
-          <div id="rewards">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2"><TrophyIcon className="text-amber-500 size-6" /> Prizes</h2>
-            <div className="space-y-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                  <Card key={i}>
-                      <CardContent className="p-4 flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                             <CheckCircle className="text-primary size-5" />
-                             <span className="font-medium">Prize Level {i + 1}</span>
-                          </div>
-                          <span className="font-bold text-lg">
-                              R$ {(card.prizeAmount / (2**i)).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                          </span>
-                      </CardContent>
-                  </Card>
-              ))}
-               <Card>
-                  <CardHeader>
-                      <CardTitle>How to Play</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2 text-muted-foreground">
-                      <p>1. Click "Play Now" to buy a card.</p>
-                      <p>2. Use your mouse or finger to scratch the designated area.</p>
-                      <p>3. Match three symbols to win the corresponding prize!</p>
-                      <p>4. Winnings are instantly credited to your account.</p>
-                  </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
       </div>
