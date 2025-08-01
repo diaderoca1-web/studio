@@ -31,16 +31,13 @@ export function DepositSheet() {
 
     return (
         <div className="bg-[#1c211d] text-white h-full flex flex-col p-4">
-            <div className="text-center py-2 bg-gradient-to-t from-green-500/80 to-green-400/80 text-sm font-bold tracking-widest">
-                CAIXA DE BÔNUS LIBERADA
-            </div>
             <div className='p-4'>
                 <Image 
                     src="https://raspagreen.com/deposit_bg.jpg"
                     alt="Compre no pix e receba no pix"
                     width={500}
                     height={200}
-                    className="rounded-lg"
+                    className="rounded-lg w-full h-auto"
                 />
             </div>
             
