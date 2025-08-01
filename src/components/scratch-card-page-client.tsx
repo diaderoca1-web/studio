@@ -48,10 +48,10 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                         </div>
                     </div>
                 </Button>
-                <Button variant="secondary" size="icon" className="h-12 w-12">
+                <Button variant="secondary" size="icon" className="h-12 w-12" onClick={() => scratchGameRef.current?.reveal()}>
                     <Zap className="size-6" />
                 </Button>
-                <Button variant="secondary" className="h-12 px-4">
+                <Button variant="secondary" className="h-12 px-4" onClick={() => scratchGameRef.current?.reveal()}>
                     <RefreshCw className="size-6" />
                     <span className="text-sm font-bold ml-2">Auto</span>
                 </Button>
@@ -75,4 +75,3 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     </div>
   );
 }
-

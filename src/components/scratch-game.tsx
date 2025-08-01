@@ -4,7 +4,7 @@
 import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Gift, Zap } from 'lucide-react';
+import { Gift } from 'lucide-react';
 import { Button } from './ui/button';
 import CoinIcon from './icons/coin-icon';
 
@@ -73,9 +73,11 @@ interface ScratchGameProps {
 
 export interface ScratchGameRef {
   purchase: () => void;
+  autoScratch: () => void;
+  reveal: () => void;
 }
 
-const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, cost, purchaseImageUrl }, ref) => {
+const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [game, setGame] = useState(generateGrid());
@@ -84,6 +86,14 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
 
     const getCtx = () => canvasRef.current?.getContext('2d');
 
+    const reveal = () => {
+        const ctx = getCtx();
+        if (ctx) {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            calculateScratchedArea();
+        }
+    };
+
     const handlePurchase = () => {
         setIsPurchased(true);
     };
@@ -91,6 +101,19 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
     useImperativeHandle(ref, () => ({
         purchase() {
             handlePurchase();
+        },
+        autoScratch() {
+            if(!isPurchased) {
+                handlePurchase();
+                setTimeout(() => reveal(), 100);
+            } else {
+                reveal();
+            }
+        },
+        reveal() {
+            if(isPurchased) {
+                reveal();
+            }
         }
     }));
 
@@ -122,11 +145,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
     
     useEffect(() => {
         if(scratchedPercentage > 60) {
-            // Reveal all
-            const ctx = getCtx();
-            if(ctx) {
-                ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            }
+            reveal();
         }
     }, [scratchedPercentage]);
 
@@ -222,17 +241,17 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                         <Image 
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
-                            layout="fill"
-                            objectFit="cover"
+                            fill
+                            className="object-cover"
                         />
                         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
-                             <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
-                                <div className="flex items-center justify-between w-full">
+                             <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => scratchGameRef.current?.purchase()}>
+                                <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-1.5">
                                         <CoinIcon />
                                         <span>Comprar</span>
                                     </div>
-                                    <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold ml-4">
+                                    <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold ml-2 sm:ml-4">
                                         <span>R$</span>
                                         <span>{cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
                                     </div>
