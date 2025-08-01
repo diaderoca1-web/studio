@@ -9,15 +9,15 @@ import { Button } from './ui/button';
 import CoinIcon from './icons/coin-icon';
 
 const prizes = [
-    { type: '1-real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1-real-coin.png?updatedAt=1753862142426' },
-    { type: '50-centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-cent-coin.png?updatedAt=1753862142410' },
+    { type: '1-real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
+    { type: '50-centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
     { type: 'star', value: 50, imageUrl: 'https://placehold.co/100x100/orange/white?text=⭐' },
     { type: 'gem', value: 100, imageUrl: 'https://placehold.co/100x100/blue/white?text=💎' },
 ];
 
 const symbolMap: { [key: string]: string } = {
-    '1-real': 'https://ik.imagekit.io/azx3nlpdu/1-real-coin.png?updatedAt=1753862142426',
-    '50-centavos': 'https://ik.imagekit.io/azx3nlpdu/50-cent-coin.png?updatedAt=1753862142410',
+    '1-real': 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586',
+    '50-centavos': 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979',
     star: 'https://placehold.co/100x100/orange/white?text=⭐',
     gem: 'https://placehold.co/100x100/blue/white?text=💎',
     lose: 'https://placehold.co/100x100/grey/white?text=❌',
