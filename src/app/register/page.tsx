@@ -23,7 +23,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Mail, Lock, Smartphone, User, X } from 'lucide-react';
 
 const formSchema = z.object({
-  email: z.string().email({ message: "Email inválido." }),
+  email: z.string().email({ message: "Por favor, insira um email válido." }),
   phone: z.string().min(10, { message: 'Por favor, insira um número de telefone válido.' }),
   password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
 });
@@ -177,3 +177,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+    
