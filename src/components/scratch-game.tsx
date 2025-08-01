@@ -52,6 +52,17 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
     
     // Generate a grid for the game
     const generateGrid = (): GameResult => {
+        if (!prizes || prizes.length === 0) {
+            // Return a default "empty" or "losing" state if there are no prizes
+            return {
+                grid: Array(9).fill({ name: 'Empty', imageUrl: '' }),
+                winningSymbol: null,
+                isWinner: false,
+                prizeValue: 0,
+                prizeName: null,
+                prizeImageUrl: null,
+            };
+        }
         const isWinner = Math.random() > 0.5; // 50% chance to win
     
         if (isWinner && prizes.length > 0) {
@@ -62,7 +73,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
 
             const otherPrizes = prizes.filter(p => p.name !== winningPrize.name);
             for (let i = 0; i < 6; i++) {
-                const randomPrize = otherPrizes[Math.floor(Math.random() * otherPrizes.length)];
+                const randomPrize = otherPrizes.length > 0 ? otherPrizes[Math.floor(Math.random() * otherPrizes.length)] : winningPrize;
                 grid.push({ name: randomPrize.name, imageUrl: randomPrize.imageUrl });
             }
             
