@@ -19,10 +19,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/auth-context';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, Smartphone } from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
 
 const formSchema = z.object({
-  phone: z.string().min(10, { message: 'Por favor, insira um número de WhatsApp válido.' }),
+  email: z.string().email({ message: 'Por favor, insira um email válido.' }),
   password: z.string().min(1, { message: 'A senha não pode estar em branco.' }),
 });
 
@@ -36,7 +36,7 @@ export default function LoginPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phone: '',
+      email: '',
       password: '',
     },
   });
@@ -44,7 +44,7 @@ export default function LoginPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      await login({ phone: values.phone, pass: values.password });
+      await login({ email: values.email, pass: values.password });
       toast({
         title: 'Sucesso!',
         description: 'Login realizado com sucesso.',
@@ -74,13 +74,13 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField
                 control={form.control}
-                name="phone"
+                name="email"
                 render={({ field }) => (
                     <FormItem>
                          <div className="relative">
-                            <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                             <FormControl>
-                                <Input placeholder="Seu WhatsApp" {...field} className="pl-10" />
+                                <Input placeholder="Seu e-mail" {...field} className="pl-10" />
                             </FormControl>
                         </div>
                         <FormMessage />
