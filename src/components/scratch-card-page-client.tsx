@@ -8,6 +8,7 @@ import { Zap, Play, Square, WandSparkles } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
+import RecentWinners from "./home/recent-winners";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -60,6 +61,9 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
 
   return (
     <div className="container mx-auto p-4 max-w-6xl">
+        <div className="py-4">
+            <RecentWinners />
+        </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <div className="md:col-span-1">
           <ScratchGame
