@@ -14,6 +14,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, ShieldCheck, User } from "lucide-react";
+import Link from "next/link";
 
 export function UserNav() {
   return (
@@ -45,16 +46,20 @@ export function UserNav() {
                  <p className="text-xs text-muted-foreground">
                     O saldo total é a soma do seu saldo e bônus.
                 </p>
-                <Button className="w-full bg-primary hover:bg-primary/90">
-                    <Landmark className="mr-2 h-4 w-4" />
-                    Sacar
+                <Button asChild className="w-full bg-primary hover:bg-primary/90">
+                    <Link href="/sacar">
+                        <Landmark className="mr-2 h-4 w-4" />
+                        Sacar
+                    </Link>
                 </Button>
             </div>
         </PopoverContent>
       </Popover>
 
-      <Button variant="primary" size="icon" className="bg-primary hover:bg-primary/90">
-        <Landmark className="h-5 w-5"/>
+      <Button asChild variant="primary" size="icon" className="bg-primary hover:bg-primary/90">
+        <Link href="/sacar">
+            <Landmark className="h-5 w-5"/>
+        </Link>
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -80,9 +85,11 @@ export function UserNav() {
               <User className="mr-2" />
               <span>Conta</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-                <DollarSign className="mr-2" />
-                <span>Sacar</span>
+            <DropdownMenuItem asChild>
+                <Link href="/sacar">
+                    <DollarSign className="mr-2" />
+                    <span>Sacar</span>
+                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Gamepad2 className="mr-2" />
