@@ -40,9 +40,9 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
         </div>
       </div>
        <div className="w-full flex justify-start mt-6">
-            <div className="flex items-center gap-2">
-                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold">
-                    <div className="flex items-center justify-between w-full">
+            <div className="flex items-center gap-2 flex-wrap">
+                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchaseClick}>
+                    <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
                             <CoinIcon />
                             <span>Comprar</span>
@@ -58,7 +58,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                 </Button>
                 <Button variant="secondary" className="h-12 px-4">
                     <RefreshCw className="size-6" />
-                    <span className="text-sm font-bold ml-2">Rodada Automática</span>
+                    <span className="text-sm font-bold ml-2 hidden sm:inline">Rodada Automática</span>
                 </Button>
             </div>
         </div>
