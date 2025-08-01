@@ -31,19 +31,6 @@ export function DepositSheet() {
     return (
         <div className="container mx-auto max-w-lg py-4">
             <div className="space-y-4">
-                <div className="text-center bg-primary/20 text-primary font-bold py-2 rounded-lg">
-                    CAIXA DE BÔNUS LIBERADA
-                </div>
-                <div className="relative aspect-video w-full overflow-hidden rounded-lg">
-                    <Image
-                        src="https://ik.imagekit.io/azx3nlpdu/NOVOS-BANNER-RASPA.png?updatedAt=1753474399329"
-                        alt="Promo Banner"
-                        fill
-                        className="object-contain"
-                        data-ai-hint="promo banner"
-                    />
-                </div>
-
                 <div className="space-y-4">
                     <h2 className="flex items-center gap-3 text-2xl font-bold">
                         <DepositIcon className="size-8" />
