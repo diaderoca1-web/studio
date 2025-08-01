@@ -1,5 +1,5 @@
 
-"use client";
+'use client';
 
 import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import Image from 'next/image';
@@ -58,66 +58,55 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
     
     // Generate a grid for the game
     const generateGrid = (): GameResult => {
-        // Handle case where there are no prizes defined for the card
-        if (!prizes || prizes.length === 0) {
-            // Generate a generic losing grid
-             const genericPrizes: PrizeType[] = [
-                { name: 'Cherry', value: 0, imageUrl: 'https://placehold.co/100x100/FF0000/FFFFFF.png?text=🍒' },
-                { name: 'Lemon', value: 0, imageUrl: 'https://placehold.co/100x100/FFFF00/000000.png?text=🍋' },
-                { name: 'Orange', value: 0, imageUrl: 'https://placehold.co/100x100/FFA500/FFFFFF.png?text=🍊' },
-                { name: 'Grape', value: 0, imageUrl: 'https://placehold.co/100x100/800080/FFFFFF.png?text=🍇' },
-                { name: 'Bell', value: 0, imageUrl: 'https://placehold.co/100x100/FFD700/000000.png?text=🔔' },
-            ];
-             let grid: { name: string; imageUrl: string }[] = [];
-            const shuffledGenericPrizes = shuffle([...genericPrizes]);
-            for (let i = 0; i < 4; i++) {
-                const prize = shuffledGenericPrizes[i];
-                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
-                grid.push({ name: prize.name, imageUrl: prize.imageUrl });
-            }
-            const lastPrize = shuffledGenericPrizes[4];
-            grid.push({ name: lastPrize.name, imageUrl: lastPrize.imageUrl });
-            
-            return {
-                grid: shuffle(grid), winningSymbol: null, isWinner: false, prizeValue: 0, prizeName: null, prizeImageUrl: null
-            };
+         if (!prizes || prizes.length === 0) {
+            return generateLosingGrid(true); // Force generic grid if no prizes
         }
         
         const isWinner = Math.random() < (settings.winProbability / 100);
 
         if (isWinner) {
-            // Calculate the expected prize value based on RTP
-            const expectedPrize = (cost * (settings.rtp / 100)) / (settings.winProbability / 100);
+             // Weighted random prize selection to respect RTP
+            const totalValue = prizes.reduce((sum, prize) => sum + prize.value, 0);
+            const weights = prizes.map(prize => ({
+                ...prize,
+                // Inverse weight: higher value = lower probability, but ensure non-zero weight
+                weight: totalValue / (prize.value || 0.01) 
+            }));
+            const totalWeight = weights.reduce((sum, prize) => sum + prize.weight, 0);
             
-            // Find the prize closest to the expected value
-            const winningPrize = prizes.reduce((prev, curr) => 
-                Math.abs(curr.value - expectedPrize) < Math.abs(prev.value - expectedPrize) ? curr : prev
-            );
+            let random = Math.random() * totalWeight;
+            let winningPrize: PrizeType = prizes[0]; // Default fallback
+
+            for (const prize of weights) {
+                if (random < prize.weight) {
+                    winningPrize = prize;
+                    break;
+                }
+                random -= prize.weight;
+            }
 
             const winningSymbol = { name: winningPrize.name, imageUrl: winningPrize.imageUrl };
-
             let grid = Array(3).fill(winningSymbol);
 
             // Get other symbols, ensuring we don't accidentally create another winning set.
             const otherSymbols = prizes.filter(p => p.name !== winningPrize.name);
-            if (otherSymbols.length < 2) {
-                // Not enough variety for a losing portion, create a losing grid instead
-                 return generateLosingGrid();
-            }
-
             let fillerSymbols: { name: string; imageUrl: string }[] = [];
-            let symbolIndex = 0;
-            while (fillerSymbols.length < 6) {
-                // Ensure we have at least two other symbols to pick from
-                const symbol1 = otherSymbols[symbolIndex % otherSymbols.length];
-                const symbol2 = otherSymbols[(symbolIndex + 1) % otherSymbols.length];
-                
-                fillerSymbols.push({name: symbol1.name, imageUrl: symbol1.imageUrl});
-                // to avoid pushing a 3rd of the same, make sure the filler isn't all the same
-                if(fillerSymbols.length < 6) {
-                    fillerSymbols.push({name: symbol2.name, imageUrl: symbol2.imageUrl});
+            
+            if (otherSymbols.length > 0) {
+                let symbolIndex = 0;
+                while (fillerSymbols.length < 6) {
+                    const symbol = otherSymbols[symbolIndex % otherSymbols.length];
+                    fillerSymbols.push({name: symbol.name, imageUrl: symbol.imageUrl});
+                    // Ensure not to add more than 2 of the same filler symbol
+                    const count = fillerSymbols.filter(s => s.name === symbol.name).length;
+                    if(count < 2) {
+                       fillerSymbols.push({name: symbol.name, imageUrl: symbol.imageUrl});
+                    }
+                    symbolIndex++;
                 }
-                symbolIndex += 2;
+            } else {
+                 // Handle edge case where there's only one prize type
+                fillerSymbols = Array(6).fill({ name: "Losing Symbol", imageUrl: "https://placehold.co/100x100/CCCCCC/000000.png?text=X" });
             }
 
             grid.push(...fillerSymbols.slice(0, 6));
@@ -131,27 +120,25 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                 prizeImageUrl: winningPrize.imageUrl
             };
         } else {
-             return generateLosingGrid();
+             return generateLosingGrid(false);
         }
     };
     
-    const generateLosingGrid = () => {
-         // Create a losing grid where no symbol appears more than twice.
-        let grid: { name: string; imageUrl: string }[] = [];
-        const shuffledPrizes = shuffle([...prizes]);
-        
-        if (shuffledPrizes.length < 5) {
-             // Fallback for very few prize types
-            let tempGrid: { name: string; imageUrl: string }[] = [];
-            for (let i = 0; i < 9; i++) {
-                const prize = shuffledPrizes[i % shuffledPrizes.length];
-                if(prize) {
-                   tempGrid.push({ name: prize.name, imageUrl: prize.imageUrl });
-                }
-            }
-            return { grid: tempGrid, winningSymbol: null, isWinner: false, prizeValue: 0, prizeName: null, prizeImageUrl: null };
+    const generateLosingGrid = (useGeneric: boolean) => {
+        let sourcePrizes: PrizeType[] = prizes;
+        if(useGeneric || sourcePrizes.length < 5) {
+            sourcePrizes = [
+                { name: 'Cherry', value: 0, imageUrl: 'https://placehold.co/100x100/f87171/ffffff.png?text=🍒' },
+                { name: 'Lemon', value: 0, imageUrl: 'https://placehold.co/100x100/facc15/000000.png?text=🍋' },
+                { name: 'Orange', value: 0, imageUrl: 'https://placehold.co/100x100/fb923c/ffffff.png?text=🍊' },
+                { name: 'Grape', value: 0, imageUrl: 'https://placehold.co/100x100/a78bfa/ffffff.png?text=🍇' },
+                { name: 'Bell', value: 0, imageUrl: 'https://placehold.co/100x100/fde047/000000.png?text=🔔' },
+            ];
         }
 
+        let grid: { name: string; imageUrl: string }[] = [];
+        const shuffledPrizes = shuffle([...sourcePrizes]);
+        
         // Add two of the first four unique prizes
         for(let i = 0; i < 4; i++) {
             const prize = shuffledPrizes[i];
