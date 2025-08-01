@@ -4,7 +4,9 @@
 import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Gift } from 'lucide-react';
+import { Gift, Zap } from 'lucide-react';
+import { Button } from './ui/button';
+import CoinIcon from './icons/coin-icon';
 
 const prizes = [
     { type: '1-real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1-real-coin.png?updatedAt=1753862142426' },
@@ -63,16 +65,24 @@ const generateGrid = () => {
     }
 };
 
+interface ScratchGameProps {
+    cardTitle: string;
+    cost: number;
+    purchaseImageUrl: string;
+}
 
-export default function ScratchGame({ cardTitle }: { cardTitle: string }) {
+export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: ScratchGameProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [game, setGame] = useState(generateGrid());
     const [scratchedPercentage, setScratchedPercentage] = useState(0);
+    const [isPurchased, setIsPurchased] = useState(false);
 
     const getCtx = () => canvasRef.current?.getContext('2d');
 
     useEffect(() => {
+        if (!isPurchased) return;
+
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = getCtx();
@@ -93,7 +103,7 @@ export default function ScratchGame({ cardTitle }: { cardTitle: string }) {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('SCRATCH HERE', canvas.width / 2, canvas.height / 2);
-    }, []);
+    }, [isPurchased]);
     
     useEffect(() => {
         if(scratchedPercentage > 60) {
@@ -160,35 +170,69 @@ export default function ScratchGame({ cardTitle }: { cardTitle: string }) {
         const percentage = (transparentPixels / totalPixels) * 100;
         setScratchedPercentage(percentage);
     };
+    
+    const handlePurchase = () => {
+        // In a real app, you would handle the purchase logic here
+        setIsPurchased(true);
+    }
 
     return (
-        <Card className="overflow-hidden relative select-none">
+        <Card className="overflow-hidden relative select-none border-none shadow-2xl shadow-primary/10">
             <CardContent className="p-2 aspect-[4/3] relative">
-                <div className="absolute inset-2 grid grid-cols-3 grid-rows-3 gap-2">
-                    {game.grid.map((item, index) => (
-                        <div key={index} className="bg-muted rounded-md flex items-center justify-center p-2">
-                           <div className="relative w-full h-full">
-                             <Image 
-                                src={symbolMap[item.type as keyof typeof symbolMap] || symbolMap.lose} 
-                                alt={item.type}
+                {isPurchased ? (
+                    <>
+                        <div className="absolute inset-2 grid grid-cols-3 grid-rows-3 gap-2">
+                            {game.grid.map((item, index) => (
+                                <div key={index} className="bg-muted rounded-md flex items-center justify-center p-2">
+                                   <div className="relative w-full h-full">
+                                     <Image 
+                                        src={symbolMap[item.type as keyof typeof symbolMap] || symbolMap.lose} 
+                                        alt={item.type}
+                                        fill
+                                        className="object-contain"
+                                     />
+                                   </div>
+                                </div>
+                            ))}
+                        </div>
+                        <canvas
+                            ref={canvasRef}
+                            className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+                            onMouseDown={startDrawing}
+                            onMouseUp={stopDrawing}
+                            onMouseLeave={stopDrawing}
+                            onMouseMove={draw}
+                            onTouchStart={startDrawing}
+                            onTouchEnd={stopDrawing}
+                            onTouchMove={draw}
+                        />
+                    </>
+                ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black/50 p-4">
+                        <p className="flex items-center gap-1 text-sm text-muted-foreground"><Zap className="size-4" />Clique em "comprar e raspar" para iniciar o jogo</p>
+                        <div className="relative w-full max-w-xs aspect-square">
+                           <Image 
+                                src={purchaseImageUrl}
+                                alt="Comprar raspadinha"
                                 fill
                                 className="object-contain"
-                             />
-                           </div>
+                           />
                         </div>
-                    ))}
-                </div>
-                <canvas
-                    ref={canvasRef}
-                    className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
-                    onMouseDown={startDrawing}
-                    onMouseUp={stopDrawing}
-                    onMouseLeave={stopDrawing}
-                    onMouseMove={draw}
-                    onTouchStart={startDrawing}
-                    onTouchEnd={stopDrawing}
-                    onTouchMove={draw}
-                />
+                        <Button onClick={handlePurchase} size="lg" className="h-12 text-base">
+                             <div className="flex gap-2 justify-between items-center w-full">
+                                <div className="flex gap-2 items-center font-bold">
+                                    <CoinIcon className="size-6" />
+                                    <span>Comprar</span>
+                                </div>
+                                <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base font-bold">
+                                    <span>R$</span>
+                                    <span>{cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
+                                </div>
+                            </div>
+                        </Button>
+                        <p className="text-sm mt-4 text-muted-foreground">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
+                    </div>
+                )}
             </CardContent>
              {scratchedPercentage > 60 && (
                 <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-center text-white p-4">
@@ -209,4 +253,3 @@ export default function ScratchGame({ cardTitle }: { cardTitle: string }) {
         </Card>
     );
 }
-
