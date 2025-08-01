@@ -58,7 +58,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                 </Button>
                 <Button variant="secondary" className="h-12 px-4">
                     <RefreshCw className="size-6" />
-                    <span className="text-sm font-bold ml-2 hidden sm:inline">Auto</span>
+                    <span className="text-sm font-bold ml-2">Auto</span>
                 </Button>
             </div>
         </div>
