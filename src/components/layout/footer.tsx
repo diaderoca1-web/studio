@@ -9,7 +9,6 @@ const seals = [
     { name: 'Pix', imageUrl: 'https://raspagreen.com/selo-pix.png' },
     { name: '18+', imageUrl: 'https://raspagreen.com/selo-18.png' },
     { name: 'Fair Play', imageUrl: 'https://raspagreen.com/selo-fair.png' },
-    { name: 'Gambling Therapy', imageUrl: 'https://raspagreen.com/selo-therapy.png' },
 ];
 
 export function Footer() {
@@ -23,15 +22,13 @@ export function Footer() {
                 © {new Date().getFullYear()} raspagreen.com. Todos os direitos reservados.
                 </p>
                 <p className="text-xs max-w-md text-center md:text-left text-muted-foreground">
-                Raspadinhas e outros jogos de azar são regulamentados e cobertos
-                pela nossa licença de jogos. Jogue com responsabilidade.
+                A RaspaGreen é uma plataforma de entretenimento e compras online. Nossos jogos oferecem prêmios físicos e digitais que podem ser adquiridos. Jogue com responsabilidade.
                 </p>
             </div>
             <div className="md:col-span-2 grid grid-cols-2 gap-8">
                 <div>
                 <h3 className="font-bold text-foreground mb-4">Regulamentos</h3>
                 <ul className="space-y-2">
-                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Jogo responsável</Link></li>
                     <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Política de Privacidade</Link></li>
                     <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Termos de Uso</Link></li>
                 </ul>

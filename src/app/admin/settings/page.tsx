@@ -84,14 +84,14 @@ export default function SettingsPage() {
 
         <Card>
             <CardHeader>
-                <CardTitle>Mecânica de Jogo</CardTitle>
+                <CardTitle>Mecânica da Plataforma</CardTitle>
                 <CardDescription>
                     Ajuste as configurações de probabilidade e prêmios.
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="space-y-2">
-                    <Label htmlFor="win-probability">Probabilidade de Vitória (%)</Label>
+                    <Label htmlFor="win-probability">Probabilidade de Acerto (%)</Label>
                     <div className="flex items-center gap-4">
                         <Slider id="win-probability" value={winProbability} onValueChange={setWinProbability} max={100} step={1} className="flex-1" />
                         <span className="w-12 text-right">{winProbability[0]}%</span>
