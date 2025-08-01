@@ -10,8 +10,15 @@ export interface User {
   email: string;
 }
 
-// Mock database of users
-const users: User[] = [];
+// Mock database of users, pre-populated with an admin user for testing.
+const users: User[] = [
+    {
+        id: '0',
+        name: 'Admin',
+        email: 'admin@raspagreen.com',
+        phone: '00000000000'
+    }
+];
 let userIdCounter = 1;
 
 /**
@@ -27,10 +34,20 @@ export const login = async (email: string, pass: string): Promise<User> => {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 500));
 
+  // Special case for admin user with password check
+  if (email === 'admin@raspagreen.com' && pass === 'admin123') {
+      const adminUser = users.find(u => u.email === 'admin@raspagreen.com');
+      if (adminUser) {
+        console.log("Admin login successful", adminUser);
+        return adminUser;
+      }
+  }
+
   const existingUser = users.find(u => u.email === email);
 
   if (existingUser) {
       // In a real app, you'd also check the password here.
+      // For regular users, we are not checking passwords in this mock service.
       console.log("Login successful", existingUser);
       return existingUser;
   }
