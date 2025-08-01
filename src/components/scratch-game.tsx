@@ -69,6 +69,8 @@ interface ScratchGameProps {
     cardTitle: string;
     cost: number;
     purchaseImageUrl: string;
+    onReveal?: () => void;
+    onReset?: () => void;
 }
 
 export interface ScratchGameRef {
@@ -77,7 +79,7 @@ export interface ScratchGameRef {
   reset: () => Promise<void>;
 }
 
-const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl }, ref) => {
+const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl, onReveal, onReset }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [game, setGame] = useState(generateGrid());
@@ -136,33 +138,35 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                 progress = Math.min(elapsedTime / duration, 1);
       
                 ctx.globalCompositeOperation = 'destination-out';
-                const diagonalLength = Math.sqrt(width * width + height * height);
-                const radius = (diagonalLength / 2) * progress;
+                const clearWidth = width * progress;
+                const clearHeight = height * progress;
       
-                const centerX = width / 2;
-                const centerY = height / 2;
-      
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
-                ctx.fill();
+                ctx.clearRect(
+                    (width - clearWidth) / 2,
+                    (height - clearHeight) / 2,
+                    clearWidth,
+                    clearHeight
+                );
       
                 if (progress < 1) {
                   requestAnimationFrame(() => animateScratch(startTime));
                 } else {
                   calculateScratchedArea();
                   setIsRevealed(true);
+                  onReveal?.();
                   resolve();
                 }
               };
       
               requestAnimationFrame(() => animateScratch(Date.now()));
             });
-          },
+        },
         reset: async () => {
             setIsPurchased(false);
             setIsRevealed(false);
             setScratchedPercentage(0);
             setGame(generateGrid());
+            onReset?.();
         }
     }));
 
@@ -180,24 +184,25 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                 ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             }
             setIsRevealed(true);
+            onReveal?.();
         }
-    }, [scratchedPercentage, isRevealed]);
+    }, [scratchedPercentage, isRevealed, onReveal]);
 
 
     const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
-        if (isRevealed) return;
+        if (isRevealed || !isPurchased) return;
         setIsDrawing(true);
         draw(e);
     };
 
     const stopDrawing = () => {
-        if (isRevealed) return;
+        if (isRevealed || !isPurchased) return;
         setIsDrawing(false);
         calculateScratchedArea();
     };
 
     const draw = (e: React.MouseEvent | React.TouchEvent) => {
-        if (!isDrawing || isRevealed) return;
+        if (!isDrawing || isRevealed || !isPurchased) return;
         const ctx = getCtx();
         if (!ctx) return;
 
@@ -273,7 +278,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                         />
                     </>
                 ) : (
-                     <div className="absolute inset-0 w-full h-full bg-transparent">
+                     <div className="absolute inset-0 w-full h-full">
                         <Image 
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
