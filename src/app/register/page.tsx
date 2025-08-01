@@ -19,8 +19,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/auth-context';
 import { useToast } from '@/hooks/use-toast';
-import { User, Lock } from 'lucide-react';
-import WhatsappIcon from '@/components/icons/whatsapp-icon';
+import { User, Lock, Smartphone } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'O nome deve ter pelo menos 2 caracteres.' }),
@@ -96,7 +95,7 @@ export default function RegisterPage() {
                 render={({ field }) => (
                   <FormItem>
                     <div className="relative">
-                        <WhatsappIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                        <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                         <FormControl>
                           <Input placeholder="Seu WhatsApp" {...field} className="pl-10" />
                         </FormControl>
