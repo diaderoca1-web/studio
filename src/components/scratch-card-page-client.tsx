@@ -24,7 +24,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   const [inviteLink, setInviteLink] = useState("");
   const [hasCopied, setHasCopied] = useState(false);
   const { toast } = useToast();
-  const { deductBalance, addBalance } = useAuth();
+  const { user, deductBalance, addBalance } = useAuth();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -79,22 +79,24 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   };
 
   const handleAutoPlay = async () => {
-    if (!scratchGameRef.current) return;
+    if (!scratchGameRef.current) return false;
     
-    if (deductBalance(card.cost)) {
-        await scratchGameRef.current.purchase();
-        await sleep(200);
-        await scratchGameRef.current.reveal();
-        await sleep(1000); 
-        await scratchGameRef.current.reset();
-    } else {
+    if (!deductBalance(card.cost)) {
         toast({
             title: "Saldo Insuficiente",
             description: "Autoplay parado por falta de saldo.",
             variant: "destructive"
         });
         setIsAutoPlaying(false);
+        return false;
     }
+
+    await scratchGameRef.current.purchase();
+    await sleep(200);
+    await scratchGameRef.current.reveal();
+    await sleep(1000); 
+    await scratchGameRef.current.reset();
+    return true;
   };
   
   const toggleAutoPlay = () => {
@@ -102,28 +104,24 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   }
 
   useEffect(() => {
-    const startAutoPlay = () => {
-        handleAutoPlay(); 
-        autoPlayIntervalRef.current = setInterval(handleAutoPlay, 5000);
-    }
-  
-    const stopAutoPlay = () => {
-       if (autoPlayIntervalRef.current) {
-          clearInterval(autoPlayIntervalRef.current);
-          autoPlayIntervalRef.current = null;
-          scratchGameRef.current?.reset();
-        }
-    }
-
     if (isAutoPlaying) {
-        startAutoPlay();
+      const runAutoPlay = async () => {
+        const canContinue = await handleAutoPlay();
+        if (canContinue) {
+          autoPlayIntervalRef.current = setTimeout(runAutoPlay, 2000);
+        }
+      };
+      runAutoPlay();
     } else {
-        stopAutoPlay();
+      if (autoPlayIntervalRef.current) {
+        clearTimeout(autoPlayIntervalRef.current);
+        scratchGameRef.current?.reset();
+      }
     }
 
     return () => {
       if (autoPlayIntervalRef.current) {
-        clearInterval(autoPlayIntervalRef.current);
+        clearTimeout(autoPlayIntervalRef.current);
       }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,7 +157,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
       </div>
       <div className="w-full flex justify-start mt-6">
         <div className="flex items-center gap-2 flex-wrap">
-            <Button className="h-12" onClick={handlePurchase} disabled={isAutoPlaying}>
+            <Button className="h-12" onClick={handlePurchase} disabled={isAutoPlaying || !user}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
                         <CoinIcon />
@@ -171,10 +169,10 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                     </div>
                 </div>
             </Button>
-            <Button variant="secondary" size="icon" className="h-12 w-12" onClick={() => scratchGameRef.current?.reveal()} disabled={isAutoPlaying}>
+            <Button variant="secondary" size="icon" className="h-12 w-12" onClick={() => scratchGameRef.current?.reveal()} disabled={isAutoPlaying || !user}>
                 <Zap className="size-6" />
             </Button>
-            <Button variant="secondary" className="h-12 px-4" onClick={toggleAutoPlay}>
+            <Button variant="secondary" className="h-12 px-4" onClick={toggleAutoPlay} disabled={!user}>
                 {isAutoPlaying ? <Square className="size-6" /> : <Play className="size-6" />}
                 <span className="text-sm font-bold ml-2">
                       {isAutoPlaying ? 'Parar' : 'Auto'}
@@ -182,7 +180,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             </Button>
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant="secondary" className="h-12 px-4">
+                    <Button variant="secondary" className="h-12 px-4" disabled={!user}>
                         <Users className="size-6" />
                         <span className="text-sm font-bold ml-2">
                             Jogar com amigo
@@ -258,3 +256,4 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     </div>
   );
 }
+
