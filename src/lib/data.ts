@@ -94,10 +94,15 @@ const prizesCentavoDaSorte: PrizeType[] = [
 
 const prizesSorteInstantanea: PrizeType[] = [
   { name: 'Caixa de som JBL', value: 2500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_jbl_boombox_3_black.png?updatedAt=1751634894498' },
+  { name: 'iPhone 12', value: 2500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_iphone_15_pro_max_256_gb_nio_preto.png?updatedAt=1751634894448' },
   { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
+  { name: 'Smartphone Motorola', value: 800.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_edge_40_neo_256_gb_black_beauty.png?updatedAt=1751634892779' },
   { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
+  { name: 'Bola de futebol', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_ft_5_branca_e_preta.png?updatedAt=1751634891004' },
+  { name: 'Perfume 212 VIP', value: 399.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F814MXBZWCF3YV4MCMJGY4.png' },
+  { name: 'Camisa de time', value: 350.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_camisa_do_seu_time.png?updatedAt=1751634896240' },
   { name: 'Fone de ouvido', value: 220.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_fone_de_ouvido_bluetooth.png?updatedAt=1751634890865' },
-  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/200-REAIS.png?updatedAt=1752865094953' },
+  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/200%20REAIS.png?updatedAt=1752047821639' },
   { name: 'Copo Stanley', value: 165.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_copo_t_rmico_stanley_preto.png?updatedAt=1751634897660' },
   { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
   { name: 'PowerBank', value: 60.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F5KTMSEJBQF1STFZ4BCKXM.png' },
@@ -107,8 +112,8 @@ const prizesSorteInstantanea: PrizeType[] = [
   { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
   { name: '3 Reais', value: 3.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/3%20REAIS.png?updatedAt=1752047821897' },
   { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
-  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
-  { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1-real-coin.png?updatedAt=1753862142426' },
+  { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-cent-coin.png?updatedAt=1753862142410' },
 ];
 
 const allPrizes: PrizeType[] = [
