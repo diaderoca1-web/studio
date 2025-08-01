@@ -4,8 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Play, Square, WandSparkles, Users, Copy, Check } from "lucide-react";
-import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
+import { Zap, Play, Square, WandSparkles, Users, Copy, Check, PartyPopper } from "lucide-react";
+import ScratchGame, { ScratchGameRef, GameResult } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
 import RecentWinners from "./home/recent-winners";
@@ -25,6 +25,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   const [hasCopied, setHasCopied] = useState(false);
   const { toast } = useToast();
   const { user, deductBalance, addBalance } = useAuth();
+  const [gameResult, setGameResult] = useState<GameResult | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -66,7 +67,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     }
   }
 
-  const handleReveal = (result: { isWinner: boolean; prizeValue: number }) => {
+  const handleReveal = (result: GameResult) => {
     if (result.isWinner) {
         addBalance(result.prizeValue);
         toast({
@@ -76,14 +77,19 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     }
 
     if (!isAutoPlaying) {
-        setTimeout(() => {
-            scratchGameRef.current?.reset();
-        }, 4000);
+      setTimeout(() => {
+        setGameResult(result);
+      }, 500);
     }
   };
   
   const toggleAutoPlay = () => {
     setIsAutoPlaying(prev => !prev);
+  }
+
+  const resetGame = () => {
+    scratchGameRef.current?.reset();
+    setGameResult(null);
   }
 
   useEffect(() => {
@@ -141,6 +147,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             purchaseImageUrl="https://ik.imagekit.io/azx3nlpdu/TELA%202.png?updatedAt=1751849389437"
             onPurchaseRequest={handlePurchase}
             onReveal={handleReveal}
+            prizes={card.prizes}
           />
         </div>
         <div className="hidden md:block">
@@ -252,6 +259,51 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             </div>
         </div>
 
+        <Dialog open={!!gameResult} onOpenChange={(isOpen) => !isOpen && resetGame()}>
+            <DialogContent className="max-w-sm text-center">
+                {gameResult?.isWinner ? (
+                    <>
+                        <DialogHeader className="space-y-4">
+                           <div className="relative w-24 h-24 mx-auto bg-muted rounded-full p-2">
+                             <Image 
+                                src={gameResult.prizeImageUrl!} 
+                                alt={gameResult.prizeName!} 
+                                fill 
+                                className="object-contain" 
+                              />
+                           </div>
+                           <DialogTitle className="text-2xl font-bold text-primary">Parabéns!</DialogTitle>
+                           <p className="text-3xl font-bold">R$ {gameResult.prizeValue.toFixed(2).replace('.', ',')}</p>
+                           <DialogDescription>
+                             Você ganhou {gameResult.prizeName}! O prêmio já está na sua conta.
+                           </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <Button onClick={resetGame} className="w-full">
+                                Jogar Novamente
+                            </Button>
+                        </DialogFooter>
+                    </>
+                ) : (
+                    <>
+                         <DialogHeader className="space-y-4">
+                            <div className="mx-auto bg-muted rounded-full p-4 w-24 h-24 flex items-center justify-center">
+                                <Zap className="size-12 text-muted-foreground" />
+                            </div>
+                           <DialogTitle className="text-2xl font-bold">Não foi dessa vez!</DialogTitle>
+                           <DialogDescription>
+                             Mais sorte na próxima! Continue tentando.
+                           </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                           <Button onClick={resetGame} className="w-full">
+                                Tentar Novamente
+                            </Button>
+                        </DialogFooter>
+                    </>
+                )}
+            </DialogContent>
+        </Dialog>
     </div>
   );
 }

@@ -4,27 +4,12 @@
 import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Gift } from 'lucide-react';
 import { Button } from './ui/button';
 import CoinIcon from './icons/coin-icon';
-
-const prizes = [
-    { type: '1-real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
-    { type: '50-centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
-    { type: 'star', value: 50, imageUrl: 'https://placehold.co/100x100/orange/white?text=⭐' },
-    { type: 'gem', value: 100, imageUrl: 'https://placehold.co/100x100/blue/white?text=💎' },
-];
-
-const symbolMap: { [key: string]: string } = {
-    '1-real': 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586',
-    '50-centavos': 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979',
-    star: 'https://placehold.co/100x100/orange/white?text=⭐',
-    gem: 'https://placehold.co/100x100/blue/white?text=💎',
-    lose: 'https://placehold.co/100x100/grey/white?text=❌',
-};
+import { PrizeType } from '@/lib/data';
 
 // Simple shuffle function
-const shuffle = (array: any[]) => {
+const shuffle = <T,>(array: T[]): T[] => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -32,44 +17,13 @@ const shuffle = (array: any[]) => {
     return array;
 };
 
-type GameResult = {
-    grid: { type: string }[];
+export type GameResult = {
+    grid: { name: string, imageUrl: string }[];
     winningSymbol: string | null;
     isWinner: boolean;
     prizeValue: number;
-};
-
-// Generate a grid for the game
-const generateGrid = (): GameResult => {
-    const winningPrize = prizes[Math.floor(Math.random() * prizes.length)];
-    const isWinner = Math.random() > 0.5; // 50% chance to win
-
-    if (isWinner) {
-        const grid = new Array(9).fill({ type: 'lose' });
-        const winningIndexes = shuffle([...Array(9).keys()]).slice(0, 3);
-        winningIndexes.forEach(i => grid[i] = winningPrize);
-        const otherPrizes = prizes.filter(p => p.type !== winningPrize.type);
-        
-        const remainingIndexes = [...Array(9).keys()].filter(i => !winningIndexes.includes(i));
-        remainingIndexes.forEach(i => {
-            grid[i] = { type: otherPrizes[Math.floor(Math.random() * otherPrizes.length)].type };
-        });
-        
-        // Ensure no other accidental wins
-        const finalGrid = shuffle(grid);
-        // This is a simplified logic, a real game would need more robust generation
-        // to avoid accidental wins of other symbols. For this demo, we'll keep it simple.
-        return {grid: finalGrid, winningSymbol: winningPrize.type, isWinner: true, prizeValue: winningPrize.value };
-    } else {
-        // Create a losing grid
-        let grid = [];
-        const prizeTypes = prizes.map(p => p.type);
-        for (let i = 0; i < 3; i++) grid.push({type: prizeTypes[0]});
-        for (let i = 0; i < 3; i++) grid.push({type: prizeTypes[1]});
-        for (let i = 0; i < 2; i++) grid.push({type: prizeTypes[2]});
-        grid.push({type: prizeTypes[3]});
-        return {grid: shuffle(grid), winningSymbol: null, isWinner: false, prizeValue: 0};
-    }
+    prizeName: string | null;
+    prizeImageUrl: string | null;
 };
 
 interface ScratchGameProps {
@@ -77,8 +31,9 @@ interface ScratchGameProps {
     cost: number;
     purchaseImageUrl: string;
     onPurchaseRequest: () => void;
-    onReveal?: (result: { isWinner: boolean; prizeValue: number }) => void;
+    onReveal?: (result: GameResult) => void;
     onReset?: () => void;
+    prizes: PrizeType[];
 }
 
 export interface ScratchGameRef {
@@ -87,14 +42,67 @@ export interface ScratchGameRef {
   reset: () => Promise<void>;
 }
 
-const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl, onPurchaseRequest, onReveal, onReset }, ref) => {
+const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl, onPurchaseRequest, onReveal, onReset, prizes }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
-    const [game, setGame] = useState<GameResult>(generateGrid());
+    const [game, setGame] = useState<GameResult | null>(null);
     const [scratchedPercentage, setScratchedPercentage] = useState(0);
     const [isPurchased, setIsPurchased] = useState(false);
     const [isRevealed, setIsRevealed] = useState(false);
+    
+    // Generate a grid for the game
+    const generateGrid = (): GameResult => {
+        const isWinner = Math.random() > 0.5; // 50% chance to win
+    
+        if (isWinner && prizes.length > 0) {
+            const winningPrize = prizes[Math.floor(Math.random() * prizes.length)];
+            const winningSymbol = { name: winningPrize.name, imageUrl: winningPrize.imageUrl };
 
+            let grid = Array(3).fill(winningSymbol);
+
+            const otherPrizes = prizes.filter(p => p.name !== winningPrize.name);
+            for (let i = 0; i < 6; i++) {
+                const randomPrize = otherPrizes[Math.floor(Math.random() * otherPrizes.length)];
+                grid.push({ name: randomPrize.name, imageUrl: randomPrize.imageUrl });
+            }
+            
+            // This is a simplified logic, a real game would need more robust generation
+            // to avoid accidental wins of other symbols. For this demo, we'll keep it simple.
+            return {
+                grid: shuffle(grid),
+                winningSymbol: winningPrize.name, 
+                isWinner: true, 
+                prizeValue: winningPrize.value,
+                prizeName: winningPrize.name,
+                prizeImageUrl: winningPrize.imageUrl
+            };
+        } else {
+            // Create a losing grid
+            let grid = [];
+            let counts: {[key: string]: number} = {};
+
+            while(grid.length < 9) {
+                const randomPrize = prizes[Math.floor(Math.random() * prizes.length)];
+                counts[randomPrize.name] = (counts[randomPrize.name] || 0) + 1;
+                if(counts[randomPrize.name] < 3) {
+                     grid.push({ name: randomPrize.name, imageUrl: randomPrize.imageUrl });
+                } else {
+                    // prevent adding a third of the same symbol
+                    counts[randomPrize.name]--; 
+                }
+            }
+            
+            return {
+                grid: shuffle(grid), 
+                winningSymbol: null, 
+                isWinner: false, 
+                prizeValue: 0,
+                prizeName: null,
+                prizeImageUrl: null,
+            };
+        }
+    };
+    
     const getCtx = () => canvasRef.current?.getContext('2d');
 
     const drawScratchLayer = () => {
@@ -123,7 +131,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
         },
         reveal: () => {
             return new Promise<void>((resolve) => {
-              if (!isPurchased || isRevealed) {
+              if (!isPurchased || isRevealed || !game) {
                 resolve();
                 return;
               }
@@ -162,7 +170,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                   calculateScratchedArea();
                   if (!isRevealed) {
                     setIsRevealed(true);
-                    onReveal?.({ isWinner: game.isWinner, prizeValue: game.prizeValue });
+                    onReveal?.(game);
                   }
                   resolve();
                 }
@@ -180,6 +188,10 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
         }
     }));
 
+    useEffect(() => {
+        setGame(generateGrid());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (isPurchased) {
@@ -188,15 +200,16 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
     }, [isPurchased]);
     
     useEffect(() => {
-        if(scratchedPercentage > 60 && !isRevealed) {
+        if(scratchedPercentage > 60 && !isRevealed && game) {
             const ctx = getCtx();
             if (ctx) {
                 ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             }
             setIsRevealed(true);
-            onReveal?.({ isWinner: game.isWinner, prizeValue: game.prizeValue });
+            onReveal?.(game);
         }
-    }, [scratchedPercentage, isRevealed, onReveal, game.isWinner, game.prizeValue]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [scratchedPercentage, isRevealed, onReveal, game]);
 
 
     const startDrawing = (e: React.MouseEvent | React.TouchEvent) => {
@@ -262,12 +275,12 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                 {isPurchased ? (
                     <>
                         <div className="absolute inset-2 grid grid-cols-3 grid-rows-3 gap-2">
-                            {game.grid.map((item, index) => (
+                            {game?.grid.map((item, index) => (
                                 <div key={index} className="bg-muted rounded-md flex items-center justify-center p-2">
                                    <div className="relative w-full h-full">
                                      <Image 
-                                        src={symbolMap[item.type as keyof typeof symbolMap] || symbolMap.lose} 
-                                        alt={item.type}
+                                        src={item.imageUrl} 
+                                        alt={item.name}
                                         fill
                                         className="object-contain"
                                      />
@@ -315,22 +328,6 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                     </div>
                 )}
             </CardContent>
-             {isRevealed && (
-                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-center text-white p-4">
-                    {game.isWinner ? (
-                        <>
-                            <h2 className="text-2xl sm:text-4xl font-bold text-amber-400">Congratulations!</h2>
-                            <p className="text-lg sm:text-2xl mt-2">You won R$ {game.prizeValue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}!</p>
-                            <p className="mt-4 flex items-center gap-2"><Gift className="size-5"/> Your prize has been credited to your account.</p>
-                        </>
-                    ) : (
-                        <>
-                            <h2 className="text-2xl sm:text-4xl font-bold">Better Luck Next Time!</h2>
-                            <p className="text-lg mt-2">No prize this time. Why not try another card?</p>
-                        </>
-                    )}
-                </div>
-            )}
         </Card>
     );
 });
