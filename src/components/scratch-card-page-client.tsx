@@ -22,7 +22,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     await scratchGameRef.current.purchase();
     await sleep(200);
     await scratchGameRef.current.reveal();
-    await sleep(3800); // Wait for the win/loss message to be visible
+    await sleep(1000); // Wait for the win/loss message to be visible
     await scratchGameRef.current.reset();
   };
   
@@ -33,7 +33,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   useEffect(() => {
     const startAutoPlay = () => {
         handleAutoPlay(); // Run once immediately
-        autoPlayIntervalRef.current = setInterval(handleAutoPlay, 8000);
+        autoPlayIntervalRef.current = setInterval(handleAutoPlay, 5000);
     }
   
     const stopAutoPlay = () => {
