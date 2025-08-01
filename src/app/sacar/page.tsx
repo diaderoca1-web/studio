@@ -13,21 +13,36 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Landmark, Asterisk } from 'lucide-react';
+import { Landmark, Asterisk, Phone, Mail, User, Building, KeyRound } from 'lucide-react';
+
+const pixKeyTypes = {
+  cpf: { icon: User, label: 'CPF' },
+  cnpj: { icon: Building, label: 'CNPJ' },
+  email: { icon: Mail, label: 'Email' },
+  phone: { icon: Phone, label: 'Celular' },
+  random: { icon: KeyRound, label: 'Aleatória' },
+};
+
+type PixKeyType = keyof typeof pixKeyTypes;
 
 export default function WithdrawPage() {
   const [amount, setAmount] = useState('0,00');
-  const [pixKeyType, setPixKeyType] = useState('cpf');
+  const [pixKeyType, setPixKeyType] = useState<PixKeyType>('cpf');
   const [pixKey, setPixKey] = useState('');
 
   const quickAmounts = [30, 50, 100, 200];
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Basic formatting for currency, can be improved
     let value = e.target.value.replace(/\D/g, '');
+    if (!value) {
+        setAmount('0,00');
+        return;
+    }
     value = (parseInt(value, 10) / 100).toFixed(2).replace('.', ',');
     setAmount(value);
   };
+
+  const SelectedIcon = pixKeyTypes[pixKeyType]?.icon || Asterisk;
 
   return (
     <div className="container mx-auto max-w-lg py-8">
@@ -87,20 +102,23 @@ export default function WithdrawPage() {
                 Chave PIX
             </label>
             <div className="flex gap-2">
-                <Select value={pixKeyType} onValueChange={setPixKeyType}>
+                <Select value={pixKeyType} onValueChange={(value) => setPixKeyType(value as PixKeyType)}>
                     <SelectTrigger className="w-24 h-12">
                          <SelectValue>
                             <div className='flex items-center gap-2'>
-                                <Asterisk className="size-5" />
+                                <SelectedIcon className="size-5" />
                             </div>
                         </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="cpf">CPF</SelectItem>
-                        <SelectItem value="cnpj">CNPJ</SelectItem>
-                        <SelectItem value="email">Email</SelectItem>
-                        <SelectItem value="phone">Celular</SelectItem>
-                        <SelectItem value="random">Aleatória</SelectItem>
+                        {Object.entries(pixKeyTypes).map(([key, { icon: Icon, label }]) => (
+                            <SelectItem key={key} value={key}>
+                                <div className="flex items-center gap-2">
+                                    <Icon className="size-4" />
+                                    <span>{label}</span>
+                                </div>
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
                 <Input
