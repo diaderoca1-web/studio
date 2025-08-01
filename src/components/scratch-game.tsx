@@ -188,7 +188,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
 
     return (
         <Card className="overflow-hidden relative select-none border-none shadow-2xl shadow-primary/10">
-            <CardContent className="p-0 aspect-[4/3] relative">
+            <CardContent className="p-0 aspect-[4/3] relative bg-black">
                 {isPurchased ? (
                     <>
                         <div className="absolute inset-2 grid grid-cols-3 grid-rows-3 gap-2">
@@ -223,13 +223,10 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
                             layout="fill"
-                            objectFit="cover"
+                            objectFit="contain"
                             className="z-0"
                         />
                         <div className="absolute inset-0 bg-black/70 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
-                            <p className="text-sm text-white/80">Clique em "comprar e raspar" para iniciar o jogo</p>
-                            <CoinIcon className="w-20 h-20 text-white/50" />
-                            <p className="text-xl font-bold text-white">Comprar por R$ {cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
                             <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
                                 <div className="flex items-center justify-between w-full gap-4">
                                     <span>Comprar</span>
@@ -239,7 +236,6 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                                     </div>
                                 </div>
                             </Button>
-                             <p className="text-sm text-white/80">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
                         </div>
                     </div>
                 )}
