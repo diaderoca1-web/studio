@@ -23,6 +23,10 @@ import { DepositSheet } from "../deposit-sheet";
 
 export function UserNav() {
   const { user, logout } = useAuth();
+  // Mock balances for demonstration
+  const realBalance = 125.50;
+  const bonusBalance = 30.00;
+  const totalBalance = realBalance + bonusBalance;
 
   if (!user) {
     return null;
@@ -35,7 +39,7 @@ export function UserNav() {
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="outline" className="flex items-center gap-2">
-            <span>R$ 0,00</span>
+            <span>R$ {totalBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
             <ChevronDown className="h-4 w-4 text-muted-foreground" />
           </Button>
         </PopoverTrigger>
@@ -43,18 +47,18 @@ export function UserNav() {
             <div className="space-y-3">
                 <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Saldo</span>
-                        <span className="font-semibold">R$ 0,00</span>
+                        <span className="text-muted-foreground">Saldo Real</span>
+                        <span className="font-semibold">R$ {realBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                         <span className="text-muted-foreground">Bônus</span>
-                        <span className="font-semibold">R$ 0,00</span>
+                        <span className="font-semibold">R$ {bonusBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                     </div>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-bold">
                     <span>Total</span>
-                    <span>R$ 0,00</span>
+                    <span>R$ {totalBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                 </div>
                  <p className="text-xs text-muted-foreground">
                     O saldo total é a soma do seu saldo e bônus.

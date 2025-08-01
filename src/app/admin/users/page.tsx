@@ -6,10 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { User } from '@/services/auth-service';
 import { Edit, Trash2, PlusCircle } from 'lucide-react';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 // This is a mock since we can't import server-side vars directly
 const mockUsers: User[] = [
@@ -23,6 +24,7 @@ export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [creditAmount, setCreditAmount] = useState('');
+    const [creditType, setCreditType] = useState('real');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { toast } = useToast();
 
@@ -34,16 +36,19 @@ export default function UsersPage() {
 
     const handleAddCredit = (user: User) => {
         setSelectedUser(user);
+        setCreditAmount('');
+        setCreditType('real');
         setIsDialogOpen(true);
     };
 
     const handleConfirmAddCredit = () => {
         if (!selectedUser || !creditAmount) return;
         
-        console.log(`Adding R$ ${creditAmount} to user ${selectedUser.name}`);
+        const typeLabel = creditType === 'real' ? 'Saldo Real' : 'Saldo de Bônus';
+        console.log(`Adding R$ ${creditAmount} of ${typeLabel} to user ${selectedUser.name}`);
         toast({
             title: 'Crédito Adicionado!',
-            description: `R$ ${creditAmount} foram adicionados para ${selectedUser.name}.`,
+            description: `R$ ${creditAmount} de ${typeLabel} foram adicionados para ${selectedUser.name}.`,
         });
 
         // Reset state
@@ -103,7 +108,20 @@ export default function UsersPage() {
                             Adicione um valor à conta de {selectedUser?.name}. Esta ação não pode ser desfeita.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="space-y-4 py-2 pb-4">
+                    <div className="space-y-6 py-2 pb-4">
+                        <div className="space-y-2">
+                            <Label>Tipo de Saldo</Label>
+                            <RadioGroup defaultValue="real" value={creditType} onValueChange={setCreditType} className="flex gap-4">
+                                <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="real" id="r-real" />
+                                    <Label htmlFor="r-real">Saldo Real</Label>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <RadioGroupItem value="bonus" id="r-bonus" />
+                                    <Label htmlFor="r-bonus">Saldo de Bônus</Label>
+                                </div>
+                            </RadioGroup>
+                        </div>
                         <div className="space-y-2">
                             <Label htmlFor="credit-amount">Valor do Crédito</Label>
                              <div className="relative">
