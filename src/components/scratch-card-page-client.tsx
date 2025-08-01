@@ -161,7 +161,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                         </div>
                         <p className="font-semibold text-sm mb-2 h-10 flex items-center">{prize.name}</p>
                         <div className="mt-auto w-full">
-                           <div className="bg-primary/20 text-primary font-bold py-2 px-4 rounded-lg text-sm">
+                           <div className="bg-white text-background font-semibold py-1 px-1.5 rounded-sm text-sm">
                                 R$ {prize.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                            </div>
                         </div>
