@@ -1,6 +1,16 @@
 
 import Link from "next/link";
 import Logo from "../icons/logo";
+import Image from "next/image";
+
+const seals = [
+    { name: 'SSL Secure', imageUrl: 'https://raspagreen.com/selo-ssl.png' },
+    { name: '24/7 Support', imageUrl: 'https://raspagreen.com/selo-24-7.png' },
+    { name: 'Pix', imageUrl: 'https://raspagreen.com/selo-pix.png' },
+    { name: '18+', imageUrl: 'https://raspagreen.com/selo-18.png' },
+    { name: 'Fair Play', imageUrl: 'https://raspagreen.com/selo-fair.png' },
+    { name: 'Gambling Therapy', imageUrl: 'https://raspagreen.com/selo-therapy.png' },
+];
 
 export function Footer() {
   return (
@@ -34,6 +44,21 @@ export function Footer() {
                     <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Suporte Técnico</Link></li>
                 </ul>
                 </div>
+            </div>
+        </div>
+         <div className="border-t border-border mt-8 pt-8">
+            <div className="flex flex-wrap items-center justify-center gap-6">
+                {seals.map((seal) => (
+                    <div key={seal.name} className="flex items-center justify-center h-10">
+                        <Image
+                            src={seal.imageUrl}
+                            alt={seal.name}
+                            width={100}
+                            height={40}
+                            className="object-contain h-full w-auto"
+                        />
+                    </div>
+                ))}
             </div>
         </div>
       </div>
