@@ -17,7 +17,7 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
   }
 
   return (
-    <div className="container mx-auto py-8 max-w-lg">
+    <div className="container mx-auto p-4 max-w-lg">
       <div className="grid grid-cols-1 gap-6">
         <div>
           <ScratchGame 
@@ -27,14 +27,16 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
           />
         </div>
 
-        <div className="flex items-center gap-2">
-            <Button variant="secondary" size="icon" className="h-14 w-14">
-                <Zap className="size-6" />
-            </Button>
-            <Button variant="secondary" size="icon" className="h-14 w-14">
-                <RefreshCw className="size-6" />
-                <span className="sr-only">Auto</span>
-            </Button>
+        <div className="w-full flex justify-center">
+            <div className="flex items-center gap-4">
+                <Button variant="secondary" size="icon" className="h-14 w-14">
+                    <Zap className="size-6" />
+                </Button>
+                <Button variant="secondary" size="icon" className="h-14 w-14">
+                    <RefreshCw className="size-6" />
+                    <span className="sr-only">Auto</span>
+                </Button>
+            </div>
         </div>
 
         <Card>
