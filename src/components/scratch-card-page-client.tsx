@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Zap, Play, Square, WandSparkles } from "lucide-react";
+import { Zap, Play, Square, WandSparkles, Users } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
@@ -112,6 +112,12 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                 {isAutoPlaying ? <Square className="size-6" /> : <Play className="size-6" />}
                 <span className="text-sm font-bold ml-2">
                       {isAutoPlaying ? 'Parar' : 'Auto'}
+                </span>
+            </Button>
+            <Button variant="secondary" className="h-12 px-4">
+                <Users className="size-6" />
+                <span className="text-sm font-bold ml-2">
+                    Jogar com amigo
                 </span>
             </Button>
         </div>
