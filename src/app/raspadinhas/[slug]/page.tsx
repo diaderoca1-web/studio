@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { scratchCards } from "@/lib/data";
 import ScratchCardPageClient from "@/components/scratch-card-page-client";
 
-export default function ScratchCardPage({ params }: { params: { slug: string } }) {
+export default async function ScratchCardPage({ params }: { params: { slug: string } }) {
   const card = scratchCards.find((c) => c.slug === params.slug);
 
   if (!card) {
