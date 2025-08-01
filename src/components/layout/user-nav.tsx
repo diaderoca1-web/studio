@@ -13,9 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, Plus, ShieldCheck, User } from "lucide-react";
 import Link from "next/link";
 import DepositIcon from "../icons/deposit-icon";
+import { DepositSheet } from "../deposit-sheet";
 
 export function UserNav() {
   return (
@@ -57,11 +59,19 @@ export function UserNav() {
         </PopoverContent>
       </Popover>
 
-      <Button asChild variant="primary" size="icon" className="bg-lime-400 hover:bg-lime-500 text-black">
-        <Link href="/depositar">
-            <DepositIcon className="h-6 w-6"/>
-        </Link>
-      </Button>
+      <Sheet>
+        <SheetTrigger asChild>
+            <Button asChild variant="primary" size="icon" className="bg-lime-400 hover:bg-lime-500 text-black">
+                <Link href="/depositar">
+                    <DepositIcon className="h-6 w-6"/>
+                </Link>
+            </Button>
+        </SheetTrigger>
+        <SheetContent side="bottom" className="p-0 bg-card/95 backdrop-blur-sm border-t border-primary/20">
+            <DepositSheet />
+        </SheetContent>
+      </Sheet>
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-10 w-10 rounded-full">
