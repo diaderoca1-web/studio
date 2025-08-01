@@ -113,9 +113,11 @@ export function UserNav() {
                     </Link>
                 </DropdownMenuItem>
             )}
-            <DropdownMenuItem>
-              <User className="mr-2" />
-              <span>Conta</span>
+            <DropdownMenuItem asChild>
+                <Link href="/perfil">
+                    <User className="mr-2" />
+                    <span>Conta</span>
+                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
                 <Link href="/sacar">
@@ -123,13 +125,17 @@ export function UserNav() {
                     <span>Sacar</span>
                 </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Gamepad2 className="mr-2" />
-              <span>Histórico de Jogos</span>
+            <DropdownMenuItem asChild>
+                <Link href="/historico">
+                    <Gamepad2 className="mr-2" />
+                    <span>Histórico de Jogos</span>
+                </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard className="mr-2" />
-              <span>Transações</span>
+            <DropdownMenuItem asChild>
+                <Link href="/transacoes">
+                    <CreditCard className="mr-2" />
+                    <span>Transações</span>
+                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <ShieldCheck className="mr-2" />
