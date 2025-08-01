@@ -1,9 +1,10 @@
 
 'use client';
 import { useRef } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Zap, RefreshCw } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Zap, RefreshCw, Sparkles, WandSparkles } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
@@ -12,17 +13,13 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   const scratchGameRef = useRef<ScratchGameRef>(null);
 
   const handlePurchaseClick = () => {
-    // This button is now primarily for display, the main purchase
-    // is inside the ScratchGame component.
-    // We can still trigger it from here if needed, but for now we'll
-    // let the game component handle its own state.
     scratchGameRef.current?.purchase();
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-lg">
-      <div className="grid grid-cols-1 gap-6">
-        <div>
+    <div className="container mx-auto p-4 max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div className="md:col-span-1">
           <ScratchGame
             ref={scratchGameRef}
             cardTitle={card.title}
@@ -31,48 +28,72 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
           />
         </div>
 
-        <div className="w-full flex justify-center">
+        <div className="md:col-span-1 space-y-6">
+            <div className="w-full aspect-video relative rounded-lg overflow-hidden">
+                <Image 
+                    src="https://raspagreen.com/deposit_bg.jpg"
+                    alt="Pix na Hora"
+                    fill
+                    className="object-cover"
+                />
+            </div>
+            
+            <Card className="bg-transparent border-none shadow-none">
+                <CardHeader className="p-0">
+                    <CardTitle className="text-3xl font-bold">{card.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2 p-0 mt-4">
+                    <div className="flex items-center justify-between text-sm">
+                        <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + R</kbd> para comprar.</p>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                        <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + B</kbd> para revelar.</p>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                        <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Shift + B</kbd> para revelar rápido.</p>
+                    </div>
+                </CardContent>
+            </Card>
+
+            <Card className="bg-card/50">
+                <CardContent className="p-4">
+                    <div className="flex items-center gap-2">
+                        <WandSparkles className="size-5 text-primary" />
+                        <p className="text-sm text-muted-foreground"><span className="font-bold text-foreground">Reúna 3 imagens iguais e conquiste seu prêmio!</span> O valor correspondente será creditado automaticamente na sua conta. Se preferir receber o produto físico, basta entrar em contato com o nosso suporte.</p>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+      </div>
+       <div className="w-full flex justify-start mt-6">
             <div className="flex items-center gap-2">
-                <Button size="lg" className="h-14 bg-lime-400 hover:bg-lime-500 text-black font-bold flex-1" onClick={handlePurchaseClick}>
+                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchaseClick}>
                     <div className="flex items-center justify-between w-full">
                         <div className="flex items-center gap-1.5">
                             <CoinIcon />
                             <span>Comprar</span>
                         </div>
-                        <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold">
+                        <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold ml-4">
                             <span>R$</span>
                             <span>{card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
                         </div>
                     </div>
                 </Button>
-                <Button variant="secondary" size="icon" className="h-14 w-14">
+                <Button variant="secondary" size="icon" className="h-12 w-12">
                     <Zap className="size-6" />
                 </Button>
-                <Button variant="secondary" className="h-14 w-14 flex-col gap-1">
+                <Button variant="secondary" className="h-12 px-4">
                     <RefreshCw className="size-6" />
-                    <span className="text-xs font-bold">Auto</span>
+                    <span className="text-sm font-bold ml-2">Rodada Automática</span>
                 </Button>
             </div>
         </div>
 
-        <Card>
-            <CardHeader>
-                <CardTitle>{card.title}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + R</kbd> para comprar.</p>
-                </div>
-                 <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + B</kbd> para revelar.</p>
-                </div>
-                 <div className="flex items-center justify-between text-sm">
-                    <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Shift + B</kbd> para revelar rápido.</p>
-                </div>
-            </CardContent>
-        </Card>
+        <div className="mt-12">
+            <h2 className="text-2xl font-bold mb-4">Prêmios da Raspadinha:</h2>
+            {/* Placeholder for prizes grid */}
+        </div>
 
-      </div>
     </div>
   );
 }

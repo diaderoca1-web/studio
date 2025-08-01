@@ -84,15 +84,16 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
 
     const getCtx = () => canvasRef.current?.getContext('2d');
 
+    const handlePurchase = () => {
+        setIsPurchased(true);
+    };
+
     useImperativeHandle(ref, () => ({
         purchase() {
             handlePurchase();
         }
     }));
 
-    const handlePurchase = () => {
-        setIsPurchased(true);
-    };
 
     useEffect(() => {
         if (!isPurchased) return;
@@ -217,7 +218,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                         />
                     </>
                 ) : (
-                    <div className="absolute inset-0">
+                     <div className="absolute inset-0 w-full h-full">
                         <Image 
                             src={purchaseImageUrl}
                             alt="Comprar raspadinha"
@@ -226,8 +227,10 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                             className="z-0"
                         />
                         <div className="absolute inset-0 bg-black/70 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
-                            <p className="text-sm mt-4 text-white/80">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
-                            <Button size="lg" className="h-14 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
+                            <p className="text-sm text-white/80">Clique em "comprar e raspar" para iniciar o jogo</p>
+                            <CoinIcon className="w-20 h-20 text-white/50" />
+                            <p className="text-xl font-bold text-white">Comprar por R$ {cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
+                            <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
                                 <div className="flex items-center justify-between w-full gap-4">
                                     <span>Comprar</span>
                                     <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold">
@@ -236,6 +239,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                                     </div>
                                 </div>
                             </Button>
+                             <p className="text-sm text-white/80">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
                         </div>
                     </div>
                 )}

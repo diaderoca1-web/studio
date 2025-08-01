@@ -13,11 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, Plus, ShieldCheck, User } from "lucide-react";
+import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, ShieldCheck, User } from "lucide-react";
 import Link from "next/link";
 import DepositIcon from "../icons/deposit-icon";
-import { DepositSheet } from "../deposit-sheet";
 
 export function UserNav() {
   return (
@@ -49,29 +47,23 @@ export function UserNav() {
                  <p className="text-xs text-muted-foreground">
                     O saldo total é a soma do seu saldo e bônus.
                 </p>
-                <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                    <Link href="/sacar">
-                        <Landmark className="mr-2 h-4 w-4" />
-                        Sacar
-                    </Link>
-                </Button>
             </div>
         </PopoverContent>
       </Popover>
 
-      <Sheet>
-        <SheetTrigger asChild>
-            <Button size="icon" className="bg-lime-400 hover:bg-lime-500 text-black">
-                <DepositIcon className="h-6 w-6"/>
-            </Button>
-        </SheetTrigger>
-        <SheetContent 
-            side="bottom" 
-            className="p-0 bg-card border-t-0"
-        >
-            <DepositSheet />
-        </SheetContent>
-      </Sheet>
+      <Button asChild className="bg-primary hover:bg-primary/90">
+        <Link href="/depositar">
+          <DepositIcon className="mr-2 h-4 w-4" />
+          Depositar
+        </Link>
+      </Button>
+      
+      <Button asChild className="bg-primary hover:bg-primary/90">
+        <Link href="/sacar">
+            <Landmark className="mr-2 h-4 w-4" />
+            Sacar
+        </Link>
+      </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -85,7 +77,7 @@ export function UserNav() {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">Usuário</p>
+              <p className="text-sm font-medium leading-none">Dia De R...</p>
               <p className="text-xs leading-none text-muted-foreground">
                 usuario@exemplo.com
               </p>
