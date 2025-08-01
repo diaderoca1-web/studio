@@ -47,7 +47,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                             <CoinIcon />
                             <span>Comprar</span>
                         </div>
-                        <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold ml-4">
+                        <div className="bg-black/80 rounded-md px-3 py-1 hidden sm:flex items-center gap-1 text-white text-sm font-bold ml-4">
                             <span>R$</span>
                             <span>{card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
                         </div>
