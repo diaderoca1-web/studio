@@ -178,7 +178,7 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
 
     return (
         <Card className="overflow-hidden relative select-none border-none shadow-2xl shadow-primary/10">
-            <CardContent className="p-2 aspect-[4/3] relative">
+            <CardContent className="p-0 aspect-[4/3] relative">
                 {isPurchased ? (
                     <>
                         <div className="absolute inset-2 grid grid-cols-3 grid-rows-3 gap-2">
@@ -208,31 +208,24 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
                         />
                     </>
                 ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90">
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white p-4 gap-4">
-                            
-                            <div className="relative w-full max-w-xs aspect-square">
-                               <Image 
-                                    src={purchaseImageUrl}
-                                    alt="Comprar raspadinha"
-                                    fill
-                                    className="object-contain"
-                               />
-                            </div>
-                            <p className="flex items-center gap-1 text-lg text-foreground font-semibold">Comprar por R$ {cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</p>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <Image 
+                            src={purchaseImageUrl}
+                            alt="Comprar raspadinha"
+                            layout="fill"
+                            objectFit="cover"
+                            className="z-0"
+                        />
+                        <div className="absolute inset-0 bg-black/70 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
+                             <p className="text-sm mt-4 text-white/80">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
                             <Button onClick={handlePurchase} size="lg" className="h-12 text-base">
                                  <div className="flex gap-2 justify-between items-center w-full px-4">
                                     <div className="flex gap-2 items-center font-bold">
                                         <CoinIcon className="size-6" />
-                                        <span>Comprar</span>
-                                    </div>
-                                    <div className="bg-background/20 rounded-md px-3 py-1.5 flex items-center gap-1.5 text-white text-base font-bold">
-                                        <span>R$</span>
-                                        <span>{cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
+                                        <span>Comprar por R$ {cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
                                     </div>
                                 </div>
                             </Button>
-                            <p className="text-sm mt-4 text-muted-foreground">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
                         </div>
                     </div>
                 )}
@@ -256,3 +249,5 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
         </Card>
     );
 }
+
+    
