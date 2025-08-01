@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from './ui/button';
 import CoinIcon from './icons/coin-icon';
 import { PrizeType } from '@/lib/data';
+import { useSettings } from '@/contexts/settings-context';
 
 // Simple shuffle function
 const shuffle = <T,>(array: T[]): T[] => {
@@ -53,6 +54,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
     const [scratchedPercentage, setScratchedPercentage] = useState(0);
     const [isPurchased, setIsPurchased] = useState(false);
     const [isRevealed, setIsRevealed] = useState(false);
+    const { settings } = useSettings();
     
     // Generate a grid for the game
     const generateGrid = (): GameResult => {
@@ -81,7 +83,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
             };
         }
         
-        const isWinner = Math.random() > 0.5; // 50% chance to win. This can be tied to admin settings later.
+        const isWinner = Math.random() < (settings.winProbability / 100);
 
         if (isWinner) {
             const winningPrize = prizes[Math.floor(Math.random() * prizes.length)];

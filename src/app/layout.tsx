@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Inter } from 'next/font/google';
@@ -7,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { Footer } from '@/components/layout/footer';
 import { MobileFooter } from '@/components/layout/mobile-footer';
 import { AuthProvider } from '@/contexts/auth-context';
+import { SettingsProvider } from '@/contexts/settings-context';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -29,13 +31,15 @@ export default function RootLayout({
         )}
       >
         <AuthProvider>
-          <div className="relative flex min-h-screen flex-col pb-20 md:pb-0">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <MobileFooter />
-          </div>
-          <Toaster />
+          <SettingsProvider>
+            <div className="relative flex min-h-screen flex-col pb-20 md:pb-0">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <MobileFooter />
+            </div>
+            <Toaster />
+          </SettingsProvider>
         </AuthProvider>
       </body>
     </html>

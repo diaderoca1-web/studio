@@ -1,6 +1,6 @@
 
 'use client';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,32 +8,62 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { useSettings } from "@/contexts/settings-context";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SettingsPage() {
-  const [storeName, setStoreName] = useState("RaspaGreen");
-  const [storeEmail, setStoreEmail] = useState("contato@raspagreen.com");
-  const [primaryColor, setPrimaryColor] = useState("#2ECC71");
-  const [winProbability, setWinProbability] = useState([50]);
-  const [rtp, setRtp] = useState([95]);
-  const [minWithdrawal, setMinWithdrawal] = useState("50.00");
-  const [withdrawalFee, setWithdrawalFee] = useState([0]);
-  const [processingTime, setProcessingTime] = useState("24 horas");
-  const [minDeposit, setMinDeposit] = useState("10.00");
-  const [firstDepositBonus, setFirstDepositBonus] = useState([100]);
-  const [paymentClientId, setPaymentClientId] = useState("");
-  const [paymentSecretKey, setPaymentSecretKey] = useState("");
-  const [dbServiceAccount, setDbServiceAccount] = useState("");
-  const [dbDatabaseUrl, setDbDatabaseUrl] = useState("");
-  const [analyticsApiKey, setAnalyticsApiKey] = useState("");
-  const [maintenanceMode, setMaintenanceMode] = useState(false);
-  const [supabaseUrl, setSupabaseUrl] = useState("");
-  const [supabaseAnonKey, setSupabaseAnonKey] = useState("");
-  const [googleClientId, setGoogleClientId] = useState("");
-  const [googleClientSecret, setGoogleClientSecret] = useState("");
+  const { settings, setSettings } = useSettings();
+  const { toast } = useToast();
+
+  // Local state to manage form inputs
+  const [storeName, setStoreName] = useState(settings.storeName);
+  const [storeEmail, setStoreEmail] = useState(settings.storeEmail);
+  const [primaryColor, setPrimaryColor] = useState(settings.primaryColor);
+  const [winProbability, setWinProbability] = useState([settings.winProbability]);
+  const [rtp, setRtp] = useState([settings.rtp]);
+  const [minWithdrawal, setMinWithdrawal] = useState(settings.minWithdrawal);
+  const [withdrawalFee, setWithdrawalFee] = useState([settings.withdrawalFee]);
+  const [processingTime, setProcessingTime] = useState(settings.processingTime);
+  const [minDeposit, setMinDeposit] = useState(settings.minDeposit);
+  const [firstDepositBonus, setFirstDepositBonus] = useState([settings.firstDepositBonus]);
+  const [paymentClientId, setPaymentClientId] = useState(settings.paymentClientId);
+  const [paymentSecretKey, setPaymentSecretKey] = useState(settings.paymentSecretKey);
+  const [dbServiceAccount, setDbServiceAccount] = useState(settings.dbServiceAccount);
+  const [dbDatabaseUrl, setDbDatabaseUrl] = useState(settings.dbDatabaseUrl);
+  const [analyticsApiKey, setAnalyticsApiKey] = useState(settings.analyticsApiKey);
+  const [maintenanceMode, setMaintenanceMode] = useState(settings.maintenanceMode);
+  const [supabaseUrl, setSupabaseUrl] = useState(settings.supabaseUrl);
+  const [supabaseAnonKey, setSupabaseAnonKey] = useState(settings.supabaseAnonKey);
+  const [googleClientId, setGoogleClientId] = useState(settings.googleClientId);
+  const [googleClientSecret, setGoogleClientSecret] = useState(settings.googleClientSecret);
+
+  // Update local state if context changes
+  useEffect(() => {
+    setStoreName(settings.storeName);
+    setStoreEmail(settings.storeEmail);
+    setPrimaryColor(settings.primaryColor);
+    setWinProbability([settings.winProbability]);
+    setRtp([settings.rtp]);
+    setMinWithdrawal(settings.minWithdrawal);
+    setWithdrawalFee([settings.withdrawalFee]);
+    setProcessingTime(settings.processingTime);
+    setMinDeposit(settings.minDeposit);
+    setFirstDepositBonus([settings.firstDepositBonus]);
+    setPaymentClientId(settings.paymentClientId);
+    setPaymentSecretKey(settings.paymentSecretKey);
+    setDbServiceAccount(settings.dbServiceAccount);
+    setDbDatabaseUrl(settings.dbDatabaseUrl);
+    setAnalyticsApiKey(settings.analyticsApiKey);
+    setMaintenanceMode(settings.maintenanceMode);
+    setSupabaseUrl(settings.supabaseUrl);
+    setSupabaseAnonKey(settings.supabaseAnonKey);
+    setGoogleClientId(settings.googleClientId);
+    setGoogleClientSecret(settings.googleClientSecret);
+  }, [settings]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const settings = {
+    setSettings({
       storeName,
       storeEmail,
       primaryColor,
@@ -54,9 +84,11 @@ export default function SettingsPage() {
       supabaseAnonKey,
       googleClientId,
       googleClientSecret,
-    };
-    console.log("Saving settings:", settings);
-    alert("Configurações salvas! Verifique o console do navegador.");
+    });
+    toast({
+        title: "Configurações Salvas!",
+        description: "Suas alterações foram salvas com sucesso.",
+    });
   };
 
   return (
