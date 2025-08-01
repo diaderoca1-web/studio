@@ -67,7 +67,7 @@ export function UserNav() {
         </SheetTrigger>
         <SheetContent 
             side="bottom" 
-            className="p-0 bg-card border-t border-primary/20"
+            className="p-0 bg-card border-t-0"
         >
             <DepositSheet />
         </SheetContent>
