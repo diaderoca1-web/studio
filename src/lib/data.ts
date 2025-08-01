@@ -136,6 +136,33 @@ const allPrizes: PrizeType[] = [
   { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
 ];
 
+const prizesRaspadinhaSuprema: PrizeType[] = [
+  { name: '5.000 Reais', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/5000-reais.png?updatedAt=1753733075630' },
+  { name: 'iPhone 15', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_iphone_15_pro_max_256_gb_nio_preto.png?updatedAt=1751634894448' },
+  { name: 'Notebook Dell G15', value: 4500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_notebook_g15.png?updatedAt=1751634891010' },
+  { name: 'PlayStation 5', value: 4500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_playstation_5.png?updatedAt=1751634892317' },
+  { name: 'Smart TV 4K de 55"', value: 3000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_smart_tv_4k_55.png?updatedAt=1751634892461' },
+  { name: 'Ipad 10', value: 2800.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/ipad-10.png?updatedAt=1753733075619' },
+  { name: 'Caixa de som JBL', value: 2500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_jbl_boombox_3_black.png?updatedAt=1751634894498' },
+  { name: 'Apple AirPods 3ª Geração', value: 1900.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_airpods_3_gera_o.png?updatedAt=1751634894740' },
+  { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
+  { name: 'Air Fryer', value: 850.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/air-fryer.png?updatedAt=1753733075678' },
+  { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
+  { name: '500 Reais', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/500-REAIS.png?updatedAt=1752856623150' },
+  { name: 'Adaptador de energia', value: 220.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/adaptador-energia.png?updatedAt=1753733075615' },
+  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/200%20REAIS.png?updatedAt=1752047821557' },
+  { name: 'Fone de ouvido', value: 170.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_fone_de_ouvido_bluetooth.png?updatedAt=1751634890865' },
+  { name: 'Copo Stanley rosa', value: 165.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_copo_t_rmico_stanley_rosa.png?updatedAt=1751634897689' },
+  { name: 'Smartwatch D20', value: 150.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_smartwatch_d20_shock.png?updatedAt=1751634892443' },
+  { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
+  { name: 'PowerBank', value: 60.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F5KTMSEJBQF1STFZ4BCKXM.png' },
+  { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
+  { name: '20 Reais', value: 20.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/20%20REAIS.png?updatedAt=1752047821716' },
+  { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
+  { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' }, // This is a coin but labeled 1 real
+];
+
 
 export const scratchCards: ScratchCardType[] = [
   {
@@ -166,7 +193,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 2.5,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FJA0JE70JMW0Y30HMFCP46.jpg",
     aiHint: "treasure chest",
-    prizes: allPrizes, // using all prizes as a fallback
+    prizes: prizesRaspadinhaSuprema,
   },
   {
     slug: "raspa-relampago",
