@@ -156,9 +156,9 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle>Convidar um amigo</DialogTitle>
+                        <DialogTitle>Desafie um Amigo e Ganhe!</DialogTitle>
                         <DialogDescription>
-                            Copie o link abaixo e envie para um amigo. A cada 5 amigos que se cadastrarem e jogarem, você ganha R$10 para sacar!
+                            Envie o link para seus amigos. A cada 5 que se cadastrarem e jogarem, você ganha <span className="font-bold text-primary">R$10 no PIX!</span>
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex items-center space-x-2">
@@ -178,7 +178,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                         </Button>
                     </div>
                     <DialogFooter className="sm:justify-start">
-                       <p className="text-xs text-muted-foreground">O link é válido por 24 horas.</p>
+                       <p className="text-xs text-muted-foreground">O link de convite é válido por 24 horas.</p>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
