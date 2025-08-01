@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Gift, Zap } from 'lucide-react';
@@ -71,7 +71,11 @@ interface ScratchGameProps {
     purchaseImageUrl: string;
 }
 
-export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: ScratchGameProps) {
+export interface ScratchGameRef {
+  purchase: () => void;
+}
+
+const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, cost, purchaseImageUrl }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [game, setGame] = useState(generateGrid());
@@ -79,6 +83,12 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
     const [isPurchased, setIsPurchased] = useState(false);
 
     const getCtx = () => canvasRef.current?.getContext('2d');
+
+    useImperativeHandle(ref, () => ({
+        purchase() {
+            handlePurchase();
+        }
+    }));
 
     useEffect(() => {
         if (!isPurchased) return;
@@ -218,14 +228,6 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
                         />
                         <div className="absolute inset-0 bg-black/70 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
                              <p className="text-sm mt-4 text-white/80">Raspe os 9 quadradinhos, encontre 3 símbolos iguais e ganhe o prêmio!</p>
-                            <Button onClick={handlePurchase} size="lg" className="h-12 text-base">
-                                 <div className="flex gap-2 justify-between items-center w-full px-4">
-                                    <div className="flex gap-2 items-center font-bold">
-                                        <CoinIcon className="size-6" />
-                                        <span>Comprar por R$ {cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
-                                    </div>
-                                </div>
-                            </Button>
                         </div>
                     </div>
                 )}
@@ -248,6 +250,8 @@ export default function ScratchGame({ cardTitle, cost, purchaseImageUrl }: Scrat
             )}
         </Card>
     );
-}
+});
 
-    
+ScratchGame.displayName = "ScratchGame";
+
+export default ScratchGame;

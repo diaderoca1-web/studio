@@ -1,4 +1,6 @@
 
+'use client';
+import { useRef } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { scratchCards } from "@/lib/data";
@@ -7,20 +9,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import CoinIcon from "@/components/icons/coin-icon";
 import TrophyIcon from "@/components/icons/trophy-icon";
 import { CheckCircle, Zap, RefreshCw } from "lucide-react";
-import ScratchGame from "@/components/scratch-game";
+import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 
 export default function ScratchCardPage({ params }: { params: { slug: string } }) {
   const card = scratchCards.find((c) => c.slug === params.slug);
+  const scratchGameRef = useRef<ScratchGameRef>(null);
 
   if (!card) {
     notFound();
   }
+
+  const handlePurchaseClick = () => {
+    scratchGameRef.current?.purchase();
+  };
 
   return (
     <div className="container mx-auto p-4 max-w-lg">
       <div className="grid grid-cols-1 gap-6">
         <div>
           <ScratchGame 
+            ref={scratchGameRef}
             cardTitle={card.title} 
             cost={card.cost} 
             purchaseImageUrl="https://ik.imagekit.io/azx3nlpdu/TELA%202.png?updatedAt=1751849389437"
@@ -29,7 +37,7 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
 
         <div className="w-full flex justify-center">
             <div className="flex items-center gap-2">
-                <Button size="lg" className="h-14 bg-lime-400 hover:bg-lime-500 text-black font-bold flex-1">
+                <Button size="lg" className="h-14 bg-lime-400 hover:bg-lime-500 text-black font-bold flex-1" onClick={handlePurchaseClick}>
                     <div className="flex items-center justify-between w-full">
                         <span>Comprar</span>
                         <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold">
