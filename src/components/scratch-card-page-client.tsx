@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Zap, RefreshCw, Sparkles, WandSparkles } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Zap, RefreshCw, WandSparkles } from "lucide-react";
 import ScratchGame, { ScratchGameRef } from "@/components/scratch-game";
 import type { ScratchCardType } from "@/lib/data";
 import CoinIcon from "./icons/coin-icon";
@@ -37,23 +37,6 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                     className="object-cover"
                 />
             </div>
-            
-            <Card className="bg-transparent border-none shadow-none">
-                <CardHeader className="p-0">
-                    <CardTitle className="text-3xl font-bold">{card.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 p-0 mt-4">
-                    <div className="flex items-center justify-between text-sm">
-                        <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + R</kbd> para comprar.</p>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                        <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl + B</kbd> para revelar.</p>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                        <p className="text-muted-foreground">Pressione <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Shift + B</kbd> para revelar rápido.</p>
-                    </div>
-                </CardContent>
-            </Card>
 
             <Card className="bg-card/50">
                 <CardContent className="p-4">
