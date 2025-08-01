@@ -12,6 +12,27 @@ import RecentWinners from "./home/recent-winners";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+const prizes = [
+  { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
+  { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
+  { name: '500 Reais', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/500-REAIS.png?updatedAt=1752856623150' },
+  { name: '200 Reais', value: 200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/200-REAIS.png?updatedAt=1752865094953' },
+  { name: 'Smartwatch D20 Shock', value: 80.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_smartwatch_d20_shock.png?updatedAt=1751634892443' },
+  { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
+  { name: 'PowerBank', value: 70.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F5KTMSEJBQF1STFZ4BCKXM.png' },
+  { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
+  { name: '20 Reais', value: 20.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/20%20REAIS.png?updatedAt=1752047821716' },
+  { name: '15 Reais', value: 15.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/15%20REAIS.png?updatedAt=1752047821835' },
+  { name: '10 Reais', value: 10.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681' },
+  { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
+  { name: '4 Reais', value: 4.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/4%20REAIS.png?updatedAt=1752047821875' },
+  { name: '3 Reais', value: 3.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/3%20REAIS.png?updatedAt=1752047821897' },
+  { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
+  { name: '50 Centavos', value: 0.50, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' },
+];
+
+
 export default function ScratchCardPageClient({ card }: { card: ScratchCardType }) {
   const scratchGameRef = useRef<ScratchGameRef>(null);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
@@ -132,7 +153,21 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
 
         <div className="mt-12">
             <h2 className="text-2xl font-bold mb-4">Prêmios da Raspadinha:</h2>
-            {/* Placeholder for prizes grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {prizes.map((prize, index) => (
+                    <Card key={index} className="bg-card/70 border-none flex flex-col items-center p-4 text-center">
+                        <div className="relative w-24 h-24 mb-4">
+                            <Image src={prize.imageUrl} alt={prize.name} fill className="object-contain" />
+                        </div>
+                        <p className="font-semibold text-sm mb-2 h-10 flex items-center">{prize.name}</p>
+                        <div className="mt-auto w-full">
+                           <div className="bg-primary/20 text-primary font-bold py-2 px-4 rounded-lg text-sm">
+                                R$ {prize.value.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                           </div>
+                        </div>
+                    </Card>
+                ))}
+            </div>
         </div>
 
     </div>
