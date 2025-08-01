@@ -15,7 +15,7 @@ export default function RecentWinners() {
   return (
     <div className="flex items-center gap-4 overflow-hidden">
       <div className="flex items-center justify-center">
-        <LiveIcon className="size-10" />
+        <LiveIcon className="size-8" />
       </div>
       <Carousel
         opts={{
@@ -34,8 +34,8 @@ export default function RecentWinners() {
           {recentWinners.map((winner, index) => (
             <CarouselItem key={index} className="basis-auto md:basis-1/3 lg:basis-1/5">
                <Card className="bg-secondary border-none">
-                <CardContent className="p-3 flex items-center gap-3">
-                  <div className="relative size-12 flex-shrink-0">
+                <CardContent className="p-2 flex items-center gap-3">
+                  <div className="relative size-10 flex-shrink-0">
                     <Image
                       src={winner.imageUrl}
                       alt={winner.prizeName}
@@ -44,7 +44,7 @@ export default function RecentWinners() {
                       data-ai-hint={winner.aiHint}
                     />
                   </div>
-                  <div className="flex flex-col text-sm overflow-hidden">
+                  <div className="flex flex-col text-xs overflow-hidden">
                     <span className="font-medium text-amber-400/95 overflow-hidden text-nowrap text-ellipsis">
                       {winner.winnerName}
                     </span>
