@@ -67,16 +67,9 @@ export function UserNav() {
         </SheetTrigger>
         <SheetContent 
             side="bottom" 
-            className="p-0 bg-transparent border-t border-primary/20"
-            style={{
-                backgroundImage: 'url(https://raspagreen.com/deposit_bg.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-            }}
+            className="p-0 bg-card border-t border-primary/20"
         >
-            <div className="bg-card/85 backdrop-blur-sm h-full w-full">
-                 <DepositSheet />
-            </div>
+            <DepositSheet />
         </SheetContent>
       </Sheet>
 
