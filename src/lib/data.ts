@@ -170,17 +170,35 @@ const prizesRaspaRelampago: PrizeType[] = [
   { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
 ];
 
-const allPrizes: PrizeType[] = [
-  ...prizesCentavoDaSorte,
-  ...prizesSorteInstantanea,
-  ...prizesRaspadinhaSuprema,
-  ...prizesRaspaRelampago
-].filter((prize, index, self) => 
-  index === self.findIndex((t) => (
-    t.name === prize.name && t.value === prize.value
-  ))
-);
-
+const prizesRaspadinhaMagica: PrizeType[] = [
+    { name: '20.000 Reais', value: 20000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F6B4W6E48V8A8Z7X5M5F5X.png' },
+    { name: 'Moto CG 160 Start', value: 16500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_cg_160_start_prata_met_lico.png?updatedAt=1751634895048' },
+    { name: 'Moto Honda Biz', value: 13000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_biz_110i_vermelho.png?updatedAt=1751634892737' },
+    { name: 'Moto Honda Pop', value: 11500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_pop_110i_branco.png?updatedAt=1751634894490' },
+    { name: 'iPhone 15 Pro', value: 11000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_iphone_15_pro_256_gb_tit_nio_natural.png?updatedAt=1751634894188' },
+    { name: '10.000 Reais', value: 10000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/5.png?updatedAt=1752731173073' },
+    { name: 'iPhone 15 Pro Max', value: 9500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_iphone_15_pro_max_256_gb_nio_preto.png?updatedAt=1751634894448' },
+    { name: 'Geladeira Frost Free', value: 7500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_geladeira_frost_free.png?updatedAt=1751634890810' },
+    { name: 'Apple Watch Ultra', value: 7500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_apple_watch_ultra_2_pulseira_loop_alpina_azul_p.png?updatedAt=1751634892598' },
+    { name: 'Churrasqueira a carvão', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_churrasqueira_a_g_s_versia_gourmand.png?updatedAt=1751634896402' },
+    { name: 'iPhone 15', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_iphone_15_azul.png?updatedAt=1751634894131' },
+    { name: '5.000 Reais', value: 5000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/5K.png?updatedAt=1752731172984' },
+    { name: 'PlayStation 5', value: 4500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_playstation_5.png?updatedAt=1751634892317' },
+    { name: 'iPhone 12', value: 2500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_iphone_12.png?updatedAt=1751634890863' },
+    { name: 'Apple AirPods 3ª Geração', value: 1900.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_airpods_3_gera_o.png?updatedAt=1751634894740' },
+    { name: 'Air Force 1 x AMBUSH', value: 1700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0BEZVB1Q17T7T7E7B7V7E7R.png' },
+    { name: 'Air Force 1 Low', value: 1200.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0BE42XDSF6D848QM4WE2PT0.png' },
+    { name: 'Air Jordan 1 Low', value: 1100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0BEYR2M4Z6F6F6E6D6V6E6R.png' },
+    { name: '1.000 Reais', value: 1000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/1K.png?updatedAt=1752865094958' },
+    { name: '700 Reais', value: 700.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/700.png?updatedAt=1752856623225' },
+    { name: '500 Reais', value: 500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/500-REAIS.png?updatedAt=1752856623150' },
+    { name: '100 Reais', value: 100.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/100%20REAIS.png?updatedAt=1752047821876' },
+    { name: '50 Reais', value: 50.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/50%20REAIS.png?updatedAt=1752047821745' },
+    { name: 'Capinha transparente', value: 30.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F6D5N9H3J3J3J3J3J3J3J3.png' },
+    { name: '10 Reais', value: 10.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/10%20REAIS.png?updatedAt=1752047821681' },
+    { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
+    { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
+];
 
 
 export const scratchCards: ScratchCardType[] = [
@@ -232,7 +250,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 50.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/BIKE%20,%20MAQUINA%20-%20MOTO.png?updatedAt=1752534650346",
     aiHint: "motorcycle prize",
-    prizes: allPrizes, // using all prizes as a fallback
+    prizes: prizesRaspadinhaMagica,
   },
   {
     slug: "raspe-e-ganhe",
@@ -242,7 +260,7 @@ export const scratchCards: ScratchCardType[] = [
     cost: 100.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/PREMIOS%20DIVERSOS.png?updatedAt=1752534650509",
     aiHint: "diamond prize",
-    prizes: allPrizes, // using all prizes as a fallback
+    prizes: [],
   },
 ];
 
