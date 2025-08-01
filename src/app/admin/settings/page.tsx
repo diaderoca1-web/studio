@@ -14,6 +14,12 @@ export default function SettingsPage() {
   const [storeEmail, setStoreEmail] = useState("contato@raspagreen.com");
   const [primaryColor, setPrimaryColor] = useState("#2ECC71");
   const [winProbability, setWinProbability] = useState([50]);
+  const [rtp, setRtp] = useState([95]);
+  const [minWithdrawal, setMinWithdrawal] = useState("50.00");
+  const [withdrawalFee, setWithdrawalFee] = useState([0]);
+  const [processingTime, setProcessingTime] = useState("24 horas");
+  const [minDeposit, setMinDeposit] = useState("10.00");
+  const [firstDepositBonus, setFirstDepositBonus] = useState([100]);
   const [paymentClientId, setPaymentClientId] = useState("");
   const [paymentSecretKey, setPaymentSecretKey] = useState("");
   const [dbServiceAccount, setDbServiceAccount] = useState("");
@@ -32,6 +38,12 @@ export default function SettingsPage() {
       storeEmail,
       primaryColor,
       winProbability: winProbability[0],
+      rtp: rtp[0],
+      minWithdrawal,
+      withdrawalFee: withdrawalFee[0],
+      processingTime,
+      minDeposit,
+      firstDepositBonus: firstDepositBonus[0],
       paymentClientId,
       paymentSecretKey,
       dbServiceAccount,
@@ -94,7 +106,7 @@ export default function SettingsPage() {
             <CardHeader>
                 <CardTitle>Mecânica da Plataforma</CardTitle>
                 <CardDescription>
-                    Ajuste as configurações de probabilidade e prêmios.
+                    Ajuste as configurações de probabilidade, retorno e prêmios.
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -104,6 +116,67 @@ export default function SettingsPage() {
                         <Slider id="win-probability" value={winProbability} onValueChange={setWinProbability} max={100} step={1} className="flex-1" />
                         <span className="w-12 text-right">{winProbability[0]}%</span>
                     </div>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="rtp">Return to Player (RTP %)</Label>
+                    <div className="flex items-center gap-4">
+                        <Slider id="rtp" value={rtp} onValueChange={setRtp} max={100} step={1} className="flex-1" />
+                        <span className="w-12 text-right">{rtp[0]}%</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                        Porcentagem média do dinheiro apostado que retornará aos jogadores.
+                    </p>
+                </div>
+            </CardContent>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                <CardTitle>Configurações de Depósito</CardTitle>
+                <CardDescription>
+                    Defina as regras para depósitos na plataforma.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="space-y-2">
+                    <Label htmlFor="min-deposit">Valor Mínimo de Depósito (R$)</Label>
+                    <Input id="min-deposit" type="number" value={minDeposit} onChange={(e) => setMinDeposit(e.target.value)} placeholder="10.00" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="first-deposit-bonus">Bônus de Primeiro Depósito (%)</Label>
+                     <div className="flex items-center gap-4">
+                        <Slider id="first-deposit-bonus" value={firstDepositBonus} onValueChange={setFirstDepositBonus} max={200} step={5} className="flex-1" />
+                        <span className="w-12 text-right">{firstDepositBonus[0]}%</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                        Bônus percentual que novos usuários recebem no primeiro depósito.
+                    </p>
+                </div>
+            </CardContent>
+        </Card>
+        
+        <Card>
+            <CardHeader>
+                <CardTitle>Configurações de Saque</CardTitle>
+                <CardDescription>
+                    Gerencie as regras e taxas para retiradas.
+                </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="space-y-2">
+                    <Label htmlFor="min-withdrawal">Valor Mínimo de Saque (R$)</Label>
+                    <Input id="min-withdrawal" type="number" value={minWithdrawal} onChange={(e) => setMinWithdrawal(e.target.value)} placeholder="50.00" />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="withdrawal-fee">Taxa de Saque (%)</Label>
+                     <div className="flex items-center gap-4">
+                        <Slider id="withdrawal-fee" value={withdrawalFee} onValueChange={setWithdrawalFee} max={10} step={0.5} className="flex-1" />
+                        <span className="w-12 text-right">{withdrawalFee[0]}%</span>
+                    </div>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="processing-time">Tempo Estimado de Processamento</Label>
+                    <Input id="processing-time" value={processingTime} onChange={(e) => setProcessingTime(e.target.value)} placeholder="Ex: 24 horas úteis" />
                 </div>
             </CardContent>
         </Card>
