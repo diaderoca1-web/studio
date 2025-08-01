@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, ShieldCheck, User } from "lucide-react";
+import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, ShieldCheck, User, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import DepositIcon from "../icons/deposit-icon";
 import { useAuth } from "@/contexts/auth-context";
@@ -27,6 +27,8 @@ export function UserNav() {
   if (!user) {
     return null;
   }
+
+  const isAdmin = user.email === 'admin@raspagreen.com';
 
   return (
     <>
@@ -103,6 +105,14 @@ export function UserNav() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
+            {isAdmin && (
+                <DropdownMenuItem asChild>
+                    <Link href="/admin/dashboard">
+                        <LayoutDashboard className="mr-2" />
+                        <span>Admin Panel</span>
+                    </Link>
+                </DropdownMenuItem>
+            )}
             <DropdownMenuItem>
               <User className="mr-2" />
               <span>Conta</span>
