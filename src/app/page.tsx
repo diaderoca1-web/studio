@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <HeroBanner />
-      <div className="container mx-auto max-w-5xl">
+      <div className="container mx-auto max-w-5xl px-4">
         <div className="py-4">
           <RecentWinners />
         </div>
