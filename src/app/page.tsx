@@ -4,6 +4,7 @@ import { scratchCards } from "@/lib/data";
 import HeroBanner from "@/components/home/hero-banner";
 import RecentWinners from "@/components/home/recent-winners";
 import ScratchCard from "@/components/scratch-card";
+import { SecuritySeals } from "@/components/security-seals";
 
 export default function Home() {
   const highlightedCards = scratchCards.slice(0, 6);
@@ -36,6 +37,10 @@ export default function Home() {
             ))}
           </div>
         </section>
+        
+        <div className="py-12">
+            <SecuritySeals />
+        </div>
       </div>
     </div>
   );
