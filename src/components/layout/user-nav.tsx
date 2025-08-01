@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, ShieldCheck, User } from "lucide-react";
+import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, Plus, ShieldCheck, User } from "lucide-react";
 import Link from "next/link";
 
 export function UserNav() {
@@ -58,7 +58,7 @@ export function UserNav() {
 
       <Button asChild variant="primary" size="icon" className="bg-primary hover:bg-primary/90">
         <Link href="/depositar">
-            <DollarSign className="h-5 w-5"/>
+            <Plus className="h-6 w-6"/>
         </Link>
       </Button>
       <DropdownMenu>
