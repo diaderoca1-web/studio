@@ -28,13 +28,22 @@ export default function ScratchCardPage({ params }: { params: { slug: string } }
         </div>
 
         <div className="w-full flex justify-center">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+                <Button size="lg" className="h-14 bg-lime-400 hover:bg-lime-500 text-black font-bold flex-1">
+                    <div className="flex items-center justify-between w-full">
+                        <span>Comprar</span>
+                        <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold">
+                            <span>R$</span>
+                            <span>{card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
+                        </div>
+                    </div>
+                </Button>
                 <Button variant="secondary" size="icon" className="h-14 w-14">
                     <Zap className="size-6" />
                 </Button>
-                <Button variant="secondary" size="icon" className="h-14 w-14">
+                <Button variant="secondary" className="h-14 w-14">
                     <RefreshCw className="size-6" />
-                    <span className="sr-only">Auto</span>
+                    <span className="text-xs font-bold">Auto</span>
                 </Button>
             </div>
         </div>
