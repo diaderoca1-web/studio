@@ -86,7 +86,14 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
         const isWinner = Math.random() < (settings.winProbability / 100);
 
         if (isWinner) {
-            const winningPrize = prizes[Math.floor(Math.random() * prizes.length)];
+            // Calculate the expected prize value based on RTP
+            const expectedPrize = (cost * (settings.rtp / 100)) / (settings.winProbability / 100);
+            
+            // Find the prize closest to the expected value
+            const winningPrize = prizes.reduce((prev, curr) => 
+                Math.abs(curr.value - expectedPrize) < Math.abs(prev.value - expectedPrize) ? curr : prev
+            );
+
             const winningSymbol = { name: winningPrize.name, imageUrl: winningPrize.imageUrl };
 
             let grid = Array(3).fill(winningSymbol);
@@ -138,7 +145,9 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
             let tempGrid: { name: string; imageUrl: string }[] = [];
             for (let i = 0; i < 9; i++) {
                 const prize = shuffledPrizes[i % shuffledPrizes.length];
-                tempGrid.push({ name: prize.name, imageUrl: prize.imageUrl });
+                if(prize) {
+                   tempGrid.push({ name: prize.name, imageUrl: prize.imageUrl });
+                }
             }
             return { grid: tempGrid, winningSymbol: null, isWinner: false, prizeValue: 0, prizeName: null, prizeImageUrl: null };
         }
@@ -397,3 +406,5 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
 ScratchGame.displayName = "ScratchGame";
 
 export default ScratchGame;
+
+    
