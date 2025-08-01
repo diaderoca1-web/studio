@@ -57,8 +57,8 @@ export function UserNav() {
       </Popover>
 
       <Button asChild variant="primary" size="icon" className="bg-primary hover:bg-primary/90">
-        <Link href="/sacar">
-            <Landmark className="h-5 w-5"/>
+        <Link href="/depositar">
+            <DollarSign className="h-5 w-5"/>
         </Link>
       </Button>
       <DropdownMenu>
