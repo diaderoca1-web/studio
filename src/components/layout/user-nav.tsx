@@ -57,7 +57,7 @@ export function UserNav() {
         </PopoverContent>
       </Popover>
 
-      <Button asChild variant="primary" size="icon" className="bg-primary text-primary-foreground hover:bg-primary/90">
+      <Button asChild variant="primary" size="icon" className="bg-lime-400 hover:bg-lime-500 text-black">
         <Link href="/depositar">
             <DepositIcon className="h-6 w-6"/>
         </Link>
