@@ -12,10 +12,6 @@ import CoinIcon from "./icons/coin-icon";
 export default function ScratchCardPageClient({ card }: { card: ScratchCardType }) {
   const scratchGameRef = useRef<ScratchGameRef>(null);
 
-  const handlePurchaseClick = () => {
-    scratchGameRef.current?.purchase();
-  };
-
   return (
     <div className="container mx-auto p-4 max-w-6xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -27,27 +23,16 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             purchaseImageUrl="https://ik.imagekit.io/azx3nlpdu/TELA%202.png?updatedAt=1751849389437"
           />
         </div>
-
-        <div className="md:col-span-1 space-y-6">
-            <div className="hidden md:block w-full aspect-video relative rounded-lg overflow-hidden">
-                <Image 
-                    src="https://raspagreen.com/deposit_bg.jpg"
-                    alt="Pix na Hora"
-                    fill
-                    className="object-cover"
-                />
-            </div>
-        </div>
       </div>
        <div className="w-full flex justify-start mt-6">
             <div className="flex items-center gap-2 flex-wrap">
-                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchaseClick}>
+                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={() => scratchGameRef.current?.purchase()}>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
                             <CoinIcon />
                             <span>Comprar</span>
                         </div>
-                        <div className="bg-black/80 rounded-md px-3 py-1 hidden sm:flex items-center gap-1 text-white text-sm font-bold ml-4">
+                        <div className="bg-black/80 rounded-md px-3 py-1 flex items-center gap-1 text-white text-sm font-bold ml-2 sm:ml-4">
                             <span>R$</span>
                             <span>{card.cost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
                         </div>
@@ -80,3 +65,4 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     </div>
   );
 }
+
