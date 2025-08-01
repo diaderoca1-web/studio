@@ -37,15 +37,6 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                     className="object-cover"
                 />
             </div>
-
-            <Card className="bg-card/50">
-                <CardContent className="p-4">
-                    <div className="flex items-center gap-2">
-                        <WandSparkles className="size-5 text-primary" />
-                        <p className="text-sm text-muted-foreground"><span className="font-bold text-foreground">Reúna 3 imagens iguais e conquiste seu prêmio!</span> O valor correspondente será creditado automaticamente na sua conta. Se preferir receber o produto físico, basta entrar em contato com o nosso suporte.</p>
-                    </div>
-                </CardContent>
-            </Card>
         </div>
       </div>
        <div className="w-full flex justify-start mt-6">
@@ -71,6 +62,15 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
                 </Button>
             </div>
         </div>
+
+        <Card className="bg-card/50 mt-6">
+            <CardContent className="p-4">
+                <div className="flex items-center gap-2">
+                    <WandSparkles className="size-5 text-primary" />
+                    <p className="text-sm text-muted-foreground"><span className="font-bold text-foreground">Reúna 3 imagens iguais e conquiste seu prêmio!</span> O valor correspondente será creditado automaticamente na sua conta. Se preferir receber o produto físico, basta entrar em contato com o nosso suporte.</p>
+                </div>
+            </CardContent>
+        </Card>
 
         <div className="mt-12">
             <h2 className="text-2xl font-bold mb-4">Prêmios da Raspadinha:</h2>
