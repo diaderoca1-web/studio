@@ -1,5 +1,4 @@
 
-
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -23,9 +22,10 @@ import { DepositSheet } from "../deposit-sheet";
 
 export function UserNav() {
   const { user, logout } = useAuth();
-  // Mock balances for demonstration
-  const realBalance = 125.50;
-  const bonusBalance = 30.00;
+  
+  // Balances are now managed by AuthContext, with mock values for demonstration
+  const realBalance = user?.balance ?? 0.00;
+  const bonusBalance = 0.00; // Bonus balance not implemented yet
   const totalBalance = realBalance + bonusBalance;
 
   if (!user) {

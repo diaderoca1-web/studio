@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/auth-context";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -23,6 +24,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
   const [inviteLink, setInviteLink] = useState("");
   const [hasCopied, setHasCopied] = useState(false);
   const { toast } = useToast();
+  const { deductBalance } = useAuth();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -48,14 +50,35 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     });
   };
 
+  const handlePurchase = async () => {
+    if (deductBalance(card.cost)) {
+        await scratchGameRef.current?.purchase();
+    } else {
+        toast({
+            title: "Saldo Insuficiente",
+            description: "Você não tem saldo suficiente para comprar esta raspadinha.",
+            variant: "destructive"
+        });
+    }
+  }
+
   const handleAutoPlay = async () => {
     if (!scratchGameRef.current) return;
     
-    await scratchGameRef.current.purchase();
-    await sleep(200);
-    await scratchGameRef.current.reveal();
-    await sleep(1000); 
-    await scratchGameRef.current.reset();
+    if (deductBalance(card.cost)) {
+        await scratchGameRef.current.purchase();
+        await sleep(200);
+        await scratchGameRef.current.reveal();
+        await sleep(1000); 
+        await scratchGameRef.current.reset();
+    } else {
+        toast({
+            title: "Saldo Insuficiente",
+            description: "Autoplay parado por falta de saldo.",
+            variant: "destructive"
+        });
+        setIsAutoPlaying(false);
+    }
   };
   
   const toggleAutoPlay = () => {
@@ -87,6 +110,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
         clearInterval(autoPlayIntervalRef.current);
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAutoPlaying]);
 
 
@@ -102,6 +126,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             cardTitle={card.title}
             cost={card.cost}
             purchaseImageUrl="https://ik.imagekit.io/azx3nlpdu/TELA%202.png?updatedAt=1751849389437"
+            onPurchaseRequest={handlePurchase}
             onReveal={() => {
                 if (!isAutoPlaying) {
                     setTimeout(() => {
@@ -124,7 +149,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
       </div>
       <div className="w-full flex justify-start mt-6">
         <div className="flex items-center gap-2 flex-wrap">
-            <Button className="h-12" onClick={() => scratchGameRef.current?.purchase()} disabled={isAutoPlaying}>
+            <Button className="h-12" onClick={handlePurchase} disabled={isAutoPlaying}>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
                         <CoinIcon />
@@ -223,5 +248,3 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     </div>
   );
 }
-
-    

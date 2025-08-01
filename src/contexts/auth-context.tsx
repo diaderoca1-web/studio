@@ -10,6 +10,7 @@ interface AuthContextType {
   register: (credentials: { name: string, email: string; phone: string; pass: string }) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
+  deductBalance: (amount: number) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,8 +20,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // In a real app, you'd check for a token in localStorage or cookies
-    // to keep the user logged in across sessions.
     const storedUser = localStorage.getItem('user');
     if(storedUser) {
         setUser(JSON.parse(storedUser));
@@ -46,8 +45,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('user');
   };
 
+  const deductBalance = (amount: number): boolean => {
+    if (user && user.balance !== undefined && user.balance >= amount) {
+        const updatedUser = { ...user, balance: user.balance - amount };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        return true;
+    }
+    return false;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, isLoading, deductBalance }}>
       {children}
     </AuthContext.Provider>
   );

@@ -69,6 +69,7 @@ interface ScratchGameProps {
     cardTitle: string;
     cost: number;
     purchaseImageUrl: string;
+    onPurchaseRequest: () => void;
     onReveal?: () => void;
     onReset?: () => void;
 }
@@ -79,7 +80,7 @@ export interface ScratchGameRef {
   reset: () => Promise<void>;
 }
 
-const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl, onReveal, onReset }, ref) => {
+const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purchaseImageUrl, onPurchaseRequest, onReveal, onReset }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [game, setGame] = useState(generateGrid());
@@ -290,7 +291,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4">
                             <Button 
                                 className="h-12"
-                                onClick={() => ref.current?.purchase()}
+                                onClick={onPurchaseRequest}
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-1.5">
