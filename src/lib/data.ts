@@ -159,7 +159,7 @@ const prizesRaspadinhaSuprema: PrizeType[] = [
   { name: '20 Reais', value: 20.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/20%20REAIS.png?updatedAt=1752047821716' },
   { name: '5 Reais', value: 5.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/5%20REAIS.png?updatedAt=1752047821734' },
   { name: '2 Reais', value: 2.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/2%20REAIS.png?updatedAt=1752047821644' },
-  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/50-CENTAVOS-2.png?updatedAt=1752864509979' }, // This is a coin but labeled 1 real
+  { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
 ];
 
 
@@ -225,3 +225,5 @@ export const scratchCards: ScratchCardType[] = [
     prizes: allPrizes, // using all prizes as a fallback
   },
 ];
+
+    
