@@ -41,7 +41,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
       </div>
        <div className="w-full flex justify-start mt-6">
             <div className="flex items-center gap-2">
-                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchaseClick}>
+                <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold">
                     <div className="flex items-center justify-between w-full">
                         <div className="flex items-center gap-1.5">
                             <CoinIcon />

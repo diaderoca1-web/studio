@@ -224,7 +224,6 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cardTitle, c
                             alt="Comprar raspadinha"
                             layout="fill"
                             objectFit="cover"
-                            className="z-0 opacity-70"
                         />
                         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-4 gap-4">
                              <Button size="lg" className="h-12 bg-lime-400 hover:bg-lime-500 text-black font-bold" onClick={handlePurchase}>
