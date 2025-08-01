@@ -119,9 +119,13 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
       </div>
        <Card className="bg-card/50 mt-6">
             <CardContent className="p-4">
-                <div className="flex items-center gap-2">
-                    <WandSparkles className="size-5 text-primary" />
-                    <p className="text-sm text-muted-foreground"><span className="font-bold text-foreground">Reúna 3 imagens iguais e conquiste seu prêmio!</span> O valor correspondente será creditado automaticamente na sua conta. Se preferir receber o produto físico, basta entrar em contato com o nosso suporte.</p>
+                <div className="flex items-start gap-3">
+                    <WandSparkles className="size-5 text-primary mt-0.5 flex-shrink-0" />
+                    <p className="text-sm text-muted-foreground">
+                        <span className="font-bold text-primary">Reúna 3 imagens iguais e conquiste seu prêmio!</span>
+                        <br />
+                        O valor correspondente será creditado automaticamente na sua conta. Se preferir receber o produto físico, basta entrar em contato com o nosso suporte.
+                    </p>
                 </div>
             </CardContent>
         </Card>
