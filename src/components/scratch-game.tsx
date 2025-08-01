@@ -55,7 +55,7 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
         if (!prizes || prizes.length === 0) {
             // Return a default "empty" or "losing" state if there are no prizes
             return {
-                grid: Array(9).fill({ name: 'Empty', imageUrl: '' }),
+                grid: [],
                 winningSymbol: null,
                 isWinner: false,
                 prizeValue: 0,
@@ -289,12 +289,14 @@ const ScratchGame = forwardRef<ScratchGameRef, ScratchGameProps>(({ cost, purcha
                             {game?.grid.map((item, index) => (
                                 <div key={index} className="bg-muted rounded-md flex items-center justify-center p-2">
                                    <div className="relative w-full h-full">
-                                     <Image 
-                                        src={item.imageUrl} 
-                                        alt={item.name}
-                                        fill
-                                        className="object-contain"
-                                     />
+                                     {item.imageUrl && (
+                                        <Image 
+                                            src={item.imageUrl} 
+                                            alt={item.name}
+                                            fill
+                                            className="object-contain"
+                                        />
+                                     )}
                                    </div>
                                 </div>
                             ))}
