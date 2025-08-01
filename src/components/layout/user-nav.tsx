@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Separator } from "@/components/ui/separator";
 import { ChevronDown, CreditCard, DollarSign, Gamepad2, Landmark, LogOut, Plus, ShieldCheck, User } from "lucide-react";
 import Link from "next/link";
+import DepositIcon from "../icons/deposit-icon";
 
 export function UserNav() {
   return (
@@ -56,9 +57,9 @@ export function UserNav() {
         </PopoverContent>
       </Popover>
 
-      <Button asChild variant="primary" size="icon" className="bg-primary hover:bg-primary/90">
+      <Button asChild variant="primary" size="icon" className="bg-primary text-primary-foreground hover:bg-primary/90">
         <Link href="/depositar">
-            <Plus className="h-6 w-6"/>
+            <DepositIcon className="h-6 w-6"/>
         </Link>
       </Button>
       <DropdownMenu>
