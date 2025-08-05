@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Landmark, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { SecuritySeals } from '@/components/security-seals';
 
 export default function WithdrawPage() {
   const [pixKeyType, setPixKeyType] = useState('');
@@ -113,11 +112,6 @@ export default function WithdrawPage() {
           </CardFooter>
         </form>
       </Card>
-      
-      <div className="mt-12">
-        <SecuritySeals />
-      </div>
-
     </div>
   );
 }
