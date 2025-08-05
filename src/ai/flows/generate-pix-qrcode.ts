@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Generates a PIX QR Code for deposits.
@@ -26,16 +27,23 @@ const GeneratePixQRCodeOutputSchema = z.object({
 });
 export type GeneratePixQRCodeOutput = z.infer<typeof GeneratePixQRCodeOutputSchema>;
 
+// In-memory cache for the access token
+let cachedToken: {
+    accessToken: string;
+    expiresAt: number; // Expiration timestamp in milliseconds
+} | null = null;
 
-export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<GeneratePixQRCodeOutput> {
-    console.log("Generating PIX QR Code for amount:", input.amount);
+async function getAccessToken(clientId: string, clientSecret: string): Promise<string> {
+    const now = Date.now();
 
-    if (!input.clientId || !input.clientSecret) {
-        throw new Error("Payment gateway credentials are not configured.");
+    // If we have a token and it's not expired (with a 60-second buffer), return it
+    if (cachedToken && now < cachedToken.expiresAt - 60000) {
+        console.log("Using cached PIX access token.");
+        return cachedToken.accessToken;
     }
-    
-    // Step 1: Get Access Token
-    const credentials = `${input.clientId}:${input.clientSecret}`;
+
+    console.log("Fetching new PIX access token.");
+    const credentials = `${clientId}:${clientSecret}`;
     const base64Credentials = Buffer.from(credentials).toString('base64');
 
     const tokenResponse = await fetch("https://api.pixupbr.com/v2/oauth/token", {
@@ -54,10 +62,30 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
     
     const tokenData = await tokenResponse.json();
     const accessToken = tokenData.access_token;
+    const expiresIn = tokenData.expires_in; // in seconds
 
-    if (!accessToken) {
-         throw new Error("Failed to retrieve access token from PIX API.");
+    if (!accessToken || !expiresIn) {
+         throw new Error("Failed to retrieve access token or expiration time from PIX API.");
     }
+    
+    // Store the new token and its expiration time
+    cachedToken = {
+        accessToken: accessToken,
+        expiresAt: now + (expiresIn * 1000)
+    };
+
+    return accessToken;
+}
+
+
+export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<GeneratePixQRCodeOutput> {
+    console.log("Generating PIX QR Code for amount:", input.amount);
+
+    if (!input.clientId || !input.clientSecret) {
+        throw new Error("Payment gateway credentials are not configured.");
+    }
+    
+    const accessToken = await getAccessToken(input.clientId, input.clientSecret);
     
     // Step 2: Generate QR Code using the token
     const qrCodeResponse = await fetch("https://api.pixupbr.com/v2/pix/qrcode", {
@@ -79,6 +107,10 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
     if (!qrCodeResponse.ok) {
         const errorBody = await qrCodeResponse.text();
         console.error("PIX QR Code API Error:", errorBody);
+        // If the token is invalid (e.g., status 401), clear the cache
+        if (qrCodeResponse.status === 401) {
+            cachedToken = null;
+        }
         throw new Error(`PIX QR Code API request failed with status ${qrCodeResponse.status}`);
     }
 
