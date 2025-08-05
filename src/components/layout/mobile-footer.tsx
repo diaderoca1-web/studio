@@ -23,6 +23,15 @@ export function MobileFooter() {
         { href: '/perfil', label: 'Perfil', icon: User },
     ];
     
+    const handleProtectedClick = (e: React.MouseEvent, href: string) => {
+        if (!user) {
+            e.preventDefault();
+            router.push('/register');
+        } else {
+            router.push(href);
+        }
+    };
+    
     const handleDepositClick = (e: React.MouseEvent) => {
         if (!user) {
             e.preventDefault();
@@ -64,8 +73,16 @@ export function MobileFooter() {
                             </Sheet>
                         );
                     }
+                    
+                    const isProtected = ['/perfil', '/indique'].includes(item.href);
+
                     return (
-                        <Link key={item.href} href={item.href} className="flex flex-col items-center gap-1">
+                        <Link 
+                            key={item.href} 
+                            href={item.href} 
+                            className="flex flex-col items-center gap-1"
+                            onClick={(e) => isProtected && handleProtectedClick(e, item.href)}
+                        >
                             <item.icon className={cn("size-6", isActive ? "text-primary" : "text-muted-foreground")} />
                             <span className={cn("text-xs font-medium", isActive ? "text-primary" : "text-muted-foreground")}>
                                 {item.label}
