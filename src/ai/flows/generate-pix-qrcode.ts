@@ -31,25 +31,22 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
         throw new Error("Payment gateway credentials are not configured.");
     }
     
-    // In a real application, you would make a POST request to the actual PIX API endpoint.
-    // This mock simulates that call using the provided credentials.
     try {
         const response = await fetch("https://api.pixupbr.com/v2/pix/qrcode", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${input.clientSecret}` // Assuming Bearer token auth
+                'Authorization': `Bearer ${input.clientSecret}`
             },
             body: JSON.stringify({
                 amount: input.amount,
-                payer_name: "Cliente Raspagreen", // Example data
+                payer_name: "Cliente Raspagreen",
                 description: "Depósito Raspagreen",
-                pix_key: input.clientId // Assuming the Client ID is the PIX key
+                pix_key: input.clientId
             })
         });
 
         if (!response.ok) {
-            // If API fails, we throw to enter the catch block for fallback generation.
             const errorBody = await response.text();
             console.error("PIX API Error, using fallback:", errorBody);
             throw new Error(`PIX API request failed with status ${response.status}`);
@@ -69,7 +66,6 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
     } catch (error) {
         console.error("Error generating PIX QR Code, using fallback generation:", error);
         
-        // Fallback to a valid mock QR code string if the API fails
         const transactionId = `fallback_tx_${Date.now()}`;
         
         const payloadFormatIndicator = "000201";
@@ -84,7 +80,6 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
         
         const payload = `${payloadFormatIndicator}${merchantAccountInfo}${merchantCategoryCode}${transactionCurrency}${transactionAmount}${countryCode}${merchantName}${merchantCity}${additionalDataField}6304`;
 
-        // CRC16 Calculation
         const crc16 = (data: string): string => {
             let crc = 0xFFFF;
             for (let i = 0; i < data.length; i++) {
