@@ -68,7 +68,7 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
                 amount: input.amount,
                 payer_name: "Cliente Raspagreen",
                 description: "Depósito Raspagreen",
-                pix_key: "ronanbiel@hotmail.com"
+                pix_key: input.clientId // Use the provided client ID as the PIX key
             })
         });
 
@@ -97,7 +97,7 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
         // This fallback creates a standard PIX 'Copia e Cola' string.
         // It's a valid format, but the final transaction depends on the PIX key holder's bank.
         const payloadFormatIndicator = "000201";
-        const merchantAccountInfo = `26580014br.gov.bcb.pix0136ronanbiel@hotmail.com`;
+        const merchantAccountInfo = `26580014br.gov.bcb.pix0136${input.clientId}`; // Use clientID as PIX key here
         const merchantCategoryCode = "52040000";
         const transactionCurrency = "5303986";
         const transactionAmount = `54${input.amount.toFixed(2).length.toString().padStart(2, '0')}${input.amount.toFixed(2)}`;
