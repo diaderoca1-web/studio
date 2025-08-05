@@ -22,6 +22,7 @@ export function Footer() {
                 <ul className="space-y-2">
                     <li><Link href="/politica-de-privacidade" className="text-sm text-muted-foreground hover:text-primary">Política de Privacidade</Link></li>
                     <li><Link href="/termos-de-uso" className="text-sm text-muted-foreground hover:text-primary">Termos de Uso</Link></li>
+                    <li><Link href="/politica-de-cookies" className="text-sm text-muted-foreground hover:text-primary">Política de Cookies</Link></li>
                 </ul>
                 </div>
                 <div>
