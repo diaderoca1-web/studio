@@ -2,13 +2,12 @@
 import Link from "next/link";
 import Logo from "../icons/logo";
 import Image from "next/image";
-import { SecuritySeals } from "../security-seals";
 
 export function Footer() {
   return (
-    <footer className="bg-card/50 border-t">
-      <div className="container mx-auto py-2 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-card/50 border-t md:py-2">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-8 md:py-4">
             <div className="flex flex-col items-center md:items-start space-y-4">
                 <Logo className="h-12 w-40" />
                 <p className="text-sm text-center md:text-left text-muted-foreground">
@@ -35,9 +34,6 @@ export function Footer() {
                 </ul>
                 </div>
             </div>
-        </div>
-         <div className="border-t border-border mt-4 pt-4">
-            <SecuritySeals />
         </div>
       </div>
     </footer>
