@@ -14,17 +14,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type ReferredFriend = {
     name: string;
-    avatarUrl: string;
+    gender: 'male' | 'female';
     status: 'registered' | 'deposited';
 };
 
 // Mock data for demonstration purposes
 const mockReferredFriends: ReferredFriend[] = [
-    { name: "Ana Beatriz", avatarUrl: "https://placehold.co/40x40/E9D5FF/6D28D9.png?text=AB", status: 'deposited' },
-    { name: "Carlos Silva", avatarUrl: "https://placehold.co/40x40/FECACA/7F1D1D.png?text=CS", status: 'deposited' },
-    { name: "Daniela Costa", avatarUrl: "https://placehold.co/40x40/BAE6FD/0C4A6E.png?text=DC", status: 'registered' },
-    { name: "Eduardo Lima", avatarUrl: "https://placehold.co/40x40/FBCFE8/831843.png?text=EL", status: 'registered' },
+    { name: "Ana Beatriz", gender: 'female', status: 'deposited' },
+    { name: "Carlos Silva", gender: 'male', status: 'deposited' },
+    { name: "Daniela Costa", gender: 'female', status: 'registered' },
+    { name: "Eduardo Lima", gender: 'male', status: 'registered' },
 ];
+
+const getAvatarUrl = (gender: 'male' | 'female') => {
+    return gender === 'female'
+        ? 'https://placehold.co/40x40/FBCFE8/831843.png'
+        : 'https://placehold.co/40x40/BAE6FD/0C4A6E.png';
+}
 
 const GOAL = 5;
 
@@ -132,7 +138,7 @@ export default function ReferAndEarnPage() {
                              <div key={index} className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <Avatar>
-                                        <AvatarImage src={friend.avatarUrl} />
+                                        <AvatarImage src={getAvatarUrl(friend.gender)} />
                                         <AvatarFallback>{friend.name.substring(0,2)}</AvatarFallback>
                                     </Avatar>
                                     <span className="font-medium">{friend.name}</span>

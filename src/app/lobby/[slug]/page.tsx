@@ -29,7 +29,7 @@ export default function LobbyPage({ params }: { params: { slug: string } }) {
         {/* Player 1 */}
         <div className="flex flex-col items-center gap-4">
           <Avatar className="w-24 h-24 border-4 border-primary">
-            <AvatarImage src="https://placehold.co/100x100.png" />
+            <AvatarImage src="https://placehold.co/100x100/BAE6FD/0C4A6E.png" />
             <AvatarFallback>P1</AvatarFallback>
           </Avatar>
           <h3 className="text-xl font-semibold">Você</h3>

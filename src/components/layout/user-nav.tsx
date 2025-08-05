@@ -44,6 +44,10 @@ export function UserNav() {
 
   const isAdmin = user.email === 'admin@raspagreen.com';
 
+  const avatarUrl = user.gender === 'female' 
+      ? 'https://placehold.co/40x40/FBCFE8/831843.png'
+      : 'https://placehold.co/40x40/BAE6FD/0C4A6E.png';
+
   return (
     <>
       <Popover>
@@ -105,7 +109,7 @@ export function UserNav() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-10 w-10 rounded-full">
             <Avatar className="h-10 w-10">
-              <AvatarImage src="https://placehold.co/40x40.png" alt={user.name} />
+              <AvatarImage src={avatarUrl} alt={user.name} />
               <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
           </Button>

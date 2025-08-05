@@ -7,6 +7,7 @@ export interface User {
   name: string;
   phone: string;
   email: string;
+  gender: 'male' | 'female' | 'other';
   document?: string;
   balance?: number; // Add balance to user type
 }
@@ -18,11 +19,12 @@ const users: User[] = [
         name: 'Admin',
         email: 'admin@raspagreen.com',
         phone: '00000000000',
+        gender: 'male',
         document: '00000000000',
         balance: 1000,
     },
-    { id: '1', name: 'John Doe', email: 'john.doe@example.com', phone: '1234567890', document: '11122233344', balance: 50 },
-    { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '0987654321', document: '55566677788', balance: 75 },
+    { id: '1', name: 'John Doe', email: 'john.doe@example.com', phone: '1234567890', gender: 'male', document: '11122233344', balance: 50 },
+    { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '0987654321', gender: 'female', document: '55566677788', balance: 75 },
 ];
 let userIdCounter = users.length;
 
@@ -112,12 +114,15 @@ export const register = async (name: string, email: string, phone: string, pass:
   if (users.find(u => u.email === email)) {
       throw new Error("User with this email already exists.");
   }
+  
+  const gender = Math.random() > 0.5 ? 'male' : 'female';
 
   const newUser: User = {
     id: (userIdCounter++).toString(),
     name,
     email,
     phone,
+    gender,
     balance: 100, // Start with a default balance
   };
 

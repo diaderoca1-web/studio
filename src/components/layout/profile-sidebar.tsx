@@ -37,13 +37,17 @@ export function ProfileSidebar() {
         { href: '/transacoes', label: 'Transações', icon: CreditCard },
         { href: '/seguranca', label: 'Segurança', icon: ShieldCheck },
     ];
+    
+    const avatarUrl = user.gender === 'female' 
+        ? 'https://placehold.co/100x100/FBCFE8/831843.png'
+        : 'https://placehold.co/100x100/BAE6FD/0C4A6E.png';
 
     return (
         <aside className="md:col-span-1">
             <Card className="p-4">
                 <div className="flex flex-col items-center space-y-4">
                     <Avatar className="w-24 h-24 border-4 border-primary">
-                        <AvatarImage src="https://placehold.co/100x100.png" />
+                        <AvatarImage src={avatarUrl} />
                         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className="text-center">
