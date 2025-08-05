@@ -20,16 +20,16 @@ export function Footer() {
                 <div>
                 <h3 className="font-bold text-foreground mb-4">Regulamentos</h3>
                 <ul className="space-y-2">
-                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Política de Privacidade</Link></li>
-                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Termos de Uso</Link></li>
+                    <li><Link href="/politica-de-privacidade" className="text-sm text-muted-foreground hover:text-primary">Política de Privacidade</Link></li>
+                    <li><Link href="/termos-de-uso" className="text-sm text-muted-foreground hover:text-primary">Termos de Uso</Link></li>
                 </ul>
                 </div>
                 <div>
                 <h3 className="font-bold text-foreground mb-4">Ajuda</h3>
                 <ul className="space-y-2">
-                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Perguntas Frequentes</Link></li>
-                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Como Jogar</Link></li>
-                    <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary">Suporte Técnico</Link></li>
+                    <li><Link href="/faq" className="text-sm text-muted-foreground hover:text-primary">Perguntas Frequentes</Link></li>
+                    <li><Link href="/como-jogar" className="text-sm text-muted-foreground hover:text-primary">Como Jogar</Link></li>
+                    <li><Link href="/suporte" className="text-sm text-muted-foreground hover:text-primary">Suporte Técnico</Link></li>
                 </ul>
                 </div>
             </div>
