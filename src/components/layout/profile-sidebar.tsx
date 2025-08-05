@@ -8,17 +8,21 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/auth-context";
 import { CreditCard, Gamepad2, LogOut, ShieldCheck, User as UserIcon } from "lucide-react";
+import { useEffect } from "react";
 
 export function ProfileSidebar() {
     const { user, logout } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
 
-    if (!user) {
-        // Redirect to login if user is not authenticated
-        if (typeof window !== 'undefined') {
+    useEffect(() => {
+        if (!user) {
             router.push('/login');
         }
+    }, [user, router]);
+
+    if (!user) {
+        // Render nothing while the redirect is happening
         return null;
     }
 
