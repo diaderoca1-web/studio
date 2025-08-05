@@ -7,9 +7,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/auth-context";
-import { Copy, Check, Gift } from "lucide-react";
-import { SecuritySeals } from "@/components/security-seals";
+import { Copy, Check, Gift, CheckCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+type ReferredFriend = {
+    name: string;
+    avatarUrl: string;
+    status: 'registered' | 'deposited';
+};
+
+// Mock data for demonstration purposes
+const mockReferredFriends: ReferredFriend[] = [
+    { name: "Ana Beatriz", avatarUrl: "https://placehold.co/40x40/E9D5FF/6D28D9.png?text=AB", status: 'deposited' },
+    { name: "Carlos Silva", avatarUrl: "https://placehold.co/40x40/FECACA/7F1D1D.png?text=CS", status: 'deposited' },
+    { name: "Daniela Costa", avatarUrl: "https://placehold.co/40x40/BAE6FD/0C4A6E.png?text=DC", status: 'registered' },
+    { name: "Eduardo Lima", avatarUrl: "https://placehold.co/40x40/FBCFE8/831843.png?text=EL", status: 'registered' },
+];
+
+const GOAL = 5;
+
 
 export default function ReferAndEarnPage() {
     const [inviteLink, setInviteLink] = useState("");
@@ -18,11 +36,12 @@ export default function ReferAndEarnPage() {
     const { user } = useAuth();
     const router = useRouter();
 
+    const friendsDeposited = mockReferredFriends.filter(f => f.status === 'deposited').length;
+
     useEffect(() => {
         if (user) {
             setInviteLink(`${window.location.origin}/register?ref=${user.id}`);
         } else {
-            // Redirect if not logged in, though navigation should prevent this.
             router.push('/login');
         }
     }, [user, router]);
@@ -71,8 +90,15 @@ export default function ReferAndEarnPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="my-4 p-4 bg-secondary border border-border rounded-lg text-center">
-                        <p className="text-muted-foreground">A cada 5 amigos que se cadastrarem e jogarem, <span className="text-white">você ganha</span></p>
+                        <p className="text-muted-foreground">A cada {GOAL} amigos que se cadastrarem e depositarem, <span className="text-white">você ganha</span></p>
                         <p className="text-3xl font-bold text-primary mt-1">R$10 no PIX!</p>
+                    </div>
+                     <div className="space-y-2 my-4">
+                        <div className="flex justify-between items-center text-sm mb-1">
+                            <Label htmlFor="progress">Seu Progresso</Label>
+                            <span className="font-bold">{friendsDeposited} / {GOAL}</span>
+                        </div>
+                        <Progress id="progress" value={(friendsDeposited / GOAL) * 100} className="w-full" />
                     </div>
                     <div className="flex items-center space-x-2">
                         <div className="grid flex-1 gap-2">
@@ -93,9 +119,45 @@ export default function ReferAndEarnPage() {
                 </CardContent>
             </Card>
 
-            <div className="mt-12">
-                <SecuritySeals />
-            </div>
+            <Card className="mt-8">
+                <CardHeader>
+                    <CardTitle>Amigos Convidados</CardTitle>
+                    <CardDescription>
+                        Acompanhe o status dos seus amigos convidados. O prêmio é liberado quando 5 deles depositam.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        {mockReferredFriends.map((friend, index) => (
+                             <div key={index} className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Avatar>
+                                        <AvatarImage src={friend.avatarUrl} />
+                                        <AvatarFallback>{friend.name.substring(0,2)}</AvatarFallback>
+                                    </Avatar>
+                                    <span className="font-medium">{friend.name}</span>
+                                </div>
+                                {friend.status === 'deposited' ? (
+                                    <div className="flex items-center gap-2 text-primary">
+                                        <CheckCircle2 className="h-5 w-5" />
+                                        <span className="text-sm font-semibold">Depósito Feito</span>
+                                    </div>
+                                ) : (
+                                    <div className="text-sm text-muted-foreground">
+                                        Aguardando depósito...
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+
+                         {mockReferredFriends.length === 0 && (
+                            <p className="text-center text-muted-foreground py-4">
+                                Você ainda não convidou nenhum amigo.
+                            </p>
+                         )}
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }
