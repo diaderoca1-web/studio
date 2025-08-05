@@ -146,7 +146,7 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
             <ReactConfetti 
                 width={windowSize.width} 
                 height={windowSize.height}
-                style={{ zIndex: 100 }}
+                style={{ zIndex: 1000 }}
                 gravity={0.3}
                 numberOfPieces={400}
                 recycle={false}
