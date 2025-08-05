@@ -19,7 +19,7 @@ export function AdminSidebar() {
   ]
 
   return (
-    <aside className="hidden h-screen w-64 flex-col border-r bg-background md:flex">
+    <aside className="h-screen w-64 flex-col border-r bg-background md:flex">
       <div className="flex h-16 items-center border-b px-6">
         <Link href="/" className="text-lg font-bold">
           Admin Panel
