@@ -16,7 +16,6 @@ import { Label } from './ui/label';
 
 export function DepositSheet() {
     const [amount, setAmount] = useState('30.00');
-    const [document, setDocument] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [qrCodeData, setQrCodeData] = useState<GeneratePixQRCodeOutput | null>(null);
     const [hasCopied, setHasCopied] = useState(false);
@@ -42,10 +41,6 @@ export function DepositSheet() {
                 toast({ title: "Erro", description: "Você precisa estar logado.", variant: "destructive" });
                 return;
             }
-             if (!document) {
-                toast({ title: "Erro", description: "Por favor, insira seu CPF.", variant: "destructive" });
-                return;
-            }
             const numericAmount = parseFloat(amount.replace(',', '.'));
             if (isNaN(numericAmount) || numericAmount < 10) {
                  toast({
@@ -69,7 +64,7 @@ export function DepositSheet() {
                 clientSecret: settings.paymentSecretKey,
                 name: user.name,
                 email: user.email,
-                document: document,
+                document: user.email,
             });
             setQrCodeData(data);
         } catch (error) {
@@ -155,19 +150,6 @@ export function DepositSheet() {
                             <DepositIcon className="size-8" />
                             Depositar
                         </h2>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="document" className="font-medium text-gray-300">
-                                CPF (apenas números):
-                            </Label>
-                            <Input
-                                id="document"
-                                value={document}
-                                onChange={(e) => setDocument(e.target.value)}
-                                className="text-lg font-semibold h-12 bg-gray-800 border-gray-700 text-white"
-                                placeholder="000.000.000-00"
-                            />
-                        </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="amount" className="font-medium text-gray-300">
