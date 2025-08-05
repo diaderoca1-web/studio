@@ -5,7 +5,7 @@ export default function Logo({ className, ...props }: { className?: string }) {
     return (
         <div className={cn("relative", className)} {...props}>
             <Image
-                src="https://i.ibb.co/pP4GzGC/logo-raspadinha.png"
+                src="/logo.png"
                 alt="Raspadinha.click Logo"
                 fill
                 className="object-contain"
