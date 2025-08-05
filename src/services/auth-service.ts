@@ -8,6 +8,7 @@ export interface User {
   name: string;
   phone: string;
   email: string;
+  document: string;
   balance?: number; // Add balance to user type
 }
 
@@ -18,10 +19,11 @@ const users: User[] = [
         name: 'Admin',
         email: 'admin@raspagreen.com',
         phone: '00000000000',
+        document: '00000000000',
         balance: 1000,
     },
-    { id: '1', name: 'John Doe', email: 'john.doe@example.com', phone: '1234567890', balance: 50 },
-    { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '0987654321', balance: 75 },
+    { id: '1', name: 'John Doe', email: 'john.doe@example.com', phone: '1234567890', document: '11122233344', balance: 50 },
+    { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com', phone: '0987654321', document: '55566677788', balance: 75 },
 ];
 let userIdCounter = users.length;
 
@@ -46,10 +48,13 @@ export const updateUser = async (updatedData: Partial<User> & { id: string }): P
     await new Promise(resolve => setTimeout(resolve, 200));
     const userIndex = users.findIndex(u => u.id === updatedData.id);
     if (userIndex !== -1) {
+        const currentUser = users[userIndex];
+        // Specifically handle balance updates
         if (updatedData.balance !== undefined) {
-            const currentBalance = users[userIndex].balance || 0;
-            // This logic assumes the 'balance' in updatedData is the amount to ADD.
-            users[userIndex].balance = currentBalance + updatedData.balance;
+             users[userIndex] = { ...currentUser, balance: (currentUser.balance || 0) + updatedData.balance };
+        } else {
+            // For other property updates
+            users[userIndex] = { ...currentUser, ...updatedData };
         }
         console.log("User updated:", users[userIndex]);
         return true;
@@ -96,10 +101,11 @@ export const login = async (email: string, pass: string): Promise<User> => {
  * @param name - The user's name.
  * @param email - The user's email.
  * @param phone - The user's phone number.
+ * @param document - The user's CPF document number.
  * @param pass - The user's password.
  * @returns A promise that resolves to the newly registered user.
  */
-export const register = async (name: string, email: string, phone: string, pass: string): Promise<User> => {
+export const register = async (name: string, email: string, phone: string, document: string, pass: string): Promise<User> => {
   console.log(`Attempting to register new user with email: ${email}`);
 
   // Simulate network delay
@@ -114,6 +120,7 @@ export const register = async (name: string, email: string, phone: string, pass:
     name,
     email,
     phone,
+    document,
     balance: 100, // Start with a default balance
   };
 

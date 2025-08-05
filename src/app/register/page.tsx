@@ -20,11 +20,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/auth-context';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, Lock, Smartphone, User, X } from 'lucide-react';
+import { Mail, Lock, Smartphone, User, X, FileText } from 'lucide-react';
 
 const formSchema = z.object({
+  name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }),
   email: z.string().email({ message: "Por favor, insira um email válido." }),
   phone: z.string().min(10, { message: 'Por favor, insira um número de telefone válido.' }),
+  document: z.string().min(11, { message: 'Por favor, insira um CPF válido.' }),
   password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
 });
 
@@ -38,8 +40,10 @@ export default function RegisterPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: '',
       email: '',
       phone: '',
+      document: '',
       password: '',
     },
   });
@@ -47,9 +51,7 @@ export default function RegisterPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      // For now, let's use the first part of the email as the name
-      const name = values.email.split('@')[0];
-      await register({ name: name, email: values.email, phone: values.phone, pass: values.password });
+      await register({ name: values.name, email: values.email, phone: values.phone, document: values.document, pass: values.password });
       toast({
         title: 'Sucesso!',
         description: 'Sua conta foi criada com sucesso.',
@@ -82,6 +84,26 @@ export default function RegisterPage() {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField
                     control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                         <FormLabel className='text-white'>Nome Completo</FormLabel>
+                        <div className="relative">
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                            <FormControl>
+                              <Input 
+                                placeholder="Seu nome completo" 
+                                {...field} 
+                                className="pl-10 bg-gray-800 border-gray-700 text-white focus:ring-primary" 
+                              />
+                            </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
@@ -111,6 +133,26 @@ export default function RegisterPage() {
                             <FormControl>
                               <Input 
                                 placeholder="(00) 0000-0000" 
+                                {...field} 
+                                className="pl-10 bg-gray-800 border-gray-700 text-white focus:ring-primary" 
+                              />
+                            </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <FormField
+                    control={form.control}
+                    name="document"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className='text-white'>CPF</FormLabel>
+                        <div className="relative">
+                            <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                            <FormControl>
+                              <Input 
+                                placeholder="000.000.000-00" 
                                 {...field} 
                                 className="pl-10 bg-gray-800 border-gray-700 text-white focus:ring-primary" 
                               />
@@ -177,5 +219,4 @@ export default function RegisterPage() {
     </div>
   );
 }
-
     

@@ -7,11 +7,11 @@ import { User, login as apiLogin, register as apiRegister, logout as apiLogout, 
 interface AuthContextType {
   user: User | null;
   login: (credentials: { email: string; pass: string }) => Promise<void>;
-  register: (credentials: { name: string, email: string; phone: string; pass: string }) => Promise<void>;
+  register: (credentials: { name: string, email: string; phone: string; document: string; pass: string }) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
   deductBalance: (amount: number) => boolean;
-  addBalance: (amount: number) => boolean;
+  addBalance: (userId: string, amount: number) => Promise<boolean>;
   updateUserInContext: (user: User) => void;
 }
 
@@ -39,8 +39,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     updateUserInContext(loggedInUser);
   };
 
-  const register = async (credentials: { name: string, email: string; phone: string; pass: string }) => {
-    const newUser = await apiRegister(credentials.name, credentials.email, credentials.phone, credentials.pass);
+  const register = async (credentials: { name: string, email: string; phone: string; document: string; pass: string }) => {
+    const newUser = await apiRegister(credentials.name, credentials.email, credentials.phone, credentials.document, credentials.pass);
     updateUserInContext(newUser);
   };
 
@@ -53,21 +53,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const deductBalance = (amount: number): boolean => {
     if (user && user.balance !== undefined && user.balance >= amount) {
         const updatedUser = { ...user, balance: user.balance - amount };
-        apiUpdateUser(updatedUser); // Update mock DB
+        apiUpdateUser(updatedUser); // This is mock, but represents an API call
         updateUserInContext(updatedUser);
         return true;
     }
     return false;
   };
   
-  const addBalance = (amount: number): boolean => {
-    if (user) {
+  const addBalance = async (userId: string, amount: number): Promise<boolean> => {
+     const success = await apiUpdateUser({ id: userId, balance: amount });
+     if (success && user && user.id === userId) {
         const updatedUser = { ...user, balance: (user.balance || 0) + amount };
-        apiUpdateUser(updatedUser); // Update mock DB
         updateUserInContext(updatedUser);
-        return true;
-    }
-    return false;
+     }
+     return success;
   };
 
   return (

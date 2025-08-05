@@ -10,15 +10,19 @@ import { generatePixQRCode, GeneratePixQRCodeOutput } from '@/ai/flows/generate-
 import QRCode from 'qrcode.react';
 import { useToast } from '@/hooks/use-toast';
 import { useSettings } from '@/contexts/settings-context';
+import { useAuth } from '@/contexts/auth-context';
+import { Label } from './ui/label';
 
 
 export function DepositSheet() {
     const [amount, setAmount] = useState('30.00');
+    const [document, setDocument] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [qrCodeData, setQrCodeData] = useState<GeneratePixQRCodeOutput | null>(null);
     const [hasCopied, setHasCopied] = useState(false);
     const { toast } = useToast();
     const { settings } = useSettings();
+    const { user } = useAuth();
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/[^0-9]/g, '');
@@ -34,6 +38,14 @@ export function DepositSheet() {
         setIsLoading(true);
         setQrCodeData(null);
         try {
+            if (!user) {
+                toast({ title: "Erro", description: "Você precisa estar logado.", variant: "destructive" });
+                return;
+            }
+             if (!document) {
+                toast({ title: "Erro", description: "Por favor, insira seu CPF.", variant: "destructive" });
+                return;
+            }
             const numericAmount = parseFloat(amount.replace(',', '.'));
             if (isNaN(numericAmount) || numericAmount < 10) {
                  toast({
@@ -54,7 +66,10 @@ export function DepositSheet() {
             const data = await generatePixQRCode({ 
                 amount: numericAmount,
                 clientId: settings.paymentClientId,
-                clientSecret: settings.paymentSecretKey
+                clientSecret: settings.paymentSecretKey,
+                name: user.name,
+                email: user.email,
+                document: document,
             });
             setQrCodeData(data);
         } catch (error) {
@@ -142,9 +157,22 @@ export function DepositSheet() {
                         </h2>
 
                         <div className="space-y-2">
-                            <label htmlFor="amount" className="font-medium text-gray-300">
+                            <Label htmlFor="document" className="font-medium text-gray-300">
+                                CPF (apenas números):
+                            </Label>
+                            <Input
+                                id="document"
+                                value={document}
+                                onChange={(e) => setDocument(e.target.value)}
+                                className="text-lg font-semibold h-12 bg-gray-800 border-gray-700 text-white"
+                                placeholder="000.000.000-00"
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label htmlFor="amount" className="font-medium text-gray-300">
                                 Valor:
-                            </label>
+                            </Label>
                             <div className="relative">
                                 <span className="absolute left-3 top-1/2 -translate-y-1/2 font-semibold text-gray-400">
                                     R$

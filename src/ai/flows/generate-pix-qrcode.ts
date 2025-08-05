@@ -14,6 +14,9 @@ const GeneratePixQRCodeInputSchema = z.object({
   amount: z.number().describe('The value of the transaction.'),
   clientId: z.string().describe('The payment gateway client ID.'),
   clientSecret: z.string().describe('The payment gateway client secret.'),
+  name: z.string().describe("The payer's full name."),
+  document: z.string().describe("The payer's CPF document number."),
+  email: z.string().describe("The payer's email address."),
 });
 export type GeneratePixQRCodeInput = z.infer<typeof GeneratePixQRCodeInputSchema>;
 
@@ -66,9 +69,9 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
         body: JSON.stringify({
             amount: input.amount,
             payer: {
-                name: "Cliente Raspagreen",
-                document: "18353198665", // API requires a document, using a placeholder
-                email: "cliente@raspagreen.com"
+                name: input.name,
+                document: input.document,
+                email: input.email,
             },
         })
     });
