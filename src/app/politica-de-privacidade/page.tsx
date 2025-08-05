@@ -41,20 +41,25 @@ export default function PrivacyPolicyPage() {
             <p>
                 Apenas retemos as informações coletadas pelo tempo necessário para fornecer o serviço solicitado. Quando armazenamos dados, protegemos dentro de meios comercialmente aceitáveis para evitar perdas e roubos, bem como acesso, divulgação, cópia, uso ou modificação não autorizados.
             </p>
+            
+            <h2>5. Não Afiliação com Outras Plataformas</h2>
+            <p>
+                O raspadinha.click é uma plataforma independente e não possui afiliação, endosso, ou qualquer tipo de parceria oficial com o Google, Facebook, Instagram, ou qualquer uma de suas empresas ou serviços. Todas as marcas comerciais, logotipos e nomes de marcas são propriedade de seus respectivos proprietários.
+            </p>
 
-            <h2>5. Links para Sites de Terceiros</h2>
+            <h2>6. Links para Sites de Terceiros</h2>
             <p>
                 O nosso site pode ter links para sites externos que não são operados por nós. Esteja ciente de que não temos controle sobre o conteúdo e práticas desses sites e não podemos aceitar responsabilidade por suas respectivas políticas de privacidade.
             </p>
 
-            <h2>6. Alterações a Esta Política</h2>
+            <h2>7. Alterações a Esta Política</h2>
             <p>
                 Podemos atualizar nossa política de privacidade de tempos em tempos. Notificaremos você sobre quaisquer alterações, publicando a nova política de privacidade nesta página.
             </p>
 
-            <h2>7. Contato</h2>
+            <h2>8. Contato</h2>
             <p>
-                Se você tiver alguma dúvida sobre como lidamos com dados do usuário e informações pessoais, entre em contato conosco através do e-mail: [email de suporte].
+                Se você tiver alguma dúvida sobre como lidamos com dados do usuário e informações pessoais, entre em contato conosco através do e-mail: contato@raspadinha.click.
             </p>
         </CardContent>
       </Card>
