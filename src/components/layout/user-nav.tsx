@@ -19,9 +19,11 @@ import DepositIcon from "../icons/deposit-icon";
 import { useAuth } from "@/contexts/auth-context";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { DepositSheet } from "../deposit-sheet";
+import { useRouter } from "next/navigation";
 
 export function UserNav() {
   const { user, logout } = useAuth();
+  const router = useRouter();
   
   // Balances are now managed by AuthContext, with mock values for demonstration
   const realBalance = user?.balance ?? 0.00;
@@ -31,6 +33,14 @@ export function UserNav() {
   if (!user) {
     return null;
   }
+
+  const handleDepositClick = (e: React.MouseEvent) => {
+    if (!user) {
+        e.preventDefault();
+        router.push('/register');
+    }
+  };
+
 
   const isAdmin = user.email === 'admin@raspagreen.com';
 
@@ -68,18 +78,20 @@ export function UserNav() {
       </Popover>
 
       <Sheet>
-        <SheetTrigger asChild>
+        <SheetTrigger asChild onClick={handleDepositClick}>
           <Button className="bg-primary hover:bg-primary/90 hidden md:flex">
             <DepositIcon className="mr-2 h-4 w-4" />
             Depositar
           </Button>
         </SheetTrigger>
-        <SheetContent 
-            side="right" 
-            className="p-0 bg-card border-l-0 w-full max-w-md"
-        >
-            <DepositSheet />
-        </SheetContent>
+        {user && (
+            <SheetContent 
+                side="right" 
+                className="p-0 bg-card border-l-0 w-full max-w-md"
+            >
+                <DepositSheet />
+            </SheetContent>
+        )}
       </Sheet>
       
       <Button asChild className="bg-primary hover:bg-primary/90 hidden md:flex">

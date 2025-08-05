@@ -2,15 +2,18 @@
 'use client'
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Home, Ticket, UserPlus, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import DepositIcon from "../icons/deposit-icon";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { DepositSheet } from "../deposit-sheet";
+import { useAuth } from "@/contexts/auth-context";
 
 export function MobileFooter() {
     const pathname = usePathname();
+    const router = useRouter();
+    const { user } = useAuth();
 
     const navItems = [
         { href: '/', label: 'Início', icon: Home },
@@ -19,6 +22,13 @@ export function MobileFooter() {
         { href: '/indique', label: 'Indique', icon: UserPlus },
         { href: '/perfil', label: 'Perfil', icon: User },
     ];
+    
+    const handleDepositClick = (e: React.MouseEvent) => {
+        if (!user) {
+            e.preventDefault();
+            router.push('/register');
+        }
+    };
 
     return (
         <footer className="fixed bottom-0 left-0 right-0 bg-card border-t h-20 md:hidden z-50">
@@ -28,7 +38,7 @@ export function MobileFooter() {
                     if (item.isCentral) {
                         return (
                             <Sheet key={item.href}>
-                                <SheetTrigger asChild>
+                                <SheetTrigger asChild onClick={handleDepositClick}>
                                     <div className="relative">
                                         <div className="absolute -top-10 left-1/2 -translate-x-1/2">
                                             <div className={cn(
@@ -43,12 +53,14 @@ export function MobileFooter() {
                                         </span>
                                     </div>
                                 </SheetTrigger>
-                                <SheetContent 
-                                    side="bottom" 
-                                    className="p-0 bg-card border-t-0"
-                                >
-                                    <DepositSheet />
-                                </SheetContent>
+                                {user && (
+                                    <SheetContent 
+                                        side="bottom" 
+                                        className="p-0 bg-card border-t-0"
+                                    >
+                                        <DepositSheet />
+                                    </SheetContent>
+                                )}
                             </Sheet>
                         );
                     }
