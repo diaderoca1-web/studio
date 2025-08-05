@@ -1,21 +1,13 @@
 
 'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/contexts/auth-context";
-import { CreditCard, Edit, Gamepad2, HeartHandshake, LogOut, Mail, Pencil, Phone, ShieldCheck, User as UserIcon, Wallet } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { Mail, Pencil, Phone, User as UserIcon, Wallet } from "lucide-react";
 import DepositIcon from "@/components/icons/deposit-icon";
 import CoinIcon from "@/components/icons/coin-icon";
+import { ProfileSidebar } from "@/components/layout/profile-sidebar";
 
 
 const StatCard = ({ title, value, icon: Icon }: { title: string, value: string, icon: React.ElementType }) => (
@@ -51,69 +43,16 @@ const InfoRow = ({ label, value, icon: Icon }: { label: string, value: string, i
 
 
 export default function ProfilePage() {
-    const { user, logout } = useAuth();
-    const router = useRouter();
+    const { user } = useAuth();
 
     if (!user) {
-        // Or show a loading spinner
         return null;
     }
-
-    const handleLogout = () => {
-        logout();
-        router.push('/');
-    };
-
-    const navItems = [
-        { href: '/perfil', label: 'Conta', icon: UserIcon },
-        { href: '/historico', label: 'Histórico de Jogos', icon: Gamepad2 },
-        { href: '/transacoes', label: 'Transações', icon: CreditCard },
-        { href: '/seguranca', label: 'Segurança', icon: ShieldCheck },
-    ];
 
     return (
         <div className="container mx-auto max-w-6xl py-12">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                {/* Sidebar */}
-                <aside className="md:col-span-1">
-                    <Card className="p-4">
-                        <div className="flex flex-col items-center space-y-4">
-                            <Avatar className="w-24 h-24 border-4 border-primary">
-                                <AvatarImage src="https://placehold.co/100x100.png" />
-                                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <div className="text-center">
-                                <h2 className="text-xl font-bold">{user.name}</h2>
-                                <p className="text-sm text-muted-foreground">Entrou em Jul 31, 2025</p>
-                            </div>
-                        </div>
-                        <nav className="mt-8 space-y-2">
-                            {navItems.map(item => (
-                                <Button
-                                    key={item.href}
-                                    variant={router.pathname === item.href ? 'secondary' : 'ghost'}
-                                    className="w-full justify-start"
-                                    asChild
-                                >
-                                    <Link href={item.href}>
-                                        <item.icon className="mr-3 h-5 w-5" />
-                                        {item.label}
-                                    </Link>
-                                </Button>
-                            ))}
-                             <Button
-                                variant='ghost'
-                                className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
-                                onClick={handleLogout}
-                            >
-                                <LogOut className="mr-3 h-5 w-5" />
-                                Sair
-                            </Button>
-                        </nav>
-                    </Card>
-                </aside>
-
-                {/* Main Content */}
+                <ProfileSidebar />
                 <main className="md:col-span-3">
                     <div className="space-y-8">
                         <div>
