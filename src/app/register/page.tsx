@@ -1,7 +1,8 @@
+
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -29,10 +30,21 @@ const formSchema = z.object({
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { register } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    const ref = searchParams.get('ref');
+    if (ref) {
+      setReferralCode(ref);
+      // Optional: Store referral code in localStorage to persist it
+      localStorage.setItem('referralCode', ref);
+    }
+  }, [searchParams]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,10 +61,18 @@ export default function RegisterPage() {
       // Derive name from email
       const name = values.email.split('@')[0].replace(/[._]/g, ' ');
       await register({ name, email: values.email, phone: values.phone, pass: values.password });
+      
       toast({
         title: 'Sucesso!',
         description: 'Sua conta foi criada com sucesso.',
       });
+
+      if(referralCode) {
+          console.log(`User registered with referral code: ${referralCode}`);
+          // Here you would typically make an API call to your backend
+          // to record the successful referral.
+      }
+
       router.push('/');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Ocorreu um erro desconhecido.';
@@ -176,4 +196,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-    
