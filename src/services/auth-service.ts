@@ -17,7 +17,7 @@ const users: User[] = [
     {
         id: '0',
         name: 'Admin',
-        email: 'admin@raspagreen.com',
+        email: 'admin@raspadinha.click',
         phone: '00000000000',
         gender: 'male',
         document: '00000000000',
@@ -83,7 +83,7 @@ export const login = async (email: string, pass: string): Promise<User> => {
   if (existingUser) {
     // In a real app, you'd check the password.
     // For admin, we have a specific password check.
-    if (email === 'admin@raspagreen.com' && pass !== 'admin123') {
+    if (email === 'admin@raspadinha.click' && pass !== 'admin123') {
         throw new Error("User not found or password incorrect.");
     }
     

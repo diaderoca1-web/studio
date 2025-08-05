@@ -137,7 +137,7 @@ export function DepositSheet() {
                 <>
                     <div className='p-4'>
                         <Image 
-                            src="https://raspagreen.com/deposit_bg.jpg"
+                            src="https://raspadinha.click/deposit_bg.jpg"
                             alt="Compre no pix e receba no pix"
                             width={500}
                             height={200}

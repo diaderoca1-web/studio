@@ -27,8 +27,8 @@ interface Settings {
 }
 
 const defaultSettings: Settings = {
-  storeName: "RaspaGreen",
-  storeEmail: "contato@raspagreen.com",
+  storeName: "Raspadinha.click",
+  storeEmail: "contato@raspadinha.click",
   primaryColor: "#2ECC71",
   winProbability: 50,
   rtp: 95,

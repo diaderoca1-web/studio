@@ -42,7 +42,7 @@ export function UserNav() {
   };
 
 
-  const isAdmin = user.email === 'admin@raspagreen.com';
+  const isAdmin = user.email === 'admin@raspadinha.click';
 
   const avatarUrl = user.gender === 'female' 
       ? 'https://placehold.co/40x40/FBCFE8/831843.png'

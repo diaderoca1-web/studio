@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'raspagreen.com',
+        hostname: 'raspadinha.click',
         port: '',
         pathname: '/**',
       },

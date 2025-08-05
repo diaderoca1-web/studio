@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import Logo from "../icons/logo";
 import Image from "next/image";
@@ -11,10 +10,10 @@ export function Footer() {
             <div className="flex flex-col items-center md:items-start space-y-4">
                 <Logo className="h-12 w-40" />
                 <p className="text-sm text-center md:text-left text-muted-foreground">
-                © {new Date().getFullYear()} raspagreen.com. Todos os direitos reservados.
+                © {new Date().getFullYear()} raspadinha.click. Todos os direitos reservados.
                 </p>
                 <p className="text-xs max-w-md text-center md:text-left text-muted-foreground">
-                A RaspaGreen é uma plataforma de entretenimento e compras online. Nossos jogos oferecem prêmios físicos e digitais que podem ser adquiridos. Jogue com responsabilidade.
+                A Raspadinha.click é uma plataforma de entretenimento e compras online. Nossos jogos oferecem prêmios físicos e digitais que podem ser adquiridos. Jogue com responsabilidade.
                 </p>
             </div>
             <div className="md:col-span-2 grid grid-cols-2 gap-8">
