@@ -202,6 +202,13 @@ const prizesRaspadinhaMagica: PrizeType[] = [
     { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
 ];
 
+const prizesRaspeEGanhe: PrizeType[] = recentWinners.map(winner => ({
+  name: winner.prizeName,
+  value: winner.prizeValue,
+  imageUrl: winner.imageUrl,
+  aiHint: winner.aiHint,
+}));
+
 
 export const scratchCards: ScratchCardType[] = [
   {
@@ -258,11 +265,11 @@ export const scratchCards: ScratchCardType[] = [
     slug: "raspe-e-ganhe",
     title: "Raspe e Ganhe",
     description: "Transforme sua sorte em dinheiro de verdade com cada raspada.",
-    prizeAmount: 60000.0,
+    prizeAmount: 120000.0,
     cost: 100.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/PREMIOS%20DIVERSOS.png?updatedAt=1752534650509",
     aiHint: "diamond prize",
-    prizes: [],
+    prizes: prizesRaspeEGanhe,
   },
 ];
 
