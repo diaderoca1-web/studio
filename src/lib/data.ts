@@ -202,12 +202,14 @@ const prizesRaspadinhaMagica: PrizeType[] = [
     { name: '1 Real', value: 1.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/Notas/1%20REAL.png?updatedAt=1752047821586' },
 ];
 
-const prizesRaspeEGanhe: PrizeType[] = recentWinners.map(winner => ({
-  name: winner.prizeName,
-  value: winner.prizeValue,
-  imageUrl: winner.imageUrl,
-  aiHint: winner.aiHint,
-}));
+const prizesRaspeEGanhe: PrizeType[] = recentWinners
+  .map(winner => ({
+    name: winner.prizeName,
+    value: winner.prizeValue,
+    imageUrl: winner.imageUrl,
+    aiHint: winner.aiHint,
+  }))
+  .sort((a, b) => b.value - a.value);
 
 
 export const scratchCards: ScratchCardType[] = [
