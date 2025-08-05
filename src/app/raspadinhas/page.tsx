@@ -1,3 +1,4 @@
+import RecentWinners from "@/components/home/recent-winners";
 import ScratchCard from "@/components/scratch-card";
 import { scratchCards } from "@/lib/data";
 
@@ -5,13 +6,11 @@ export default function AllScratchCardsPage() {
   return (
     <>
       <div className="container mx-auto py-12">
-        <div className="space-y-4 text-center mb-12">
-          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
-            All Scratch Cards
-          </h1>
+        <div className="py-4">
+          <RecentWinners />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {scratchCards.map((card) => (
             <ScratchCard key={card.slug} card={card} />
           ))}
