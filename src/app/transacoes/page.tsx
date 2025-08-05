@@ -91,52 +91,49 @@ export default function TransactionsPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <ProfileSidebar />
                 <main className="md:col-span-3">
-                   <Card>
-                        <CardHeader className="flex-row items-center justify-between">
-                            <CardTitle>Transações</CardTitle>
-                             <Tabs defaultValue="deposits" className="w-auto">
+                   <Tabs defaultValue="deposits">
+                        <Card>
+                            <CardHeader className="flex-row items-center justify-between">
+                                <CardTitle>Transações</CardTitle>
                                 <TabsList>
                                     <TabsTrigger value="deposits">Depósitos</TabsTrigger>
                                     <TabsTrigger value="withdrawals">Saques</TabsTrigger>
                                 </TabsList>
-                            </Tabs>
-                        </CardHeader>
-                        <CardContent>
-                             <Tabs defaultValue="deposits">
+                            </CardHeader>
+                            <CardContent>
                                 <TabsContent value="deposits">
                                     <TransactionsTable transactions={mockDeposits} />
                                 </TabsContent>
                                 <TabsContent value="withdrawals">
                                      <TransactionsTable transactions={mockWithdrawals} />
                                 </TabsContent>
-                            </Tabs>
 
-                            <div className="flex items-center justify-between mt-6 text-sm text-muted-foreground">
-                                <div className="flex items-center gap-2">
-                                    <span>Mostrar</span>
-                                    <Select defaultValue="10">
-                                        <SelectTrigger className="w-20 h-8">
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="10">10</SelectItem>
-                                            <SelectItem value="25">25</SelectItem>
-                                            <SelectItem value="50">50</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                     <span>registros por página</span>
+                                <div className="flex items-center justify-between mt-6 text-sm text-muted-foreground">
+                                    <div className="flex items-center gap-2">
+                                        <span>Mostrar</span>
+                                        <Select defaultValue="10">
+                                            <SelectTrigger className="w-20 h-8">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="10">10</SelectItem>
+                                                <SelectItem value="25">25</SelectItem>
+                                                <SelectItem value="50">50</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        <span>registros por página</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <Button variant="outline" size="sm">Anterior</Button>
+                                        <Button variant="default" size="sm" className="w-8 h-8 p-0">1</Button>
+                                        <Button variant="outline" size="sm">Próximo</Button>
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <Button variant="outline" size="sm">Anterior</Button>
-                                    <Button variant="default" size="sm" className="w-8 h-8 p-0">1</Button>
-                                    <Button variant="outline" size="sm">Próximo</Button>
-                                </div>
-                            </div>
-                        </CardContent>
-                   </Card>
+                            </CardContent>
+                        </Card>
+                   </Tabs>
                 </main>
             </div>
         </div>
     );
 }
-
