@@ -171,7 +171,9 @@ const prizesRaspaRelampago: PrizeType[] = [
 ];
 
 const prizesRaspadinhaMagica: PrizeType[] = [
-    { name: '20.000 Reais', value: 20000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/banner/01K0F6B4W6E48V8A8Z7X5M5F5X.png' },
+    { name: '50.000 Reais', value: 50000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/10.png?updatedAt=1752731173064' },
+    { name: 'Churrasqueira de cerâmica', value: 20000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/item_churrasqueira_cer_mica_carv_o.png?updatedAt=1751634896778' },
+    { name: '2.000 Reais', value: 2000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/2K.png?updatedAt=1752731173023' },
     { name: 'Moto CG 160 Start', value: 16500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_cg_160_start_prata_met_lico.png?updatedAt=1751634895048' },
     { name: 'Moto Honda Biz', value: 13000.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_biz_110i_vermelho.png?updatedAt=1751634892737' },
     { name: 'Moto Honda Pop', value: 11500.00, imageUrl: 'https://ik.imagekit.io/azx3nlpdu/variant_pop_110i_branco.png?updatedAt=1751634894490' },
@@ -246,7 +248,7 @@ export const scratchCards: ScratchCardType[] = [
     slug: "raspadinha-magica",
     title: "Raspadinha Mágica",
     description: "Raspadinhas online com pagamentos instantâneos no seu Pix.",
-    prizeAmount: 30000.0,
+    prizeAmount: 50000.0,
     cost: 50.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/BIKE%20,%20MAQUINA%20-%20MOTO.png?updatedAt=1752534650346",
     aiHint: "motorcycle prize",
