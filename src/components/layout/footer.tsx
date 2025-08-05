@@ -13,7 +13,7 @@ export function Footer() {
                 © {new Date().getFullYear()} raspadinha.click. Todos os direitos reservados.
                 </p>
                 <p className="text-xs max-w-md text-center md:text-left text-muted-foreground">
-                A Raspadinha.click é uma plataforma de entretenimento e compras online. Nossos jogos oferecem prêmios físicos e digitais que podem ser adquiridos. Jogue com responsabilidade.
+                Raspadinha.click é uma plataforma de entretenimento e compras online. Nossos produtos oferecem a chance de ganhar prêmios físicos e digitais. Jogue com responsabilidade.
                 </p>
             </div>
             <div className="md:col-span-2 grid grid-cols-2 gap-8">

@@ -216,7 +216,7 @@ export const scratchCards: ScratchCardType[] = [
   {
     slug: "centavo-da-sorte",
     title: "Centavo da Sorte",
-    description: "Uma moedinha pode valer mil no PIX. Vai ficar de fora?",
+    description: "Compre por centavos e concorra a mil no PIX.",
     prizeAmount: 1000.0,
     cost: 0.5,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/scratch-card/01K0FF7ZDNXFVAFJ6R79MX2ZZ5.png",
@@ -224,8 +224,8 @@ export const scratchCards: ScratchCardType[] = [
     prizes: prizesCentavoDaSorte,
   },
   {
-    slug: "sorte-instantanea",
-    title: "Sorte Instantânea",
+    slug: "premio-instantaneo",
+    title: "Prêmio Instantâneo",
     description: "Raspou, ganhou, sacou!",
     prizeAmount: 2500.0,
     cost: 1.0,
@@ -266,7 +266,7 @@ export const scratchCards: ScratchCardType[] = [
   {
     slug: "raspe-e-ganhe",
     title: "Raspe e Ganhe",
-    description: "Transforme sua sorte em dinheiro de verdade com cada raspada.",
+    description: "Sua compra pode te dar prêmios em dinheiro de verdade com cada raspada.",
     prizeAmount: 120000.0,
     cost: 100.0,
     imageUrl: "https://ik.imagekit.io/azx3nlpdu/PREMIOS%20DIVERSOS.png?updatedAt=1752534650509",

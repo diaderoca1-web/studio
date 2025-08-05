@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const faqs = [
     {
         question: "Como funciona a raspadinha online?",
-        answer: "Nossa raspadinha online é um jogo de sorte onde você compra um bilhete virtual e o 'raspa' para revelar símbolos. Se você encontrar uma combinação vencedora de símbolos, ganha um prêmio em dinheiro ou um produto, que é creditado na sua conta instantaneamente."
+        answer: "Nossa raspadinha online é um produto onde você compra um bilhete virtual e o 'raspa' para revelar símbolos. Se você encontrar uma combinação vencedora de três símbolos iguais, ganha um prêmio em dinheiro ou um produto, que é creditado na sua conta instantaneamente."
     },
     {
         question: "É seguro jogar no raspadinha.click?",
