@@ -9,9 +9,6 @@ export default function AllScratchCardsPage() {
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">
             All Scratch Cards
           </h1>
-          <p className="text-muted-foreground md:text-xl">
-            Pick your favorite card and start scratching. Good luck!
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
