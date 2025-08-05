@@ -12,7 +12,7 @@ import { z } from 'genkit';
 
 const GeneratePixQRCodeInputSchema = z.object({
   amount: z.number().describe('The value of the transaction.'),
-  clientId: z.string().describe('The payment gateway client ID, which is treated as the PIX key.'),
+  clientId: z.string().describe('The payment gateway client ID.'),
   clientSecret: z.string().describe('The payment gateway client secret.'),
 });
 export type GeneratePixQRCodeInput = z.infer<typeof GeneratePixQRCodeInputSchema>;
@@ -32,11 +32,37 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
     }
     
     try {
-        const response = await fetch("https://api.pixupbr.com/v2/pix/qrcode", {
+        // Step 1: Get Access Token
+        const credentials = `${input.clientId}:${input.clientSecret}`;
+        const base64Credentials = Buffer.from(credentials).toString('base64');
+
+        const tokenResponse = await fetch("https://api.pixupbr.com/v2/oauth/token", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Basic ${base64Credentials}`
+            },
+        });
+
+        if (!tokenResponse.ok) {
+            const errorBody = await tokenResponse.text();
+            console.error("PIX Auth API Error:", errorBody);
+            throw new Error(`PIX Auth API request failed with status ${tokenResponse.status}`);
+        }
+        
+        const tokenData = await tokenResponse.json();
+        const accessToken = tokenData.access_token;
+
+        if (!accessToken) {
+             throw new Error("Failed to retrieve access token from PIX API.");
+        }
+        
+        // Step 2: Generate QR Code using the token
+        const qrCodeResponse = await fetch("https://api.pixupbr.com/v2/pix/qrcode", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${input.clientSecret}`
+                'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({
                 amount: input.amount,
@@ -46,16 +72,16 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
             })
         });
 
-        if (!response.ok) {
-            const errorBody = await response.text();
-            console.error("PIX API Error, using fallback:", errorBody);
-            throw new Error(`PIX API request failed with status ${response.status}`);
+        if (!qrCodeResponse.ok) {
+            const errorBody = await qrCodeResponse.text();
+            console.error("PIX QR Code API Error, using fallback:", errorBody);
+            throw new Error(`PIX QR Code API request failed with status ${qrCodeResponse.status}`);
         }
 
-        const data = await response.json();
+        const data = await qrCodeResponse.json();
 
         if (!data.qr_code_text || !data.transaction_id) {
-            throw new Error("Invalid response from PIX API, using fallback.");
+            throw new Error("Invalid response from PIX QR Code API, using fallback.");
         }
 
         return {
@@ -68,6 +94,8 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
         
         const transactionId = `fallback_tx_${Date.now()}`;
         
+        // This fallback creates a standard PIX 'Copia e Cola' string.
+        // It's a valid format, but the final transaction depends on the PIX key holder's bank.
         const payloadFormatIndicator = "000201";
         const merchantAccountInfo = `26580014br.gov.bcb.pix0136${input.clientId}`;
         const merchantCategoryCode = "52040000";
@@ -78,24 +106,23 @@ export async function generatePixQRCode(input: GeneratePixQRCodeInput): Promise<
         const merchantCity = "6009SAO PAULO";
         const additionalDataField = "62070503***";
         
-        const payload = `${payloadFormatIndicator}${merchantAccountInfo}${merchantCategoryCode}${transactionCurrency}${transactionAmount}${countryCode}${merchantName}${merchantCity}${additionalDataField}6304`;
+        let payload = `${payloadFormatIndicator}${merchantAccountInfo}${merchantCategoryCode}${transactionCurrency}${transactionAmount}${countryCode}${merchantName}${merchantCity}${additionalDataField}6304`;
 
-        const crc16 = (data: string): string => {
-            let crc = 0xFFFF;
-            for (let i = 0; i < data.length; i++) {
-                crc ^= (data.charCodeAt(i) & 0xFF) << 8;
-                for (let j = 0; j < 8; j++) {
-                    if ((crc & 0x8000) !== 0) {
-                        crc = (crc << 1) ^ 0x1021;
-                    } else {
-                        crc <<= 1;
-                    }
+        // CRC16 checksum calculation
+        let crc = 0xFFFF;
+        for (let i = 0; i < payload.length; i++) {
+            crc ^= payload.charCodeAt(i) << 8;
+            for (let j = 0; j < 8; j++) {
+                if ((crc & 0x8000) > 0) {
+                    crc = (crc << 1) ^ 0x1021;
+                } else {
+                    crc <<= 1;
                 }
             }
-            return ('0000' + (crc & 0xFFFF).toString(16).toUpperCase()).slice(-4);
         }
         
-        const finalQrCode = `${payload}${crc16(payload)}`;
+        const crc16 = ('0000' + (crc & 0xFFFF).toString(16).toUpperCase()).slice(-4);
+        const finalQrCode = `${payload}${crc16}`;
 
          return {
             transactionId,
