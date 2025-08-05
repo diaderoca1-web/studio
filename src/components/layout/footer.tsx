@@ -2,18 +2,11 @@
 import Link from "next/link";
 import Logo from "../icons/logo";
 import Image from "next/image";
-
-const seals = [
-    { name: 'SSL Secure', imageUrl: 'https://raspagreen.com/selo-ssl.png' },
-    { name: '24/7 Support', imageUrl: 'https://raspagreen.com/selo-24-7.png' },
-    { name: 'Pix', imageUrl: 'https://raspagreen.com/selo-pix.png' },
-    { name: '18+', imageUrl: 'https://raspagreen.com/selo-18.png' },
-    { name: 'Fair Play', imageUrl: 'https://raspagreen.com/selo-fair.png' },
-];
+import { SecuritySeals } from "../security-seals";
 
 export function Footer() {
   return (
-    <footer className="bg-card/50 border-t hidden md:block">
+    <footer className="bg-card/50 border-t">
       <div className="container mx-auto py-2 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center md:items-start space-y-4">
@@ -44,6 +37,7 @@ export function Footer() {
             </div>
         </div>
          <div className="border-t border-border mt-4 pt-4">
+            <SecuritySeals />
         </div>
       </div>
     </footer>
