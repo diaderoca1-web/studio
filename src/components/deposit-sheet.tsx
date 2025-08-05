@@ -9,6 +9,7 @@ import DepositIcon from './icons/deposit-icon';
 import { generatePixQRCode, GeneratePixQRCodeOutput } from '@/ai/flows/generate-pix-qrcode';
 import QRCode from 'qrcode.react';
 import { useToast } from '@/hooks/use-toast';
+import { useSettings } from '@/contexts/settings-context';
 
 
 export function DepositSheet() {
@@ -17,6 +18,7 @@ export function DepositSheet() {
     const [qrCodeData, setQrCodeData] = useState<GeneratePixQRCodeOutput | null>(null);
     const [hasCopied, setHasCopied] = useState(false);
     const { toast } = useToast();
+    const { settings } = useSettings();
 
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/[^0-9]/g, '');
@@ -41,13 +43,25 @@ export function DepositSheet() {
                 });
                 return;
             }
-            const data = await generatePixQRCode({ amount: numericAmount });
+            if (!settings.paymentClientId || !settings.paymentSecretKey) {
+                toast({
+                   title: "Erro de Configuração",
+                   description: "As credenciais do gateway de pagamento não estão configuradas no painel de administração.",
+                   variant: "destructive",
+               });
+               return;
+            }
+            const data = await generatePixQRCode({ 
+                amount: numericAmount,
+                clientId: settings.paymentClientId,
+                clientSecret: settings.paymentSecretKey
+            });
             setQrCodeData(data);
         } catch (error) {
             console.error("Failed to generate QR Code:", error);
             toast({
                 title: "Erro",
-                description: "Não foi possível gerar o QR Code. Tente novamente.",
+                description: `Não foi possível gerar o QR Code. ${error instanceof Error ? error.message : 'Tente novamente.'}`,
                 variant: "destructive",
             });
         } finally {
