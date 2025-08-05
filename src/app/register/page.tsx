@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -20,12 +19,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/auth-context';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, Lock, Smartphone, User, X, FileText } from 'lucide-react';
+import { Mail, Lock, Smartphone, X } from 'lucide-react';
 
 const formSchema = z.object({
   email: z.string().email({ message: "Por favor, insira um email válido." }),
   phone: z.string().min(10, { message: 'Por favor, insira um número de telefone válido.' }),
-  document: z.string().min(11, { message: 'Por favor, insira um CPF válido.' }),
   password: z.string().min(6, { message: 'A senha deve ter pelo menos 6 caracteres.' }),
 });
 
@@ -41,7 +39,6 @@ export default function RegisterPage() {
     defaultValues: {
       email: '',
       phone: '',
-      document: '',
       password: '',
     },
   });
@@ -51,7 +48,7 @@ export default function RegisterPage() {
     try {
       // Derive name from email
       const name = values.email.split('@')[0].replace(/[._]/g, ' ');
-      await register({ name, email: values.email, phone: values.phone, document: values.document, pass: values.password });
+      await register({ name, email: values.email, phone: values.phone, pass: values.password });
       toast({
         title: 'Sucesso!',
         description: 'Sua conta foi criada com sucesso.',
@@ -113,26 +110,6 @@ export default function RegisterPage() {
                             <FormControl>
                               <Input 
                                 placeholder="(00) 0000-0000" 
-                                {...field} 
-                                className="pl-10 bg-gray-800 border-gray-700 text-white focus:ring-primary" 
-                              />
-                            </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                   <FormField
-                    control={form.control}
-                    name="document"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className='text-white'>CPF</FormLabel>
-                        <div className="relative">
-                            <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-                            <FormControl>
-                              <Input 
-                                placeholder="000.000.000-00" 
                                 {...field} 
                                 className="pl-10 bg-gray-800 border-gray-700 text-white focus:ring-primary" 
                               />

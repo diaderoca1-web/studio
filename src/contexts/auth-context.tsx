@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
@@ -7,7 +6,7 @@ import { User, login as apiLogin, register as apiRegister, logout as apiLogout, 
 interface AuthContextType {
   user: User | null;
   login: (credentials: { email: string; pass: string }) => Promise<void>;
-  register: (credentials: { name: string; email: string; phone: string; document: string; pass: string }) => Promise<void>;
+  register: (credentials: { name: string; email: string; phone: string; pass: string }) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
   deductBalance: (amount: number) => boolean;
@@ -39,8 +38,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     updateUserInContext(loggedInUser);
   };
 
-  const register = async (credentials: { name: string; email: string; phone: string; document: string; pass: string }) => {
-    const newUser = await apiRegister(credentials.name, credentials.email, credentials.phone, credentials.document, credentials.pass);
+  const register = async (credentials: { name: string; email: string; phone: string; pass: string }) => {
+    const newUser = await apiRegister(credentials.name, credentials.email, credentials.phone, credentials.pass);
     updateUserInContext(newUser);
   };
 

@@ -1,4 +1,3 @@
-
 // This is a mock authentication service.
 // In a real application, this file would contain the logic
 // to interact with your authentication backend (e.g., Firebase, Supabase, etc.).
@@ -8,7 +7,7 @@ export interface User {
   name: string;
   phone: string;
   email: string;
-  document: string;
+  document?: string;
   balance?: number; // Add balance to user type
 }
 
@@ -101,11 +100,10 @@ export const login = async (email: string, pass: string): Promise<User> => {
  * @param name - The user's name.
  * @param email - The user's email.
  * @param phone - The user's phone number.
- * @param document - The user's CPF document number.
  * @param pass - The user's password.
  * @returns A promise that resolves to the newly registered user.
  */
-export const register = async (name: string, email: string, phone: string, document: string, pass: string): Promise<User> => {
+export const register = async (name: string, email: string, phone: string, pass: string): Promise<User> => {
   console.log(`Attempting to register new user with email: ${email}`);
 
   // Simulate network delay
@@ -120,7 +118,6 @@ export const register = async (name: string, email: string, phone: string, docum
     name,
     email,
     phone,
-    document,
     balance: 100, // Start with a default balance
   };
 
