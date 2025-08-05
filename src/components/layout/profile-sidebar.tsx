@@ -16,7 +16,9 @@ export function ProfileSidebar() {
 
     if (!user) {
         // Redirect to login if user is not authenticated
-        router.push('/login');
+        if (typeof window !== 'undefined') {
+            router.push('/login');
+        }
         return null;
     }
 

@@ -153,9 +153,11 @@ export function UserNav() {
                     <span>Transações</span>
                 </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <ShieldCheck className="mr-2" />
-              <span>Segurança</span>
+            <DropdownMenuItem asChild>
+              <Link href="/seguranca">
+                <ShieldCheck className="mr-2" />
+                <span>Segurança</span>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
