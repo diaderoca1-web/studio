@@ -44,6 +44,13 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     }
   }, [card.slug]);
 
+  useEffect(() => {
+    if (gameResult?.isWinner) {
+      const audio = new Audio('https://actions.google.com/sounds/v1/office/cash_register.ogg');
+      audio.play();
+    }
+  }, [gameResult]);
+
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(inviteLink).then(() => {
       setHasCopied(true);
