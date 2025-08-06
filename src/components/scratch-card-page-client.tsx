@@ -44,13 +44,6 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
     }
   }, [card.slug]);
 
-  useEffect(() => {
-    if (gameResult?.isWinner) {
-      const audio = new Audio('https://actions.google.com/sounds/v1/office/cash_register.ogg');
-      audio.play();
-    }
-  }, [gameResult]);
-
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(inviteLink).then(() => {
       setHasCopied(true);
@@ -75,6 +68,10 @@ export default function ScratchCardPageClient({ card }: { card: ScratchCardType 
         return;
     }
     if (deductBalance(card.cost)) {
+        // Play sound on successful purchase
+        const audio = new Audio('https://actions.google.com/sounds/v1/office/cash_register.ogg');
+        audio.play().catch(error => console.error("Audio play failed:", error));
+        
         await scratchGameRef.current?.purchase();
     } else {
         toast({
