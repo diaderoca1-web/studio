@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  lucky-scratch-app:
+    build: .
+    image: lucky-scratch-app:latest
+    environment:
+      - PORT=3000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=network_public"
+        - "traefik.http.routers.lucky-scratch.rule=Host(`your-domain.com`)"
+        - "traefik.http.routers.lucky-scratch.entrypoints=websecure"
+        - "traefik.http.routers.lucky-scratch.tls.certresolver=letsencryptresolver"
+        - "traefik.http.services.lucky-scratch.loadbalancer.server.port=3000"
+    networks:
+      - network_public
+
+networks:
+  network_public:
+    external: true
