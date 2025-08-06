@@ -1,27 +1,42 @@
-# 1. Install dependencies
-FROM node:20-alpine AS deps
+# 1. Install dependencies only when needed
+FROM node:18-alpine AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package.json ./
-RUN npm install
 
-# 2. Build the app
-FROM node:20-alpine AS builder
+# Copy package.json and lockfile
+COPY package.json package-lock.json ./
+# Install production dependencies
+RUN npm install --omit=dev
+
+
+# 2. Rebuild the source code only when needed
+FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Build the Next.js application
 RUN npm run build
 
-# 3. Run the app
-FROM node:20-alpine AS runner
+
+# 3. Production image, copy all the files and run next server
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Copy built app from builder
+# Copy the standalone Next.js server, public assets, and static files
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Start the app
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+
+USER nextjs
+
 EXPOSE 3000
-CMD node server.js
+
+ENV PORT 3000
+
+CMD ["node", "server.js"]
